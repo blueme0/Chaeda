@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Chaeda"
 include(":app")
- 
+include(":build-logic:convention")
+include(":core:domain")
+include(":core:data")
+include(":core:base")
