@@ -14,11 +14,13 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityConfirmSubmitBinding
 import com.chaeda.chaeda.presentation.homework.FileState
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
+@AndroidEntryPoint
 class ConfirmSubmitActivity
     : BindingActivity<ActivityConfirmSubmitBinding>(R.layout.activity_confirm_submit) {
 
@@ -31,7 +33,7 @@ class ConfirmSubmitActivity
 
         initViewPager()
         initListener()
-        addFileToViewPager(5)
+        addFileToViewPager(1)
         sendFileObserver()
     }
 

@@ -16,7 +16,7 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="<  숙제 화면으로"
+            android:text="숙제 화면으로"
             android:fontFamily="@font/nanumsquare_bold"
             android:textColor="#683F21"
             app:layout_constraintTop_toTopOf="parent"
