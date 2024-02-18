@@ -3,6 +3,7 @@ package com.chaeda.data.repository
 import com.chaeda.data.datasoure.remote.RemoteSampleDataSource
 import com.chaeda.data.model.response.PresignedResponse
 import com.chaeda.domain.entity.ImageInfo
+import com.chaeda.domain.entity.PresignedInfo
 import com.chaeda.domain.repository.SampleRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -24,7 +25,7 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
         memberId: Int,
         imageType: String,
         imageFileExtension: String
-    ): Result<String> {
+    ): Result<PresignedInfo> {
         return runCatching {
             remoteSampleDataSource.getPresignedUrl(memberId, ImageInfo(imageType, imageFileExtension))
 //            gsonBuilder.fromJson(presignedResponse, PresignedResponse::class.java).presignedUrl

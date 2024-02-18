@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.R
+import com.chaeda.domain.entity.PresignedInfo
 import com.chaeda.domain.repository.SampleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +29,10 @@ class HomeworkViewModel @Inject constructor(
     private var _urlState = MutableStateFlow<FileState>(FileState.Init)
     val urlState: StateFlow<FileState> = _urlState.asStateFlow()
 
+    private var urlList = mutableListOf<PresignedInfo>()
+
     fun getPresignedUrl(
+        count: Int,
         memberId: Int,
         imageType: String = "ANNOUNCEMENT_THUMBNAIL",
         imageFileExtension: String = "PNG") {
@@ -36,7 +40,9 @@ class HomeworkViewModel @Inject constructor(
             repository.getPresignedUrl(memberId, imageType, imageFileExtension)
                 .onSuccess {
                     Timber.tag("chaeda-pre").d("onSuccess: $it")
-                    _urlState.value = FileState.UrlSuccess(it)
+//                    _urlState.value = FileState.UrlSuccess(it)
+                    urlList.add(it)
+                    if (urlList.size == count) _urlState.value = FileState.UrlSuccess(urlList)
                 }
                 .onFailure {
                     Timber.tag("chaeda-pre").d("onFailure: ${it.message}")
@@ -70,7 +76,7 @@ class HomeworkViewModel @Inject constructor(
 sealed interface FileState {
     object Init: FileState
     object Success: FileState
-    data class UrlSuccess(val url: String): FileState
+    data class UrlSuccess(val url: List<PresignedInfo>): FileState
     data class FileSuccess(val url: String): FileState
     data class Failure(val msg: String): FileState
 }

@@ -4,6 +4,7 @@ import com.chaeda.data.model.response.ResponseGetSample
 import com.chaeda.data.service.ImageService
 import com.chaeda.data.service.SampleService
 import com.chaeda.domain.entity.ImageInfo
+import com.chaeda.domain.entity.PresignedInfo
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -18,8 +19,8 @@ class RemoteSampleDataSource @Inject constructor(
     suspend fun getRecommendCourse(pageNo: String?): ResponseGetSample =
         sampleService.getSample()
 
-    suspend fun getPresignedUrl(memberId: Int, imageInfo: ImageInfo): String =
-        sampleService.getPresignedUrl(memberId, imageInfo).presigendUrl
+    suspend fun getPresignedUrl(memberId: Int, imageInfo: ImageInfo): PresignedInfo =
+        sampleService.getPresignedUrl(memberId, imageInfo).toPresignedInfo()
 
     suspend fun putFileToUrl(url: String, contentType: String, file: File): String =
         imageService.putFileToUrl(
