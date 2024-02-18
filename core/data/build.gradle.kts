@@ -1,43 +1,60 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("chaeda.android.library")
+    kotlin("plugin.serialization") version libs.versions.kotlinVersion
+    alias(libs.plugins.androidKotlin)
 }
 
 android {
-    namespace = "com.chaeda.data"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
     buildTypes {
+        debug {
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                gradleLocalProperties(rootDir).getProperty("base.url"),
+            )
+            buildConfigField(
+                "String",
+                "IMAGE_URL",
+                gradleLocalProperties(rootDir).getProperty("image.url"),
+            )
+        }
+
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                gradleLocalProperties(rootDir).getProperty("base.url"),
+            )
+            buildConfigField(
+                "String",
+                "IMAGE_URL",
+                gradleLocalProperties(rootDir).getProperty("image.url"),
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+
+    buildFeatures {
+        buildConfig = true
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
+    namespace = "com.chaeda.data"
 }
 
 dependencies {
+    implementation(project(":core:domain"))
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.coreKtx)
+    implementation(libs.androidx.pagingRuntime)
+    implementation(libs.androidx.security)
+    implementation(libs.billing)
+
+    implementation(libs.gson)
+    implementation(libs.okhttp.bom)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.retrofit)
+    implementation(libs.timber)
+    implementation(libs.androidx.appCompat)
+    implementation(libs.materialDesign)
+    implementation(libs.androidx.constraintLayout)
 }
