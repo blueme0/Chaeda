@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gom="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_homework"
+        android:icon="@drawable/ic_bnv_homework_unselected"
+        android:title="채점"
+        android:checked="false"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/menu_home"
+        android:title=""
+        android:checked="true"
+        android:enabled="true"
+        gom:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_analysis"
+        android:icon="@drawable/ic_bnv_analysis_unselected"
+        android:title="통계"
+        android:enabled="true"
+        />
+</menu>

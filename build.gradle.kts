@@ -1,7 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "8.1.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
-    id("org.jetbrains.kotlin.jvm") version "1.9.0" apply false
-    id("com.android.library") version "8.1.2" apply false
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.androidKotlin) apply false
+    alias(libs.plugins.androidHilt) apply false
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath(libs.android.build)
+        classpath(libs.kotlin.gradle)
+//        classpath(libs.google.services.plugin)
+//        classpath(libs.google.appdistribution.gradle)
+//        classpath(libs.google.crashlytics.gradle)
+        classpath(libs.navigation.plugin)
+        classpath(libs.hilt.gradle)
+        classpath(libs.google.oss.plugin)
+    }
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
