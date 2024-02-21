@@ -1,14 +1,14 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteSampleDataSource
-import com.chaeda.data.model.response.PresignedResponse
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
 import com.chaeda.domain.repository.SampleRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -35,6 +35,18 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
     override suspend fun putFileToUrl(url: String, contentType: String, file: File): Result<String> {
         return runCatching {
             remoteSampleDataSource.putFileToUrl(url, contentType, file)
+        }
+    }
+
+    override suspend fun uploadImages(images: List<File>): Result<String> {
+        return runCatching {
+            val flist = ArrayList<MultipartBody.Part>()
+            for (file in images) {
+                val fileRequestBody = file.asRequestBody("image/jpg".toMediaType())
+                val filePart = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
+                flist.add(filePart)
+            }
+            remoteSampleDataSource.uploadImages(images = flist)
         }
     }
 

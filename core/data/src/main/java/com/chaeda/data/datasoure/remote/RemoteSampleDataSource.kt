@@ -5,9 +5,8 @@ import com.chaeda.data.service.ImageService
 import com.chaeda.data.service.SampleService
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
+import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
@@ -27,4 +26,7 @@ class RemoteSampleDataSource @Inject constructor(
             url,
             file.asRequestBody(contentType.toMediaTypeOrNull())
         )
+
+    suspend fun uploadImages(images: List<MultipartBody.Part>): String =
+        sampleService.uploadImages(images)
 }
