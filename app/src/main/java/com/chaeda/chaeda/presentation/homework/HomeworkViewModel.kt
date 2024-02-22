@@ -1,13 +1,7 @@
 package com.chaeda.chaeda.presentation.homework
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.Environment
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaeda.chaeda.R
 import com.chaeda.domain.entity.PresignedInfo
 import com.chaeda.domain.repository.SampleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +11,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,6 +64,14 @@ class HomeworkViewModel @Inject constructor(
                     _urlState.value = FileState.Failure(it.message!!)
                 }
         }
+    }
+
+    private var _selectedDate = MutableStateFlow<Date>(Calendar.getInstance().time)
+    val selectedDate: StateFlow<Date> = _selectedDate
+
+    fun setSelectedDate(date: Date) {
+        Timber.tag("chaeda-cal").d("viewModel setSelectedDate called: $date")
+        _selectedDate.value = date
     }
 }
 

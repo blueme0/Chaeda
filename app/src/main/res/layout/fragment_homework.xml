@@ -12,18 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        
+
         <TextView
-            android:id="@+id/tv_presign"
+            android:id="@+id/tv_weekly_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#d9a7f8"
-            android:text="get presigned url"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="2024년 2월"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textSize="24sp"
+            android:textColor="#683F21"
+            android:layout_marginStart="25dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="48dp"
+            />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_weekly_month"
+            android:layout_marginTop="10dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
