@@ -26,8 +26,8 @@ class MainActivity
         setTabLayout()
         this.window?.apply {
             this.statusBarColor = Color.TRANSPARENT
-            decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//            decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
 
