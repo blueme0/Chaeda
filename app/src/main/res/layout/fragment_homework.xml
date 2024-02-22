@@ -20,11 +20,11 @@
             android:text="2024년 2월"
             android:fontFamily="@font/nanumsquare_bold"
             android:textSize="24sp"
-            android:textColor="#683F21"
+            android:textColor="#000000"
             android:layout_marginStart="25dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="48dp"
+            app:layout_constraintTop_toTopOf="@id/tv_false"
+            app:layout_constraintBottom_toBottomOf="@id/tv_false"
             />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -35,6 +35,65 @@
             app:layout_constraintTop_toBottomOf="@id/tv_weekly_month"
             android:layout_marginTop="10dp"
             />
+
+        <TextView
+            android:id="@+id/tv_false"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="오답 모아보기"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="25dp"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="10dp"
+            android:textColor="#683F21"
+            android:textSize="13sp"
+            android:fontFamily="@font/nanumsquare_regular"
+            android:background="@drawable/shape_rect16_stroke_false"
+            />
+
+        <TextView
+            android:id="@+id/tv_homework"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:fontFamily="@font/font_nanumsquare_extrabold"
+            android:text="이날의 숙제"
+            android:textColor="#262626"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv_home"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            android:layout_marginTop="23dp"
+            android:layout_marginHorizontal="15dp"
+            android:paddingLeft="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_homework"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_homework"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                android:orientation="vertical"
+                android:foregroundGravity="center"
+                android:overScrollMode="never"
+                />
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
