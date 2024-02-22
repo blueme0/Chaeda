@@ -1,9 +1,6 @@
 package com.chaeda.chaeda.presentation
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -24,11 +21,6 @@ class MainActivity
         setContentView(binding.root)
         initBnvItemSelectedListener()
         setTabLayout()
-        this.window?.apply {
-            this.statusBarColor = Color.TRANSPARENT
-//            decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
     }
 
     private fun setTabLayout() {
