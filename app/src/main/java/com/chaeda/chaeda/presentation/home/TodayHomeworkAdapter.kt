@@ -44,7 +44,7 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
 
         fun onBind(item: Homework) {
             binding.tvTitle.text = item.title
-            binding.tvContent.text = item.content
+            binding.tvContent.text = item.range
 
             binding.ivThumbnail.load(item.photoUrls.first()) {
 //                transformations(RoundedCornersTransformation(4f))
