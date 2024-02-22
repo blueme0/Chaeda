@@ -51,7 +51,7 @@
             android:textColor="#683F21"
             android:textSize="13sp"
             android:fontFamily="@font/nanumsquare_regular"
-            android:background="@drawable/shape_rect16_stroke_false"
+            android:background="@drawable/shape_rect30_fab"
             />
 
         <TextView

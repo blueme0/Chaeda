@@ -9,6 +9,7 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentHomeworkBinding
 import com.chaeda.chaeda.presentation.home.TodayHomeworkAdapter
 import com.chaeda.chaeda.presentation.homework.calendar.WeekFragmentStateAdapter
+import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
 import com.chaeda.domain.entity.Homework
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +39,7 @@ class HomeworkFragment
     private fun initView() {
         homeworkAdapter = TodayHomeworkAdapter {
             // click listener
+            startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0))
         }
 
         binding.rvHomework.adapter = homeworkAdapter
