@@ -1,5 +1,6 @@
 package com.chaeda.chaeda.presentation.homework.calendar
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -11,7 +12,6 @@ import com.chaeda.chaeda.databinding.FragmentWeekCalendarBinding
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -41,9 +41,15 @@ class WeekCalendarFragment
     }
 
     override fun onResume() {
-        Timber.tag("chaeda-cal").d(dateList.toString())
-        Timber.tag("chaeda-cal").d("${viewModel.selectedDate.value}")
         setSelectedDate(viewModel.selectedDate.value)
+
+        // 현재 연도와 월 설정
+        val yearMonthFormat = SimpleDateFormat("yyyy년 MM월", Locale.KOREA)
+        var yearMonthText = yearMonthFormat.format(dateList[0])
+        if (yearMonthFormat.format(dateList[0]) != yearMonthFormat.format(dateList[6]))
+            yearMonthText += " - ${yearMonthFormat.format(dateList[6]).split(" ")[1]}"
+        requireActivity().findViewById<TextView>(R.id.tv_weekly_month).text = yearMonthText
+
         super.onResume()
     }
 
@@ -55,9 +61,8 @@ class WeekCalendarFragment
             add(Calendar.WEEK_OF_YEAR, pageIndex)
         }
 
-        // 현재 연도와 월 설정
-        val yearMonthFormat = SimpleDateFormat("yyyy년 MM월", Locale.KOREA)
-        requireActivity().findViewById<TextView>(R.id.tv_weekly_month).text = yearMonthFormat.format(date.time)
+//        Timber.tag("chaeda-cal").d("month: ${yearMonthFormat.format(date.time)}")
+//        .text = yearMonthFormat.format(date.time)
 
         val dateFormat = SimpleDateFormat("dd", Locale.KOREA)
 
@@ -103,6 +108,22 @@ class WeekCalendarFragment
             llDay5.setBackgroundResource(0)
             llDay6.setBackgroundResource(0)
             llDay7.setBackgroundResource(0)
+
+            tvDay1.setTextColor(Color.parseColor("#1E293B"))
+            tvDay2.setTextColor(Color.parseColor("#1E293B"))
+            tvDay3.setTextColor(Color.parseColor("#1E293B"))
+            tvDay4.setTextColor(Color.parseColor("#1E293B"))
+            tvDay5.setTextColor(Color.parseColor("#1E293B"))
+            tvDay6.setTextColor(Color.parseColor("#1E293B"))
+            tvDay7.setTextColor(Color.parseColor("#1E293B"))
+
+            tvMon.setTextColor(Color.parseColor("#94A3B8"))
+            tvTue.setTextColor(Color.parseColor("#94A3B8"))
+            tvWed.setTextColor(Color.parseColor("#94A3B8"))
+            tvThu.setTextColor(Color.parseColor("#94A3B8"))
+            tvFri.setTextColor(Color.parseColor("#94A3B8"))
+            tvSat.setTextColor(Color.parseColor("#94A3B8"))
+            tvSun.setTextColor(Color.parseColor("#94A3B8"))
         }
     }
 
@@ -116,13 +137,41 @@ class WeekCalendarFragment
         with(binding) {
             if (dateFormat.format(dateList[(dayOfWeek + 5) % 7]) == dateFormat.format(date)) {
                 when (dayOfWeek) {
-                    1 -> llDay7.setBackgroundResource(R.drawable.shape_rect16_fill_date)
-                    2 -> llDay1.setBackgroundResource(R.drawable.shape_rect16_fill_date)
-                    3 -> llDay2.setBackgroundResource(R.drawable.shape_rect16_fill_date)
-                    4 -> llDay3.setBackgroundResource(R.drawable.shape_rect16_fill_date)
-                    5 -> llDay4.setBackgroundResource(R.drawable.shape_rect16_fill_date)
-                    6 -> llDay5.setBackgroundResource(R.drawable.shape_rect16_fill_date)
-                    7 -> llDay6.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                    1 -> {
+                        llDay7.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay7.setTextColor(Color.parseColor("#FFB400"))
+                        tvSun.setTextColor(Color.parseColor("#FFB400"))
+                    }
+                    2 -> {
+                        llDay1.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay1.setTextColor(Color.parseColor("#FFB400"))
+                        tvMon.setTextColor(Color.parseColor("#FFB400"))
+                    }
+                    3 -> {
+                        llDay2.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay2.setTextColor(Color.parseColor("#FFB400"))
+                        tvTue.setTextColor(Color.parseColor("#FFB400"))
+                    }
+                    4 -> {
+                        llDay3.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay3.setTextColor(Color.parseColor("#FFB400"))
+                        tvWed.setTextColor(Color.parseColor("#FFB400"))
+                    }
+                    5 -> {
+                        llDay4.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay4.setTextColor(Color.parseColor("#FFB400"))
+                        tvThu.setTextColor(Color.parseColor("#FFB400"))
+                    }
+                    6 -> {
+                        llDay5.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay5.setTextColor(Color.parseColor("#FFB400"))
+                        tvFri.setTextColor(Color.parseColor("#FFB400"))
+                    }
+                    7 -> {
+                        llDay6.setBackgroundResource(R.drawable.shape_rect16_fill_date)
+                        tvDay6.setTextColor(Color.parseColor("#FFB400"))
+                        tvSat.setTextColor(Color.parseColor("#FFB400"))
+                    }
                 }
             }
         }
