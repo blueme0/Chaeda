@@ -48,8 +48,8 @@ class WeekCalendarFragment
         var yearMonthText = yearMonthFormat.format(dateList[0])
         if (yearMonthFormat.format(dateList[0]) != yearMonthFormat.format(dateList[6]))
             yearMonthText += " - ${yearMonthFormat.format(dateList[6]).split(" ")[1]}"
-        requireActivity().findViewById<TextView>(R.id.tv_weekly_month).text = yearMonthText
-
+        val textView = requireActivity().findViewById<TextView>(R.id.tv_weekly_month)
+        if (textView != null) textView.text = yearMonthText
         super.onResume()
     }
 

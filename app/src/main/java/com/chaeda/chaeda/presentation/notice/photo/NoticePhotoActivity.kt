@@ -1,32 +1,30 @@
-package com.chaeda.chaeda.presentation.homework.result.photo
+package com.chaeda.chaeda.presentation.notice.photo
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.chaeda.base.BindingFragment
+import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
-import com.chaeda.chaeda.databinding.FragmentResultPhotoBinding
+import com.chaeda.chaeda.databinding.ActivityNoticePhotoBinding
+import com.chaeda.chaeda.presentation.homework.result.photo.LoadImagesAdapter
 
-class ResultPhotoFragment
-    : BindingFragment<FragmentResultPhotoBinding>(R.layout.fragment_result_photo) {
+class NoticePhotoActivity
+    : BindingActivity<ActivityNoticePhotoBinding>(R.layout.activity_notice_photo)  {
 
-    private val imagesAdapter = LoadImagesAdapter()
     private val viewpagerList = ArrayList<String>()
+    private val imagesAdapter = LoadImagesAdapter()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+        val intent = intent.getStringArrayListExtra("images")
+        if (!intent.isNullOrEmpty()) viewpagerList.addAll(intent)
         initViewPagerItems()
         initViewPager()
         initListener()
-    }
-
-    private fun initViewPagerItems() {
-        viewpagerList.add("")
-        viewpagerList.add("")
-        viewpagerList.add("")
     }
 
     private fun initViewPager() {
@@ -53,6 +51,20 @@ class ResultPhotoFragment
                 val currentIndex = tvCount.text.split("/")[0].toInt() - 1
                 vp.setCurrentItem(currentIndex + 1, true)
             }
+            llBack.setOnSingleClickListener { finish() }
+        }
+    }
+
+    private fun initViewPagerItems() {
+        viewpagerList.add("a")
+        viewpagerList.add("b")
+        viewpagerList.add("c")
+    }
+
+    companion object {
+        fun getIntent(context: Context) = Intent(context, NoticePhotoActivity::class.java)
+        fun getIntent(context: Context, images: ArrayList<String>) = Intent(context, NoticePhotoActivity::class.java).apply {
+            putExtra("images", images)
         }
     }
 }
