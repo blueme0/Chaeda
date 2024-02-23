@@ -21,6 +21,7 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityConfirmSubmitBinding
 import com.chaeda.chaeda.presentation.homework.FileState
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
+import com.chaeda.domain.entity.FileWithName
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
@@ -212,18 +213,18 @@ class ConfirmSubmitActivity
                         /**
                          * s3에 업로드할 때
                          */
-                        for (i in urlList.indices) {
-                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
-                        }
+//                        for (i in urlList.indices) {
+//                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
+//                        }
                         /**
                          * uploadFile로 할 때
                          */
-//                        val fileWithNameList = mutableListOf<FileWithName>()
-//                        for (i in urlList.indices) {
-//                            fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
-//                            Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
-//                        }
-//                        viewModel.uploadImageFiles(fileWithNameList)
+                        val fileWithNameList = mutableListOf<FileWithName>()
+                        for (i in urlList.indices) {
+                            fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
+                            Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
+                        }
+                        viewModel.uploadImageFiles(fileWithNameList)
                     }
                     is FileState.Failure -> {
                     }
