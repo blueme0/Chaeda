@@ -5,11 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -45,7 +42,6 @@ class ConfirmSubmitActivity
 
         initViewPager()
         initListener()
-//        addFileToViewPager(4)
         sendFileObserver()
     }
 
@@ -203,31 +199,6 @@ class ConfirmSubmitActivity
         return file.absolutePath // 생성한 파일의 절대경로 반환
     }
 
-    /**
-     * 테스트용 이미지 추가
-     */
-    private fun addFileToViewPager(count: Int) {
-        repeat(count) {
-            addFileToList()
-        }
-        introduceAdapter.notifyDataSetChanged()
-    }
-
-    private fun addFileToList() {
-        val resourceId = R.drawable.test_paper // Replace with your actual resource ID
-        val bitmap = resourceToBitmap(this, resourceId)
-        bitmap?.let {
-            val fileName = "1.png" // Replace with your desired file name
-            val file = bitmapToFile(this, it, fileName)
-            // Now 'file' is your File object containing the PNG image
-//            val tempImageFiles : ArrayList<File> = ArrayList<File>()
-            if (file != null) {
-//                tempImageFiles.add(file)
-                viewpagerList.add(file)
-            }
-        }
-    }
-
     private fun testPostHomeworkImage(url: String, file: File) {
         viewModel.putFileToUrl(url, "image/png", file)
     }
@@ -251,27 +222,6 @@ class ConfirmSubmitActivity
                 }
             }
         }
-    }
-
-    private fun resourceToBitmap(context: Context, resId: Int): Bitmap? {
-        return BitmapFactory.decodeResource(context.resources, resId)
-    }
-
-    private fun bitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File? {
-        // Get the directory for the app's private pictures directory.
-        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)
-
-        try {
-            val stream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            stream.flush()
-            stream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return null
-        }
-
-        return file
     }
 
     companion object {
