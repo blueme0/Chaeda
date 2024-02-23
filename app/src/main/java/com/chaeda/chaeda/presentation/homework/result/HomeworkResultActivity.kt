@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.chaeda.base.BindingActivity
+import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkResultBinding
 import com.chaeda.chaeda.presentation.homework.result.answer.ResultAnswerFragment
@@ -23,6 +24,7 @@ class HomeworkResultActivity
         super.onCreate(savedInstanceState)
 
         setTabLayout()
+        initListener()
     }
 
     private fun setTabLayout() {
@@ -42,6 +44,12 @@ class HomeworkResultActivity
                 }
                 override fun onTabUnselected(tab: TabLayout.Tab?) { }
             })
+        }
+    }
+
+    private fun initListener() {
+        with(binding) {
+            llBack.setOnSingleClickListener { finish() }
         }
     }
 

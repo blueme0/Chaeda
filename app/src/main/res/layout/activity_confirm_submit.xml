@@ -12,18 +12,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <TextView
-            android:id="@+id/tv_back"
+        <LinearLayout
+            android:id="@+id/ll_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="숙제 화면으로"
-            android:fontFamily="@font/nanumsquare_bold"
-            android:textColor="#683F21"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
-            />
+            android:layout_marginTop="25dp"
+            >
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_arrow_left"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="숙제 화면으로"
+                android:fontFamily="@font/nanumsquare_regular"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                />
+
+        </LinearLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp"
@@ -33,7 +50,7 @@
             app:layout_constraintBottom_toTopOf="@id/rv_submit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_back" />
+            app:layout_constraintTop_toBottomOf="@id/ll_back" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rv_submit"

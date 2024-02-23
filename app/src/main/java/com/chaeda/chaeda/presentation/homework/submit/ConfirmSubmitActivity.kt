@@ -70,6 +70,7 @@ class ConfirmSubmitActivity
                 // viewPagerList.add(file)하고, introduceAdapter.notifyDataSetChanged() 하기
                 selectGallery()
             }
+            llBack.setOnSingleClickListener { finish() }
         }
     }
 

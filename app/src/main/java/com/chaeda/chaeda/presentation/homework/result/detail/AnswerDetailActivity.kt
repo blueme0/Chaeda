@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.intExtra
+import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAnswerDetailBinding
 
@@ -18,6 +19,7 @@ class AnswerDetailActivity
         super.onCreate(savedInstanceState)
 
         initView()
+        initListener()
     }
 
     private fun initView() {
@@ -26,6 +28,12 @@ class AnswerDetailActivity
             else tvIndex.setBackgroundColor(Color.parseColor("#FADDDD"))
 
             tvIndex.text = index.toString()
+        }
+    }
+
+    private fun initListener() {
+        with(binding) {
+            llBack.setOnSingleClickListener { finish() }
         }
     }
 
