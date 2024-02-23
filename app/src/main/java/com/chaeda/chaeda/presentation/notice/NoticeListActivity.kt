@@ -8,6 +8,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityNoticeListBinding
 import com.chaeda.chaeda.presentation.home.RecentNoticeAdapter
+import com.chaeda.chaeda.presentation.notice.detail.NoticeDetailActivity
 import com.chaeda.domain.entity.Notice
 import timber.log.Timber
 
@@ -27,6 +28,7 @@ class NoticeListActivity
     private fun initView() {
         noticeAdapter = RecentNoticeAdapter {
             // click listener
+            startActivity(NoticeDetailActivity.getIntent(this@NoticeListActivity, 0))
         }
 
         binding.rvNotice.adapter = noticeAdapter
