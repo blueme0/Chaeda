@@ -17,7 +17,7 @@ abstract class BindingActivity<B : ViewBinding>(@LayoutRes private val layoutRes
 
         this.window?.apply {
 //            this.statusBarColor = Color.TRANSPARENT
-            this.statusBarColor = Color.parseColor("#FFE581")
+            this.statusBarColor = Color.parseColor("#FFD571")
 //            decorView.systemUiVisibility =
 //                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
