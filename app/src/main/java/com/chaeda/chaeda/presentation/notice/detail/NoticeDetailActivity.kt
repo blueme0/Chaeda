@@ -8,6 +8,7 @@ import com.chaeda.base.util.extension.intExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityNoticeDetailBinding
+import com.chaeda.chaeda.presentation.notice.photo.NoticePhotoActivity
 
 class NoticeDetailActivity
     : BindingActivity<ActivityNoticeDetailBinding>(R.layout.activity_notice_detail) {
@@ -23,6 +24,9 @@ class NoticeDetailActivity
     private fun initListener() {
         with(binding) {
             llBack.setOnSingleClickListener { finish() }
+            morePhoto.setOnSingleClickListener {
+                startActivity(NoticePhotoActivity.getIntent(this@NoticeDetailActivity))
+            }
         }
     }
 
