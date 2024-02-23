@@ -7,7 +7,7 @@ import com.chaeda.domain.entity.PresignedInfo
 import com.chaeda.domain.repository.SampleRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
@@ -41,13 +41,11 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
 
     override suspend fun uploadImages(images: List<FileWithName>): Result<String> {
         return runCatching {
-            val flist = ArrayList<MultipartBody.Part>()
-            for (image in images) {
-                val fileRequestBody = image.image.asRequestBody("image/jpg".toMediaType())
-                val filePart = MultipartBody.Part.createFormData("images", image.fileName, fileRequestBody)
-                flist.add(filePart)
+            val imageParts = images.map { file ->
+                val requestFile = file.image.asRequestBody("image/*".toMediaTypeOrNull())
+                MultipartBody.Part.createFormData("files", file.fileName, requestFile)
             }
-            remoteSampleDataSource.uploadImages(images = flist)
+            remoteSampleDataSource.uploadImages(imageParts)
         }
     }
 

@@ -12,6 +12,7 @@ import com.chaeda.chaeda.presentation.homework.calendar.WeekFragmentStateAdapter
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
 import com.chaeda.domain.entity.Homework
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeworkFragment
@@ -39,7 +40,8 @@ class HomeworkFragment
     private fun initView() {
         homeworkAdapter = TodayHomeworkAdapter {
             // click listener
-            startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0))
+            Timber.tag("chaeda-hw").d("homework: $it")
+            startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0, it.isDone))
         }
 
         binding.rvHomework.adapter = homeworkAdapter
@@ -48,9 +50,9 @@ class HomeworkFragment
     private fun initHomeworkItems() {
         homeworkAdapter.setItems(
             listOf(
-                Homework(HOMEWORK_TITLE, HOMEWORK_CONTENT, listOf("")),
-                Homework(HOMEWORK_TITLE, HOMEWORK_CONTENT, listOf("")),
-                Homework(HOMEWORK_TITLE, HOMEWORK_CONTENT, listOf(""))
+                Homework("$HOMEWORK_TITLE 1", HOMEWORK_CONTENT, listOf(""), isDone = false),
+                Homework("$HOMEWORK_TITLE 2", HOMEWORK_CONTENT, listOf(""), isDone = true),
+                Homework("$HOMEWORK_TITLE 3", HOMEWORK_CONTENT, listOf(""))
             )
         )
     }

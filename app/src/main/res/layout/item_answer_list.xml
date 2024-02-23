@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1A000000"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="문제 번호"
+            android:textColor="#683F21"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:paddingVertical="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_written"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="작성한 답"
+            android:textColor="#683F21"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tv_correct"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="정답"
+            android:textColor="#683F21"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/iv_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_arrow_right_detail"
+            android:layout_gravity="center"
+            android:paddingVertical="12dp"
+            />
+    </LinearLayout>
+</LinearLayout>

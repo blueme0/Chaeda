@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#00FFFFFF"
+    tools:context=".presentation.homework.result.ResultAnswerFragment">
+
+    <data>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/tv_index"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="문제 번호"
+                android:textColor="#683F21"
+                android:fontFamily="@font/nanumsquare_bold"
+                android:textSize="11sp"
+                android:textAlignment="center"
+                android:paddingVertical="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_written"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="작성한 답"
+                android:textColor="#683F21"
+                android:fontFamily="@font/nanumsquare_bold"
+                android:textSize="11sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/tv_correct"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="정답"
+                android:textColor="#683F21"
+                android:fontFamily="@font/nanumsquare_bold"
+                android:textSize="11sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="상세 확인"
+                android:textColor="#683F21"
+                android:fontFamily="@font/nanumsquare_bold"
+                android:textSize="11sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ll_title"
+
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

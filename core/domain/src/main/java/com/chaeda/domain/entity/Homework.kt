@@ -7,4 +7,4 @@ data class Homework(
     val range: String = "79p - 81p",
     val deadline: String = "2024-02-22T15:30:45",
     val isDone: Boolean = false
-)
+) : java.io.Serializable

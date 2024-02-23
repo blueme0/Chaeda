@@ -210,9 +210,17 @@ class ConfirmSubmitActivity
                 when (state) {
                     is FileState.UrlSuccess -> {
                         val urlList = state.url
+                        /**
+                         * s3에 업로드할 때
+                         */
+//                        for (i in urlList.indices) {
+//                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
+//                        }
+                        /**
+                         * uploadFile로 할 때
+                         */
                         val fileWithNameList = mutableListOf<FileWithName>()
                         for (i in urlList.indices) {
-//                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
                             fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
                             Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
                         }
