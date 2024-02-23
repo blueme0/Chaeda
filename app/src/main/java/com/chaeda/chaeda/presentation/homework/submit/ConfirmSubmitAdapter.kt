@@ -1,9 +1,5 @@
 package com.chaeda.chaeda.presentation.homework.submit
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -12,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chaeda.chaeda.databinding.ItemSubmitPhotoBinding
+import timber.log.Timber
 import java.io.File
 
 class ConfirmSubmitAdapter() :
@@ -37,6 +34,7 @@ class ConfirmSubmitAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: File) {
+            Timber.tag("chaeda-pic").d("file: $item")
             Glide.with(itemView.context)
                 .load(item)
                 .skipMemoryCache(true) // 메모리 캐시 건너뛰기
