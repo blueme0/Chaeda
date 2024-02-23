@@ -1,6 +1,7 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteSampleDataSource
+import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
 import com.chaeda.domain.repository.SampleRepository
@@ -38,12 +39,12 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
         }
     }
 
-    override suspend fun uploadImages(images: List<File>): Result<String> {
+    override suspend fun uploadImages(images: List<FileWithName>): Result<String> {
         return runCatching {
             val flist = ArrayList<MultipartBody.Part>()
-            for (file in images) {
-                val fileRequestBody = file.asRequestBody("image/jpg".toMediaType())
-                val filePart = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
+            for (image in images) {
+                val fileRequestBody = image.image.asRequestBody("image/jpg".toMediaType())
+                val filePart = MultipartBody.Part.createFormData("images", image.fileName, fileRequestBody)
                 flist.add(filePart)
             }
             remoteSampleDataSource.uploadImages(images = flist)

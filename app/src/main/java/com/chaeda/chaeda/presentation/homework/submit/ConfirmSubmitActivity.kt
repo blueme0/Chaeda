@@ -21,6 +21,7 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityConfirmSubmitBinding
 import com.chaeda.chaeda.presentation.homework.FileState
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
+import com.chaeda.domain.entity.FileWithName
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
@@ -209,14 +210,21 @@ class ConfirmSubmitActivity
                 when (state) {
                     is FileState.UrlSuccess -> {
                         val urlList = state.url
+                        val fileWithNameList = mutableListOf<FileWithName>()
                         for (i in urlList.indices) {
-                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
+//                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
+                            fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
+                            Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
                         }
+                        viewModel.uploadImageFiles(fileWithNameList)
                     }
                     is FileState.Failure -> {
                     }
                     is FileState.FileSuccess -> {
                         Timber.tag("chaeda-pre").d("FileState is FileSuccess\n${state.url}")
+                    }
+                    is FileState.UploadImagesSuccess -> {
+                        Timber.tag("chaeda-pre").d("FileState is UploadImagesSuccess\n${state.url}")
                     }
                     else -> {}
                 }

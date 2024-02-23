@@ -36,7 +36,7 @@ interface SampleService {
 
     @Multipart
     @POST("/api/images/upload") // 실제 API 엔드포인트를 여기에 입력
-    fun uploadImages(
-        @Part images: List<MultipartBody.Part>
+    suspend fun uploadImages(
+        @Part files: List<MultipartBody.Part>
     ): String
 }
