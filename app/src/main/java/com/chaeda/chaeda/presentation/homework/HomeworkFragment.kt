@@ -5,10 +5,12 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.chaeda.base.BindingFragment
+import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentHomeworkBinding
 import com.chaeda.chaeda.presentation.home.TodayHomeworkAdapter
 import com.chaeda.chaeda.presentation.homework.calendar.WeekFragmentStateAdapter
+import com.chaeda.chaeda.presentation.homework.collection.IncorrectCollectionActivity
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
 import com.chaeda.domain.entity.Homework
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +37,9 @@ class HomeworkFragment
 //        binding.tvPresign.setOnSingleClickListener {
 //            startActivity(Intent(requireContext(), ConfirmSubmitActivity::class.java))
 //        }
+        binding.tvFalse.setOnSingleClickListener {
+            startActivity(IncorrectCollectionActivity.getIntent(requireContext()))
+        }
     }
 
     private fun initView() {
