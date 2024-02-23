@@ -8,6 +8,7 @@ import com.chaeda.base.util.extension.intExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkDetailBinding
+import com.chaeda.chaeda.presentation.homework.submit.ConfirmSubmitActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +27,9 @@ class HomeworkDetailActivity
         with(binding) {
             llBack.setOnSingleClickListener {
                 finish()
+            }
+            fab.setOnSingleClickListener {
+                startActivity(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
             }
         }
     }
