@@ -4,7 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1A000000"
+        />가
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,10 +63,4 @@
             android:paddingVertical="12dp"
             />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#1A000000"
-        />
-
 </LinearLayout>
