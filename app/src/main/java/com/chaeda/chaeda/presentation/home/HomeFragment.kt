@@ -9,6 +9,7 @@ import com.chaeda.chaeda.databinding.FragmentHomeBinding
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
 import com.chaeda.chaeda.presentation.notice.NoticeListActivity
 import com.chaeda.chaeda.presentation.notice.detail.NoticeDetailActivity
+import com.chaeda.chaeda.presentation.setting.SettingActivity
 import com.chaeda.domain.entity.Homework
 import com.chaeda.domain.entity.Notice
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +49,9 @@ class HomeFragment
         with(binding) {
             ivHomeMorenotice.setOnSingleClickListener {
                 startActivity(NoticeListActivity.getIntent(requireContext()))
+            }
+            ivHomeSetting.setOnSingleClickListener {
+                startActivity(SettingActivity.getIntent(requireContext()))
             }
         }
     }
