@@ -33,4 +33,7 @@ class RemoteSampleDataSource @Inject constructor(
 
     suspend fun noticePresignedUrl(memberId: Int, imageInfo: ImageInfo): Any =
         sampleService.noticePresignedUrl(memberId, imageInfo).string()
+
+    suspend fun getImagesUrl(memberId: Int, images: List<ImageInfo>): List<String> =
+        sampleService.getImagesUrl(memberId, images)
 }

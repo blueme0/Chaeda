@@ -48,4 +48,10 @@ interface SampleService {
         @Body imageInfo: ImageInfo
     ): ResponseBody
 
+    @POST("/api/images/display/{memberId}")
+    suspend fun getImagesUrl(
+        @Path ("memberId") memberId: Int,
+        @Body images: List<ImageInfo>
+    ): List<String>
+
 }

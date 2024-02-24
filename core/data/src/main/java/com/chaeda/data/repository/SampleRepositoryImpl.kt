@@ -61,4 +61,10 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
         }
     }
 
+    override suspend fun getImagesUrl(memberId: Int, images: List<ImageInfo>): Result<List<String>> {
+        return runCatching {
+            remoteSampleDataSource.getImagesUrl(memberId, images)
+        }
+    }
+
 }

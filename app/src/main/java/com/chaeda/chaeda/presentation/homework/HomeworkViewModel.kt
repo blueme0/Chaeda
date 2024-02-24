@@ -3,6 +3,7 @@ package com.chaeda.chaeda.presentation.homework
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.domain.entity.FileWithName
+import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedDetailInfo
 import com.chaeda.domain.repository.SampleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,7 +72,9 @@ class HomeworkViewModel @Inject constructor(
 
     private var sentSuccessCount = 0
 
-    fun noticePresignedUrl(
+    val sentImageList = mutableListOf<ImageInfo>()
+
+    private fun noticePresignedUrl(
         memberId: Int,
         pdInfo: PresignedDetailInfo
     ) {
@@ -80,6 +83,7 @@ class HomeworkViewModel @Inject constructor(
                 .onSuccess {
                     Timber.tag("chaeda-put").d("noticePresignedUrl success: $it")
                     sentSuccessCount++
+                    sentImageList.add(ImageInfo(pdInfo.imageType, pdInfo.imageFileExtension, pdInfo.presignedInfo.imageKey))
                     if (sentSuccessCount == urlList.size) {
                         _urlState.value = FileState.FileSuccess(it.toString())
                         sentSuccessCount = 0
@@ -91,6 +95,23 @@ class HomeworkViewModel @Inject constructor(
                 }
         }
 
+    }
+
+    fun getImagesUrl(
+        memberId: Int,
+        images: List<ImageInfo>
+    ) {
+        viewModelScope.launch {
+            repository.getImagesUrl(memberId, images)
+                .onSuccess {
+                    Timber.tag("chaeda-put").d("getImagesUrl success: $it")
+                    _urlState.value = FileState.GetImagesUrlSuccess(it)
+                }
+                .onFailure {
+                    Timber.tag("chaeda-put").d("getImagesUrl failure: $it")
+                    _urlState.value = FileState.Failure(it.message!!)
+                }
+        }
     }
 
     private var _selectedDate = MutableStateFlow<Date>(Calendar.getInstance().time)
@@ -122,5 +143,6 @@ sealed interface FileState {
     data class UrlSuccess(val url: List<PresignedDetailInfo>): FileState
     data class FileSuccess(val url: String): FileState
     data class UploadImagesSuccess(val url: String): FileState
+    data class GetImagesUrlSuccess(val urls: List<String>): FileState
     data class Failure(val msg: String): FileState
 }
