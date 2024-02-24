@@ -1,6 +1,7 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteSampleDataSource
+import com.chaeda.data.model.request.RequestImageInfo
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
@@ -28,7 +29,7 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
         imageFileExtension: String
     ): Result<PresignedInfo> {
         return runCatching {
-            remoteSampleDataSource.getPresignedUrl(memberId, ImageInfo(imageType, imageFileExtension))
+            remoteSampleDataSource.getPresignedUrl(memberId, RequestImageInfo(imageType, imageFileExtension))
 //            gsonBuilder.fromJson(presignedResponse, PresignedResponse::class.java).presignedUrl
         }
     }
@@ -46,6 +47,23 @@ class SampleRepositoryImpl @Inject constructor(private val remoteSampleDataSourc
                 MultipartBody.Part.createFormData("files", file.fileName, requestFile)
             }
             remoteSampleDataSource.uploadImages(imageParts)
+        }
+    }
+
+    override suspend fun noticePresignedUrl(
+        memberId: Int,
+        imageType: String,
+        imageFileExtension: String,
+        imageKey: String
+    ) : Result<Any> {
+        return runCatching {
+            remoteSampleDataSource.noticePresignedUrl(memberId, ImageInfo(imageType, imageFileExtension, imageKey))
+        }
+    }
+
+    override suspend fun getImagesUrl(memberId: Int, images: List<ImageInfo>): Result<List<String>> {
+        return runCatching {
+            remoteSampleDataSource.getImagesUrl(memberId, images)
         }
     }
 

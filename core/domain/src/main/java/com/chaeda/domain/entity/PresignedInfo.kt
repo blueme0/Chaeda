@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PresignedInfo (
     val imageKey: String,
-    val presigendUrl: String
+    val presignedUrl: String
 )
