@@ -9,7 +9,9 @@ import com.chaeda.base.util.extension.intExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAnswerDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AnswerDetailActivity
     : BindingActivity<ActivityAnswerDetailBinding>(R.layout.activity_answer_detail){
 

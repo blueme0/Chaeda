@@ -10,8 +10,10 @@ import com.chaeda.chaeda.databinding.ActivityNoticeListBinding
 import com.chaeda.chaeda.presentation.home.RecentNoticeAdapter
 import com.chaeda.chaeda.presentation.notice.detail.NoticeDetailActivity
 import com.chaeda.domain.entity.Notice
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class NoticeListActivity
     : BindingActivity<ActivityNoticeListBinding>(R.layout.activity_notice_list) {
 

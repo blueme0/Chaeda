@@ -8,7 +8,9 @@ import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityIncorrectCollectionBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class IncorrectCollectionActivity
     : BindingActivity<ActivityIncorrectCollectionBinding>(R.layout.activity_incorrect_collection) {
 
