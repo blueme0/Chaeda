@@ -22,7 +22,7 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityConfirmSubmitBinding
 import com.chaeda.chaeda.presentation.homework.FileState
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
-import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
+import com.chaeda.chaeda.presentation.notice.photo.NoticePhotoActivity
 import com.chaeda.domain.entity.PresignedDetailInfo
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -73,6 +73,13 @@ class ConfirmSubmitActivity
                 selectGallery()
             }
             llBack.setOnSingleClickListener { finish() }
+            /**
+             * 이미지 로딩 확인을 위한 임시 리스너
+             */
+            tvCount.setOnSingleClickListener {
+                if (viewModel.sentImageList.isNotEmpty()) viewModel.getImagesUrl(4, viewModel.sentImageList)
+                // viewModel.sentImageList를 비우는 작업 한 번 필요하긴 함
+            }
         }
     }
 
@@ -226,7 +233,7 @@ class ConfirmSubmitActivity
 //                        for (i in urlList.indices) {
 //                            fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
 //                            Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
-//                        }
+//                        }트
 //                        viewModel.uploadImageFiles(fileWithNameList)
                     }
                     is FileState.Failure -> {
@@ -235,10 +242,16 @@ class ConfirmSubmitActivity
                         Timber.tag("chaeda-pre").d("FileState is FileSuccess\n${state.url}")
 
                         toast("이미지 업로드 성공")
-                        val intent = Intent(this@ConfirmSubmitActivity, HomeworkDetailActivity::class.java)
-                        intent.putExtra("isDone", true)
-                        setResult(RESULT_OK, intent)
-                        finish()
+//                        val intent = Intent(this@ConfirmSubmitActivity, HomeworkDetailActivity::class.java)
+//                        intent.putExtra("isDone", true)
+//                        setResult(RESULT_OK, intent)
+//                        finish()
+                    }
+                    is FileState.GetImagesUrlSuccess -> {
+                        Timber.tag("chaeda-pre").d("FileState is GetImagesUrlSuccess\n${state.urls}")
+                        val array = ArrayList<String>()
+                        array.addAll(state.urls)
+                        startActivity(NoticePhotoActivity.getIntent(this@ConfirmSubmitActivity, array))
                     }
                     is FileState.UploadImagesSuccess -> {
                         Timber.tag("chaeda-pre").d("FileState is UploadImagesSuccess\n${state.url}")
