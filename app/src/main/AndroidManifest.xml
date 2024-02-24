@@ -25,6 +25,9 @@
             android:name=".presentation.setting.SettingActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.login.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.notice.photo.NoticePhotoActivity"
             android:exported="false" />
         <activity
