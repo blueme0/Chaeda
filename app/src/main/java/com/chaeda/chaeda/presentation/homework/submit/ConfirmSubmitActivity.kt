@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.base.util.extension.toast
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityConfirmSubmitBinding
 import com.chaeda.chaeda.presentation.homework.FileState
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
-import com.chaeda.domain.entity.FileWithName
+import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
+import com.chaeda.domain.entity.PresignedDetailInfo
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.File
@@ -201,8 +203,8 @@ class ConfirmSubmitActivity
         return file.absolutePath // 생성한 파일의 절대경로 반환
     }
 
-    private fun testPostHomeworkImage(url: String, file: File) {
-        viewModel.putFileToUrl(url, "image/png", file)
+    private fun testPostHomeworkImage(pdInfo: PresignedDetailInfo, file: File) {
+        viewModel.putFileToUrl(pdInfo, "image/png", file)
     }
 
     private fun sendFileObserver() {
@@ -214,23 +216,29 @@ class ConfirmSubmitActivity
                         /**
                          * s3에 업로드할 때
                          */
-//                        for (i in urlList.indices) {
-//                            testPostHomeworkImage(urlList[i].presigendUrl, viewpagerList[i])
-//                        }
+                        for (i in urlList.indices) {
+                            testPostHomeworkImage(urlList[i], viewpagerList[i])
+                        }
                         /**
                          * uploadFile로 할 때
                          */
-                        val fileWithNameList = mutableListOf<FileWithName>()
-                        for (i in urlList.indices) {
-                            fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
-                            Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
-                        }
-                        viewModel.uploadImageFiles(fileWithNameList)
+//                        val fileWithNameList = mutableListOf<FileWithName>()
+//                        for (i in urlList.indices) {
+//                            fileWithNameList.add(FileWithName(viewpagerList[i], urlList[i].imageKey))
+//                            Timber.tag("chaeda-file").d("fileWithName: ${fileWithNameList[i]}")
+//                        }
+//                        viewModel.uploadImageFiles(fileWithNameList)
                     }
                     is FileState.Failure -> {
                     }
                     is FileState.FileSuccess -> {
                         Timber.tag("chaeda-pre").d("FileState is FileSuccess\n${state.url}")
+
+                        toast("이미지 업로드 성공")
+                        val intent = Intent(this@ConfirmSubmitActivity, HomeworkDetailActivity::class.java)
+                        intent.putExtra("isDone", true)
+                        setResult(RESULT_OK, intent)
+                        finish()
                     }
                     is FileState.UploadImagesSuccess -> {
                         Timber.tag("chaeda-pre").d("FileState is UploadImagesSuccess\n${state.url}")

@@ -1,8 +1,11 @@
 package com.chaeda.chaeda.presentation.homework.detail
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.boolExtra
 import com.chaeda.base.util.extension.intExtra
@@ -20,10 +23,27 @@ class HomeworkDetailActivity
     private val id by intExtra()
     private val isDone by boolExtra()
 
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initListener()
+        setResultLauncher()
+    }
+
+    private fun setResultLauncher() {
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK){
+                val isDoneNow = result.data?.getBooleanExtra("isDone", false)
+                if (isDoneNow == true) {
+                    binding.tvFab.text = "오답 확인하기"
+                    binding.fab.setOnSingleClickListener {
+                        startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity))
+                    }
+                }
+            }
+        }
     }
 
     private fun initListener() {
@@ -34,12 +54,19 @@ class HomeworkDetailActivity
             }
             fab.setOnSingleClickListener {
                 if (isDone) startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity))
-                else startActivity(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
+                else {
+                    resultLauncher.launch(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
+                }
             }
         }
     }
 
     companion object {
+
+        // 요청 코드 정의
+        private const val REQUEST_CODE = 204
+
+        // 액티비티 시작
         fun getIntent(context: Context, id: Int) = Intent(context, HomeworkDetailActivity::class.java).apply {
             putExtra("id", id)
         }
