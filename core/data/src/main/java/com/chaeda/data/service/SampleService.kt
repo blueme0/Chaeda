@@ -1,9 +1,11 @@
 package com.chaeda.data.service
 
+import com.chaeda.data.model.request.RequestImageInfo
 import com.chaeda.data.model.response.PresignedResponse
 import com.chaeda.data.model.response.ResponseGetSample
 import com.chaeda.domain.entity.ImageInfo
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -31,7 +33,7 @@ interface SampleService {
     @POST("/api/images/presigned-url/{memberId}")
     suspend fun getPresignedUrl(
         @Path ("memberId") memberId: Int,
-        @Body imageInfo: ImageInfo
+        @Body requestImageInfo: RequestImageInfo
     ): PresignedResponse
 
     @Multipart
@@ -39,4 +41,17 @@ interface SampleService {
     suspend fun uploadImages(
         @Part files: List<MultipartBody.Part>
     ): String
+
+    @POST("/api/images/presigned-url/complete/{memberId}")
+    suspend fun noticePresignedUrl(
+        @Path ("memberId") memberId: Int,
+        @Body imageInfo: ImageInfo
+    ): ResponseBody
+
+    @POST("/api/images/display/{memberId}")
+    suspend fun getImagesUrl(
+        @Path ("memberId") memberId: Int,
+        @Body images: List<ImageInfo>
+    ): List<String>
+
 }

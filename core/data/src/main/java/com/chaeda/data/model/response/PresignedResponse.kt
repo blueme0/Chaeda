@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PresignedResponse (
     val imageKey: String,
-    val presigendUrl: String
+    val presignedUrl: String
 ) {
-    fun toPresignedInfo(): PresignedInfo = PresignedInfo(imageKey, presigendUrl)
+    fun toPresignedInfo(): PresignedInfo = PresignedInfo(imageKey, presignedUrl)
 }
