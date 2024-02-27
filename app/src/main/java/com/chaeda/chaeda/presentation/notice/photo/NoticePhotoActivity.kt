@@ -60,7 +60,6 @@ class NoticePhotoActivity
     private fun initViewPagerItems() {
         viewpagerList.add("a")
         viewpagerList.add("b")
-        viewpagerList.add("c")
     }
 
     companion object {
