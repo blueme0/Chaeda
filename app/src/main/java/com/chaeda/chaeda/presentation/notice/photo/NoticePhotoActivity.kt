@@ -10,7 +10,9 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityNoticePhotoBinding
 import com.chaeda.chaeda.presentation.homework.result.photo.LoadImagesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticePhotoActivity
     : BindingActivity<ActivityNoticePhotoBinding>(R.layout.activity_notice_photo)  {
 
@@ -58,7 +60,6 @@ class NoticePhotoActivity
     private fun initViewPagerItems() {
         viewpagerList.add("a")
         viewpagerList.add("b")
-        viewpagerList.add("c")
     }
 
     companion object {

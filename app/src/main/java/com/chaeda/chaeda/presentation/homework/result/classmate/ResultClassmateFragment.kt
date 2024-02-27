@@ -7,7 +7,9 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentResultClassmateBinding
 import com.chaeda.chaeda.presentation.homework.result.detail.AnswerDetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResultClassmateFragment
     : BindingFragment<FragmentResultClassmateBinding>(R.layout.fragment_result_classmate) {
 

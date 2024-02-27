@@ -8,7 +8,9 @@ import com.chaeda.base.BindingFragment
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentResultPhotoBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResultPhotoFragment
     : BindingFragment<FragmentResultPhotoBinding>(R.layout.fragment_result_photo) {
 

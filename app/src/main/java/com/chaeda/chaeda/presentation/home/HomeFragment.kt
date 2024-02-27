@@ -9,6 +9,7 @@ import com.chaeda.chaeda.databinding.FragmentHomeBinding
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
 import com.chaeda.chaeda.presentation.notice.NoticeListActivity
 import com.chaeda.chaeda.presentation.notice.detail.NoticeDetailActivity
+import com.chaeda.chaeda.presentation.setting.SettingActivity
 import com.chaeda.domain.entity.Homework
 import com.chaeda.domain.entity.Notice
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,15 +50,18 @@ class HomeFragment
             ivHomeMorenotice.setOnSingleClickListener {
                 startActivity(NoticeListActivity.getIntent(requireContext()))
             }
+            ivHomeSetting.setOnSingleClickListener {
+                startActivity(SettingActivity.getIntent(requireContext()))
+            }
         }
     }
 
     private fun initHomeworkItems() {
         homeworkAdapter.setItems(
             listOf(
-                Homework(HOMEWORK_TITLE, HOMEWORK_CONTENT, listOf("")),
-                Homework(HOMEWORK_TITLE, HOMEWORK_CONTENT, listOf("")),
-                Homework(HOMEWORK_TITLE, HOMEWORK_CONTENT, listOf(""))
+                Homework("$HOMEWORK_TITLE 1", HOMEWORK_CONTENT, listOf("https://i.namu.wiki/i/nXtowZQG8EcHp9eGH8M7yP5a43Ho01PXm97UT5iah1vsvRNqyL8DuokA46-Gh85bBeP0uREHRWYVHsZgtzLScQ.webp")),
+                Homework("$HOMEWORK_TITLE 2", HOMEWORK_CONTENT, listOf("https://lh3.googleusercontent.com/proxy/NBaH02XGRMm5kIHjLaA2ej1ms-o-Vjzm0ccu46r-W76x0saLswinVJfY0puvEDdaTpSaZ-1uO6fxo8fXO2RzG_xooZoen4XgJExJp-siW1ie6anDj1BJPNqlnT22s73xco8aks2Ie9bFM4gZQ4weveuv8yi9tA")),
+                Homework("$HOMEWORK_TITLE 2", HOMEWORK_CONTENT, listOf("https://blog.kakaocdn.net/dn/IwJkz/btqV355Nt9X/ehKnbamCdVPKTjmaKxVIj0/img.png"))
             )
         )
     }

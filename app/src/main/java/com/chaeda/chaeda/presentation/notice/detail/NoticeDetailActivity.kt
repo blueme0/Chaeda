@@ -9,7 +9,9 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityNoticeDetailBinding
 import com.chaeda.chaeda.presentation.notice.photo.NoticePhotoActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticeDetailActivity
     : BindingActivity<ActivityNoticeDetailBinding>(R.layout.activity_notice_detail) {
 
