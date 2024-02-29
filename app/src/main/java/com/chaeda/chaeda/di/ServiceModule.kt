@@ -1,5 +1,6 @@
 package com.chaeda.chaeda.di
 
+import com.chaeda.data.service.HomeworkService
 import com.chaeda.data.service.ImageService
 import com.chaeda.data.service.SampleService
 import dagger.Module
@@ -22,4 +23,9 @@ object ServiceModule {
     @Provides
     fun provideImageService(@Named("ImageRetrofit") imageRetrofit: Retrofit) =
         imageRetrofit.create(ImageService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideHomeworkService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
+        chaedaRetrofit.create(HomeworkService::class.java)
 }
