@@ -1,6 +1,8 @@
 package com.chaeda.chaeda.di
 
+import com.chaeda.data.repository.HomeworkRepositoryImpl
 import com.chaeda.data.repository.SampleRepositoryImpl
+import com.chaeda.domain.repository.HomeworkRepository
 import com.chaeda.domain.repository.SampleRepository
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,8 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindSampleRepository(sampleRepositoryImpl: SampleRepositoryImpl): SampleRepository
+
+    @Singleton
+    @Binds
+    fun bindHomeworkRepository(homeworkRepositoryImpl: HomeworkRepositoryImpl): HomeworkRepository
 }
