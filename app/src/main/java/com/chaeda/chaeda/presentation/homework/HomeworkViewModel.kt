@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedDetailInfo
-import com.chaeda.domain.repository.SampleRepository
+import com.chaeda.domain.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeworkViewModel @Inject constructor(
-    val repository: SampleRepository
+    private val imageRepository: ImageRepository
 ) : ViewModel() {
 
     private var _urlState = MutableStateFlow<FileState>(FileState.Init)
@@ -34,7 +34,7 @@ class HomeworkViewModel @Inject constructor(
         imageFileExtension: String = "PNG") {
         repeat(count) {
             viewModelScope.launch {
-                repository.getPresignedUrl(memberId, imageType, imageFileExtension)
+                imageRepository.getPresignedUrl(memberId, imageType, imageFileExtension)
                     .onSuccess {
                         Timber.tag("chaeda-pre").d("onSuccess: $it")
 //                    _urlState.value = FileState.UrlSuccess(it)
@@ -58,7 +58,7 @@ class HomeworkViewModel @Inject constructor(
         file: File,
     ) {
         viewModelScope.launch {
-            repository.putFileToUrl(pdInfo.presignedInfo.presignedUrl, contentType, file)
+            imageRepository.putFileToUrl(pdInfo.presignedInfo.presignedUrl, contentType, file)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("putFileToUrl success: $it")
                     noticePresignedUrl(4, pdInfo)
@@ -79,7 +79,7 @@ class HomeworkViewModel @Inject constructor(
         pdInfo: PresignedDetailInfo
     ) {
         viewModelScope.launch {
-            repository.noticePresignedUrl(memberId, pdInfo.imageType, pdInfo.imageFileExtension, pdInfo.presignedInfo.imageKey)
+            imageRepository.noticePresignedUrl(memberId, pdInfo.imageType, pdInfo.imageFileExtension, pdInfo.presignedInfo.imageKey)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("noticePresignedUrl success: $it")
                     sentSuccessCount++
@@ -102,7 +102,7 @@ class HomeworkViewModel @Inject constructor(
         images: List<ImageInfo>
     ) {
         viewModelScope.launch {
-            repository.getImagesUrl(memberId, images)
+            imageRepository.getImagesUrl(memberId, images)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("getImagesUrl success: $it")
                     _urlState.value = FileState.GetImagesUrlSuccess(it)
@@ -124,7 +124,7 @@ class HomeworkViewModel @Inject constructor(
 
     fun uploadImageFiles(list: List<FileWithName>) {
         viewModelScope.launch {
-            repository.uploadImages(list)
+            imageRepository.uploadImages(list)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("uploadImageFiles success: $it")
                     _fileState.value = FileState.UploadImagesSuccess(it)
