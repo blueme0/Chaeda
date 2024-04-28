@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import com.chaeda.base.BindingActivity
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivitySplashBinding
-import com.chaeda.chaeda.presentation.MainActivity
+import com.chaeda.chaeda.presentation.login.LoginActivity
 import com.chaeda.chaeda.util.NetworkManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,8 +42,11 @@ class SplashActivity
     }
 
     private fun initSplash() {
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            startActivity(MainActivity.getIntent(this))
+//        }, 3000)
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(MainActivity.getIntent(this))
+            startActivity(LoginActivity.getIntent(this))
         }, 3000)
     }
 }
