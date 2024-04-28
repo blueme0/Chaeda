@@ -2,9 +2,11 @@ package com.chaeda.chaeda.di
 
 import com.chaeda.data.repository.HomeworkRepositoryImpl
 import com.chaeda.data.repository.ImageRepositoryImpl
+import com.chaeda.data.repository.MemberRepositoryImpl
 import com.chaeda.data.repository.SampleRepositoryImpl
 import com.chaeda.domain.repository.HomeworkRepository
 import com.chaeda.domain.repository.ImageRepository
+import com.chaeda.domain.repository.MemberRepository
 import com.chaeda.domain.repository.SampleRepository
 import dagger.Binds
 import dagger.Module
@@ -27,4 +29,8 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindImageRepository(imageRepositoryImpl: ImageRepositoryImpl): ImageRepository
+
+    @Singleton
+    @Binds
+    fun bindMemberRepository(memberRepositoryImpl: MemberRepositoryImpl): MemberRepository
 }
