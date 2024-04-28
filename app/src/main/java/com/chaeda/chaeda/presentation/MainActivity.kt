@@ -10,8 +10,8 @@ import androidx.fragment.app.replace
 import com.chaeda.base.BindingActivity
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityMainBinding
-import com.chaeda.chaeda.presentation.home.HomeFragment
 import com.chaeda.chaeda.presentation.homework.HomeworkFragment
+import com.chaeda.chaeda.presentation.setting.SettingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,17 +35,20 @@ class MainActivity
     }
 
     private fun initBnvItemSelectedListener() {
-        supportFragmentManager.findFragmentById(R.id.fcv_main) ?: navigateTo<HomeFragment>()
-        binding.bnvMain.selectedItemId = R.id.menu_home
+        supportFragmentManager.findFragmentById(R.id.fcv_main) ?: navigateTo<SettingFragment>()
+        binding.bnvMain.selectedItemId = R.id.menu_setting
         binding.bnvMain.setOnItemSelectedListener { menu ->
             when (menu.itemId) {
-                R.id.menu_home -> {
-                    navigateTo<HomeFragment>()
+                R.id.menu_setting -> {
+                    navigateTo<SettingFragment>()
                 }
 
                 R.id.menu_homework -> navigateTo<HomeworkFragment>()
                 R.id.menu_analysis -> {
 //                    navigateTo<AnalysisFragment>()
+                }
+                R.id.menu_upload -> {
+
                 }
             }
             true

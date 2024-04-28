@@ -9,15 +9,24 @@
         android:enabled="true"
         />
     <item
-        android:id="@+id/menu_home"
-        android:title=""
-        android:checked="true"
-        android:enabled="true"
-        gom:showAsAction="never"/>
-    <item
         android:id="@+id/menu_analysis"
         android:icon="@drawable/ic_bnv_analysis_unselected"
         android:title="통계"
+        android:checked="false"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/menu_upload"
+        android:icon="@drawable/ic_bnv_upload_unselected"
+        android:title="교재 업로드"
+        android:checked="false"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_bnv_setting_unselected"
+        android:title="설정"
+        android:checked="true"
         android:enabled="true"
         />
 </menu>
