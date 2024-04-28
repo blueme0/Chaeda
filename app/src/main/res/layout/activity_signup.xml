@@ -205,11 +205,11 @@
                     app:layout_constraintStart_toEndOf="@id/tv_role"
                     app:layout_constraintTop_toTopOf="@id/tv_role">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <ImageView
                         android:id="@+id/btn_student"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:background="@drawable/ic_radio_checked"
+                        android:background="@drawable/ic_radio_selector"
                         android:checked="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -236,10 +236,11 @@
                     app:layout_constraintStart_toEndOf="@id/cl_student"
                     app:layout_constraintTop_toTopOf="@id/cl_student">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <ImageView
                         android:id="@+id/btn_teacher"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:checked="false"
                         android:background="@drawable/ic_radio_selector"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
