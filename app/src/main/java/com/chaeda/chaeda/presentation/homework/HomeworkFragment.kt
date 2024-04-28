@@ -1,5 +1,6 @@
 package com.chaeda.chaeda.presentation.homework
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -9,6 +10,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentHomeworkBinding
 import com.chaeda.chaeda.presentation.home.TodayHomeworkAdapter
+import com.chaeda.chaeda.presentation.homework.add.AddHomeworkActivity
 import com.chaeda.chaeda.presentation.homework.calendar.WeekFragmentStateAdapter
 import com.chaeda.chaeda.presentation.homework.collection.IncorrectCollectionActivity
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
@@ -30,6 +32,13 @@ class HomeworkFragment
         initViewPager()
         initView()
         initHomeworkItems()
+
+        requireActivity().window?.apply {
+//            this.statusBarColor = Color.TRANSPARENT
+            this.statusBarColor = Color.parseColor("#FFD571")
+//            decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
     }
 
     private fun initListener() {
@@ -48,6 +57,9 @@ class HomeworkFragment
             Timber.tag("chaeda-hw").d("homework: $it")
             startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0, it.isDone))
         }
+        homeworkAdapter.setAddItemClick {
+            startActivity(AddHomeworkActivity.getIntent(requireContext()))
+        }
 
         binding.rvHomework.adapter = homeworkAdapter
     }
@@ -55,7 +67,7 @@ class HomeworkFragment
     private fun initHomeworkItems() {
         homeworkAdapter.setItems(
             listOf(
-                Homework("", "", listOf(), isDone = false),
+                Homework("", "", listOf(), isDone = false, range = ""),
                 Homework("$HOMEWORK_TITLE 1", HOMEWORK_CONTENT, listOf("https://i.namu.wiki/i/nXtowZQG8EcHp9eGH8M7yP5a43Ho01PXm97UT5iah1vsvRNqyL8DuokA46-Gh85bBeP0uREHRWYVHsZgtzLScQ.webp"), isDone = false),
                 Homework("$HOMEWORK_TITLE 2", HOMEWORK_CONTENT, listOf("https://lh3.googleusercontent.com/proxy/NBaH02XGRMm5kIHjLaA2ej1ms-o-Vjzm0ccu46r-W76x0saLswinVJfY0puvEDdaTpSaZ-1uO6fxo8fXO2RzG_xooZoen4XgJExJp-siW1ie6anDj1BJPNqlnT22s73xco8aks2Ie9bFM4gZQ4weveuv8yi9tA"), isDone = true),
                 Homework("$HOMEWORK_TITLE 3", HOMEWORK_CONTENT, listOf("https://blog.kakaocdn.net/dn/IwJkz/btqV355Nt9X/ehKnbamCdVPKTjmaKxVIj0/img.png"))
@@ -69,6 +81,16 @@ class HomeworkFragment
         binding.vp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         fragmentStateAdapter.apply {
             binding.vp.setCurrentItem(this.firstFragmentPosition, false)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().window?.apply {
+//            this.statusBarColor = Color.TRANSPARENT
+            this.statusBarColor = Color.parseColor("#FFFFFF")
+//            decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
     }
 

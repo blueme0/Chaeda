@@ -11,7 +11,7 @@ class ClassListAdapter (private val itemClick: (ClassItem) -> (Unit))
     : RecyclerView.Adapter<ClassListAdapter.ClassListViewHolder>() {
 
     private val classList = mutableListOf<ClassItem>()
-    private var selectedClass: String = ""
+    private var selectedClass: ClassItem = ClassItem("", "기본", "")
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,14 +27,18 @@ class ClassListAdapter (private val itemClick: (ClassItem) -> (Unit))
 
     override fun onBindViewHolder(holder: ClassListViewHolder, position: Int) {
         val currentItem = classList[position]
-        holder.onBind(currentItem, currentItem.id == selectedClass)
+        holder.onBind(currentItem, currentItem.id == selectedClass.id)
     }
 
     override fun getItemCount(): Int = classList.size
 
-    fun setSelectedItem(id: String) {
-        selectedClass = id
+    fun setSelectedItem(item: ClassItem) {
+        selectedClass = item
         notifyDataSetChanged()
+    }
+
+    fun getSelectedClassName(): String {
+        return selectedClass.name
     }
 
     fun setItems(newItems: List<ClassItem>) {
@@ -56,7 +60,7 @@ class ClassListAdapter (private val itemClick: (ClassItem) -> (Unit))
 
             binding.root.setOnSingleClickListener {
                 itemClick(item)
-                adapter.setSelectedItem(item.id)
+                adapter.setSelectedItem(item)
             }
         }
     }

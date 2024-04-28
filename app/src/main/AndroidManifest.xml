@@ -31,6 +31,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".presentation.homework.add.AddHomeworkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.homework.add.HomeworkClassActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.setting.SettingActivity"
             android:exported="false" />
         <activity

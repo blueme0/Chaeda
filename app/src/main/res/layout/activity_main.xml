@@ -29,6 +29,8 @@
             android:layout_height="104dp"
             android:background="@drawable/bg_bnv_shadow"
             app:itemIconSize="20dp"
+            app:itemTextAppearanceInactive="@style/Widget.BottomNavigationView"
+            app:itemTextAppearanceActive="@style/Widget.BottomNavigationView"
             app:itemIconTint="@drawable/menu_bnv_selector"
             app:itemTextColor="@drawable/menu_bnv_selector"
             app:itemBackground="@color/white"
@@ -41,16 +43,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/nav_menu" />
-
-        <ImageView
-            android:id="@+id/btn_main_yello_active"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/ic_bnv_home"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bnv_main" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
