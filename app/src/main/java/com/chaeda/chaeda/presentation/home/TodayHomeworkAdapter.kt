@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
 import com.chaeda.domain.entity.Homework
 
@@ -45,13 +46,19 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
         fun onBind(item: Homework) {
             binding.tvTitle.text = item.title
             binding.tvContent.text = item.range
+            if (item.title.isEmpty()) {
+                binding.ivThumbnail.setImageResource(R.drawable.ic_homework_add)
+                binding.root.setOnSingleClickListener {
+                    // 선생님이 추가하기 클릭 시
+                }
 
-            binding.ivThumbnail.load(item.photoUrls.first()) {
+            } else {
+                binding.ivThumbnail.load(item.photoUrls.first()) {
 //                transformations(RoundedCornersTransformation(4f))
-            }
-
-            binding.root.setOnSingleClickListener {
-                itemClick(item)
+                }
+                binding.root.setOnSingleClickListener {
+                    itemClick(item)
+                }
             }
         }
     }

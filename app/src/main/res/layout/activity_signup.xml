@@ -57,8 +57,8 @@
                     android:layout_marginTop="7dp"
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
-                    android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingVertical="12dp"
                     android:paddingEnd="82dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_id" />
@@ -97,9 +97,8 @@
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="textPassword"
+                    android:paddingVertical="12dp"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_pw" />
 
@@ -126,8 +125,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="textPassword"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_pw_check" />
 
@@ -154,8 +152,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="textPassword"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
@@ -182,8 +179,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="number"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_number" />
 
@@ -209,11 +205,11 @@
                     app:layout_constraintStart_toEndOf="@id/tv_role"
                     app:layout_constraintTop_toTopOf="@id/tv_role">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <ImageView
                         android:id="@+id/btn_student"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:background="@drawable/ic_radio_checked"
+                        android:background="@drawable/ic_radio_selector"
                         android:checked="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -240,10 +236,11 @@
                     app:layout_constraintStart_toEndOf="@id/cl_student"
                     app:layout_constraintTop_toTopOf="@id/cl_student">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <ImageView
                         android:id="@+id/btn_teacher"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:checked="false"
                         android:background="@drawable/ic_radio_selector"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -284,8 +281,7 @@
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_advisor" />
             </androidx.constraintlayout.widget.ConstraintLayout>
