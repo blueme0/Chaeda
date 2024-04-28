@@ -57,8 +57,8 @@
                     android:layout_marginTop="7dp"
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
-                    android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingVertical="12dp"
                     android:paddingEnd="82dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_id" />
@@ -97,9 +97,8 @@
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="textPassword"
+                    android:paddingVertical="12dp"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_pw" />
 
@@ -126,8 +125,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="textPassword"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_pw_check" />
 
@@ -154,8 +152,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="textPassword"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
@@ -182,8 +179,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:inputType="number"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_number" />
 
@@ -284,8 +280,7 @@
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
                     android:paddingHorizontal="16dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="82dp"
+                    android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_advisor" />
             </androidx.constraintlayout.widget.ConstraintLayout>
