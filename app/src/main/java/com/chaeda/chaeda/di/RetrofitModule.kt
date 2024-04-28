@@ -1,5 +1,11 @@
 package com.chaeda.chaeda.di
 
+import com.chaeda.chaeda.BuildConfig.BASE_URL
+import com.chaeda.chaeda.BuildConfig.IMAGE_URL
+import com.chaeda.chaeda.addFlipperNetworkPlugin
+import com.chaeda.chaeda.di.qualifier.Auth
+import com.chaeda.chaeda.di.qualifier.Logger
+import com.chaeda.data.interceptor.AuthInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -12,12 +18,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
-import javax.inject.Singleton
-import com.chaeda.chaeda.BuildConfig.BASE_URL
-import com.chaeda.chaeda.BuildConfig.IMAGE_URL
-import com.chaeda.chaeda.addFlipperNetworkPlugin
-import com.chaeda.chaeda.di.qualifier.Logger
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,10 +33,10 @@ object RetrofitModule {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-//    @Provides
-//    @Singleton
-//    @Auth
-//    fun provideAuthInterceptor(interceptor: AuthInterceptor): Interceptor = interceptor
+    @Provides
+    @Singleton
+    @Auth
+    fun provideAuthInterceptor(interceptor: AuthInterceptor): Interceptor = interceptor
 
     @Provides
     @Singleton
@@ -47,6 +49,7 @@ object RetrofitModule {
     @Singleton
     fun provideOkHttpClient(
         @Logger loggingInterceptor: Interceptor,
+        @Auth authInterceptor: Interceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addFlipperNetworkPlugin()
