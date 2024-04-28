@@ -13,6 +13,7 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
     : RecyclerView.Adapter<TodayHomeworkAdapter.TodayHomeworkViewHolder>() {
 
     private val homeworkList = mutableListOf<Homework>()
+    private var newItemClick: (Homework) -> (Unit) = itemClick
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,7 +24,11 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
             parent,
             false
         )
-        return TodayHomeworkViewHolder(binding,itemClick)
+        return TodayHomeworkViewHolder(binding,itemClick, newItemClick)
+    }
+
+    fun setAddItemClick(itemClick: (Homework) -> (Unit)) {
+        newItemClick = itemClick
     }
 
     override fun onBindViewHolder(holder: TodayHomeworkViewHolder, position: Int) {
@@ -40,7 +45,8 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
 
     class TodayHomeworkViewHolder(
         private val binding: ItemHomeHomeworkBinding,
-        private val itemClick: (Homework) -> Unit
+        private val itemClick: (Homework) -> Unit,
+        private val newItemClick: (Homework) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(item: Homework) {
@@ -50,6 +56,7 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
                 binding.ivThumbnail.setImageResource(R.drawable.ic_homework_add)
                 binding.root.setOnSingleClickListener {
                     // 선생님이 추가하기 클릭 시
+                    newItemClick(item)
                 }
 
             } else {
