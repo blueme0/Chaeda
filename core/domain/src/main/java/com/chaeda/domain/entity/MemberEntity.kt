@@ -12,11 +12,9 @@ data class MemberEntity (
     val address: String?,
     val profileUrl: String?,
     val schoolName: String?,
-    val grade: String?,
-    val role: String,
     val parentPhoneNum: String?,
     val homePhoneNum: String?,
-    val subject: String?,
+    val grade: String?,
     val notes: String?,
     val imageId: Long?
 )

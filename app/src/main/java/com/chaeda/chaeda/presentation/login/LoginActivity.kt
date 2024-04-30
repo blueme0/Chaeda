@@ -9,6 +9,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityLoginBinding
 import com.chaeda.chaeda.presentation.MainActivity
+import com.chaeda.chaeda.presentation.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +33,9 @@ class LoginActivity
             tvLogin.setOnSingleClickListener {
                 startActivity(MainActivity.getIntent(this@LoginActivity))
                 finish()
+            }
+            tvSignup.setOnSingleClickListener {
+                startActivity(SignUpActivity.getIntent(this@LoginActivity))
             }
         }
     }
