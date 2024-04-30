@@ -5,6 +5,9 @@
     tools:context=".presentation.login.LoginActivity">
 
     <data>
+        <variable
+            name="vm"
+            type="com.chaeda.chaeda.presentation.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +37,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_logo"
             android:layout_marginTop="45dp"
             android:hint="아이디"
+            android:text="@{vm.loginId}"
             android:fontFamily="@font/pretendard_regular"
             android:textSize="16sp"
             android:textColorHint="#444444"
@@ -50,6 +54,7 @@
             app:layout_constraintTop_toBottomOf="@id/et_id"
             android:layout_marginTop="16dp"
             android:hint="비밀번호"
+            android:text="@{vm.password}"
             android:fontFamily="@font/pretendard_regular"
             android:textSize="16sp"
             android:textColorHint="#444444"
