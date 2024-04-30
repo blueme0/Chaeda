@@ -48,12 +48,12 @@ class AuthInterceptor @Inject constructor(
                         refreshTokenResponse.close()
                         val newRequest = originalRequest.newAuthBuilder().build()
                         return chain.proceed(newRequest)
-                    }
-
-                    with(dataStore) {
-                        isLogin = false
-                        userToken = ""
-                        refreshToken = ""
+                    } else {
+                        with(dataStore) {
+                            isLogin = false
+                            userToken = ""
+                            refreshToken = ""
+                        }
                     }
                 } catch (t: Throwable) {
                     Timber.e(t)
