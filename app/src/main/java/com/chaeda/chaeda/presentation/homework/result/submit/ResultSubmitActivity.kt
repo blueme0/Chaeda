@@ -1,20 +1,20 @@
-package com.chaeda.chaeda.presentation.homework.result
+package com.chaeda.chaeda.presentation.homework.result.submit
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.chaeda.base.BindingActivity
-import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
-import com.chaeda.chaeda.databinding.ActivityHomeworkResultBinding
+import com.chaeda.chaeda.databinding.ActivityResultSubmitBinding
+import com.chaeda.chaeda.presentation.homework.result.ResultViewModel
 import com.chaeda.chaeda.presentation.homework.result.answer.ResultAnswerAdapter
 import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeworkResultActivity
-    : BindingActivity<ActivityHomeworkResultBinding>(R.layout.activity_homework_result) {
+class ResultSubmitActivity
+    : BindingActivity<ActivityResultSubmitBinding> (R.layout.activity_result_submit) {
 
     private val resultViewModel by viewModels<ResultViewModel>()
     private lateinit var answerAdapter: ResultAnswerAdapter
@@ -25,7 +25,6 @@ class HomeworkResultActivity
         binding.lifecycleOwner = this
         initView()
         initAnswerItems()
-        initListener()
     }
 
     private fun initView() {
@@ -47,15 +46,7 @@ class HomeworkResultActivity
         )
     }
 
-    private fun initListener() {
-        with(binding) {
-            llBack.setOnSingleClickListener { finish() }
-        }
-    }
-
     companion object {
-        fun getIntent(context: Context) = Intent(context, HomeworkResultActivity::class.java).apply {
-        }
+        fun getIntent(context: Context) = Intent(context, ResultSubmitActivity::class.java)
     }
-
 }

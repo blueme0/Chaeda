@@ -43,7 +43,8 @@ class LoginActivity
     private fun initListener() {
         with(binding) {
             tvLogin.setOnSingleClickListener {
-                loginViewModel.postLogin()
+//                loginViewModel.postLogin()
+                startActivity(MainActivity.getIntent(this@LoginActivity))
             }
             tvSignup.setOnSingleClickListener {
                 startActivity(SignUpActivity.getIntent(this@LoginActivity))
