@@ -13,7 +13,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkDetailBinding
 import com.chaeda.chaeda.presentation.homework.result.HomeworkResultActivity
-import com.chaeda.chaeda.presentation.homework.submit.ConfirmSubmitActivity
+import com.chaeda.chaeda.presentation.homework.result.submit.ResultSubmitActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,9 +38,6 @@ class HomeworkDetailActivity
                 val isDoneNow = result.data?.getBooleanExtra("isDone", false)
                 if (isDoneNow == true) {
                     binding.tvFab.text = "오답 확인하기"
-                    binding.fab.setOnSingleClickListener {
-                        startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity))
-                    }
                 }
             }
         }
@@ -55,7 +52,8 @@ class HomeworkDetailActivity
             fab.setOnSingleClickListener {
                 if (isDone) startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity))
                 else {
-                    resultLauncher.launch(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
+//                    resultLauncher.launch(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
+                    startActivity(ResultSubmitActivity.getIntent(this@HomeworkDetailActivity))
                 }
             }
         }

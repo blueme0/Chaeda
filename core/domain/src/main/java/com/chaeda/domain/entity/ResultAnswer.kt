@@ -1,7 +1,7 @@
 package com.chaeda.domain.entity
 
 data class ResultAnswer (
+    var checked: Boolean = false,
     val index: Int,
-    val written: Int,
-    val correct: Int
+    var level: Int = 0
 )
