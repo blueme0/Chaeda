@@ -10,4 +10,5 @@ class ResultViewModel @Inject constructor(
     private val hwRepository: HomeworkRepository
 ) : ViewModel() {
 
+    // HashMap으로 페이지 별 문항들 저장하기
 }

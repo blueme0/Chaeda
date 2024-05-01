@@ -38,33 +38,18 @@ class SignUpActivity
             btnMale.setOnSingleClickListener { signUpViewModel.updateGender(1) }
             btnFemale.setOnSingleClickListener { signUpViewModel.updateGender(2) }
 
-            val grades = HashMap<String, String>()
-            grades["학년 선택하기"] = ""
-            grades["N수생"] = "N_SU"
-            grades["고1"] = "HIGH_1"
-            grades["고2"] = "HIGH_2"
-            grades["고3"] = "HIGH_3"
-            grades["중1"] = "MIDDLE_1"
-            grades["중2"] = "MIDDLE_2"
-            grades["중3"] = "MIDDLE_3"
-            grades["초1"] = "ELEMENT_1"
-            grades["초2"] = "ELEMENT_2"
-            grades["초3"] = "ELEMENT_3"
-            grades["초4"] = "ELEMENT_4"
-            grades["초5"] = "ELEMENT_5"
-            grades["초6"] = "ELEMENT_6"
+            val grades = listOf<String>(
+                "학년 선택하기", "N수", "고1", "고2", "고3", "중1", "중2", "중3", "초1", "초2", "초3", "초4", "초5", "초6"
+            )
 
-            binding.spinnerGrade.adapter = ArrayAdapter<String>(this@SignUpActivity, R.layout.item_spinner,
-                grades.keys.toList().sortedWith(Comparator { t1, t2 ->
-                    if (grades[t1]!!.length != grades[t2]!!.length) return@Comparator grades[t1]!!.length - grades[t2]!!.length
-                    else return@Comparator grades[t1]!!.last().digitToInt() - grades[t2]!!.last().digitToInt()
-                }))
+            binding.spinnerGrade.adapter = ArrayAdapter<String>(this@SignUpActivity, R.layout.item_spinner, grades)
             // Spinner에 OnItemSelectedListener 설정
             binding.spinnerGrade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: android.view.View, position: Int, id: Long) {
                     // 선택된 아이템의 텍스트 가져오기
                     val selectedItem = parent.getItemAtPosition(position) as String
-                    signUpViewModel.updateGrade(grades[selectedItem]!!)
+                    if (selectedItem != "학년 선택하기") signUpViewModel.updateGrade(selectedItem)
+                    else signUpViewModel.updateGrade("")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
