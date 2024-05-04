@@ -1,7 +1,9 @@
 package com.chaeda.chaeda.presentation.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chaeda.domain.ChaedaDataStore
 import com.chaeda.domain.repository.MemberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val dataStore: ChaedaDataStore
 ) : ViewModel() {
 
     private val _loginId = MutableStateFlow<String>("")
@@ -39,9 +42,13 @@ class LoginViewModel @Inject constructor(
                 password = password.value
             )
                 .onSuccess {
+                    dataStore.userToken = it.accessTokenDto
+                    dataStore.refreshToken = it.refreshTokenDto
+                    dataStore.isLogin = true
                     _loginState.value = LoginUiState.Success
                 }
                 .onFailure {
+                    Log.d("chaeda-login", "${it.message}")
                     _loginState.value = LoginUiState.Failure("로그인 실패")
                 }
         }
