@@ -5,6 +5,9 @@
     tools:context=".presentation.homework.result.detail.AnswerDetailActivity">
 
     <data>
+        <variable
+            name="vm"
+            type="com.chaeda.chaeda.presentation.homework.add.AddAssignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

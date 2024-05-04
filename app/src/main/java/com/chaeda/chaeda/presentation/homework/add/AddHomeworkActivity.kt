@@ -3,6 +3,7 @@ package com.chaeda.chaeda.presentation.homework.add
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
@@ -13,9 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddHomeworkActivity
     : BindingActivity<ActivityAddHomeworkBinding>(R.layout.activity_add_homework) {
 
+    private val addAssignmentViewModel by viewModels<AddAssignmentViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.lifecycleOwner = this
         initListener()
     }
 

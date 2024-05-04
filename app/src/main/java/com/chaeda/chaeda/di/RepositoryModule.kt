@@ -4,10 +4,12 @@ import com.chaeda.data.repository.HomeworkRepositoryImpl
 import com.chaeda.data.repository.ImageRepositoryImpl
 import com.chaeda.data.repository.MemberRepositoryImpl
 import com.chaeda.data.repository.SampleRepositoryImpl
+import com.chaeda.data.repository.TextbookRepositoryImpl
 import com.chaeda.domain.repository.HomeworkRepository
 import com.chaeda.domain.repository.ImageRepository
 import com.chaeda.domain.repository.MemberRepository
 import com.chaeda.domain.repository.SampleRepository
+import com.chaeda.domain.repository.TextbookRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +35,8 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindMemberRepository(memberRepositoryImpl: MemberRepositoryImpl): MemberRepository
+
+    @Singleton
+    @Binds
+    fun bindTextbookRepository(textbookRepositoryImpl: TextbookRepositoryImpl): TextbookRepository
 }
