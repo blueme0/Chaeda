@@ -75,6 +75,9 @@
         <activity
             android:name=".presentation.homework.result.submit.ResultSubmitActivity"
             android:exported="true" />
+        <activity
+            android:name=".presentation.homework.textbook.TextbookListActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

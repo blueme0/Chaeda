@@ -1,5 +1,6 @@
 package com.chaeda.chaeda.presentation.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.domain.repository.MemberRepository
@@ -33,15 +34,21 @@ class LoginViewModel @Inject constructor(
     val loginState: StateFlow<LoginUiState> = _loginState.asStateFlow()
 
     fun postLogin() {
+        if (memberRepository.getAutoLogin()) {
+            _loginState.value = LoginUiState.Success
+            return
+        }
         viewModelScope.launch {
             memberRepository.login(
                 loginId = loginId.value,
                 password = password.value
             )
                 .onSuccess {
+                    memberRepository.setAutoLogin(it.accessTokenDto, it.refreshTokenDto)
                     _loginState.value = LoginUiState.Success
                 }
                 .onFailure {
+                    Log.d("chaeda-login", "${it.message}")
                     _loginState.value = LoginUiState.Failure("로그인 실패")
                 }
         }

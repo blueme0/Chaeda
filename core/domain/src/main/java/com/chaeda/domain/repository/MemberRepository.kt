@@ -19,4 +19,8 @@ interface MemberRepository {
     suspend fun logout(): Any
     suspend fun login(loginId: String, password: String): Result<TokenDTO>
     suspend fun getMember(): Result<MemberEntity>
+
+    fun setAutoLogin(userToken: String, refreshToken: String)
+    fun disableAutoLogin()
+    fun getAutoLogin(): Boolean
 }

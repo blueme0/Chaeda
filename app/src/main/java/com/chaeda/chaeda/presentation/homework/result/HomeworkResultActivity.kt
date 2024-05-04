@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.chaeda.base.BindingActivity
+import com.chaeda.base.util.extension.intExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkResultBinding
@@ -15,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeworkResultActivity
     : BindingActivity<ActivityHomeworkResultBinding>(R.layout.activity_homework_result) {
+
+    private val id by intExtra()
 
     private val resultViewModel by viewModels<ResultViewModel>()
     private lateinit var answerAdapter: ResultAnswerAdapter
@@ -54,7 +57,8 @@ class HomeworkResultActivity
     }
 
     companion object {
-        fun getIntent(context: Context) = Intent(context, HomeworkResultActivity::class.java).apply {
+        fun getIntent(context: Context, id: Int) = Intent(context, HomeworkResultActivity::class.java).apply {
+            putExtra("id", id)
         }
     }
 

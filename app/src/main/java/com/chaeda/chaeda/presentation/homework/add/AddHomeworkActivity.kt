@@ -3,29 +3,118 @@ package com.chaeda.chaeda.presentation.homework.add
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAddHomeworkBinding
+import com.chaeda.chaeda.presentation.homework.AssignmentState
+import com.chaeda.chaeda.presentation.homework.textbook.TextbookListActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddHomeworkActivity
     : BindingActivity<ActivityAddHomeworkBinding>(R.layout.activity_add_homework) {
 
+    private val addAssignmentViewModel by viewModels<AddAssignmentViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.lifecycleOwner = this
         initListener()
+        setTextChangedListener()
+        observe()
     }
 
     private fun initListener() {
         with(binding) {
             fab.setOnSingleClickListener {
-                finish()
+                if (addAssignmentViewModel.assignmentValid.value)
+                    addAssignmentViewModel.postAssignment()
+                else {
+                    Toast.makeText(this@AddHomeworkActivity, "입력을 완료해주세요.", Toast.LENGTH_SHORT).show()
+                }
             }
-            etClass.setOnSingleClickListener {
-                startActivityForResult(HomeworkClassActivity.getIntent(this@AddHomeworkActivity), REQUEST_CODE_HOMEWORK_CLASS_ACTIVITY)
+
+            etBook.setOnSingleClickListener {
+                startActivityForResult(TextbookListActivity.getIntent(this@AddHomeworkActivity), REQUEST_CODE_TEXTBOOK_LIST_ACTIVITY)
+            }
+        }
+    }
+
+    private fun setTextChangedListener() {
+        with(binding) {
+            etTitle.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    addAssignmentViewModel.updateTitle(p0.toString())
+                }
+            })
+
+            etDeadline.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    addAssignmentViewModel.updateDueDate(p0.toString())
+                }
+            })
+
+            etRangeStart.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    addAssignmentViewModel.updateRange(
+                        p0.toString().toInt(),
+                        addAssignmentViewModel.endRange.value
+                    )
+                }
+            })
+
+            etRangeEnd.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    addAssignmentViewModel.updateRange(
+                        addAssignmentViewModel.startRange.value,
+                        p0.toString().toInt()
+                    )
+                }
+            })
+        }
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            addAssignmentViewModel.assignmentState.collect { state ->
+                when (state) {
+                    is AssignmentState.UploadSuccess -> {
+                        finish()
+                    }
+                    else -> { }
+                }
             }
         }
     }
@@ -33,16 +122,20 @@ class AddHomeworkActivity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_CODE_HOMEWORK_CLASS_ACTIVITY && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_TEXTBOOK_LIST_ACTIVITY && resultCode == RESULT_OK) {
             data?.let {
-                val yourNumberValue = it.getStringExtra("className")
-                binding.etClass.text = yourNumberValue
+                val bookId = it.getIntExtra("textbookId", 0)
+                val bookName = it.getStringExtra("textbookName")
+                if (bookName != null) {
+                    addAssignmentViewModel.updateTextbookId(bookId)
+                    addAssignmentViewModel.updateTextbook(bookName)
+                }
             }
         }
     }
 
     companion object {
-        const val REQUEST_CODE_HOMEWORK_CLASS_ACTIVITY = 1001
+        const val REQUEST_CODE_TEXTBOOK_LIST_ACTIVITY = 1001
         fun getIntent(context: Context) = Intent(context, AddHomeworkActivity::class.java)
     }
 }

@@ -2,9 +2,11 @@ package com.chaeda.chaeda.presentation.homework
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chaeda.domain.entity.AssignmentDTO
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedDetailInfo
+import com.chaeda.domain.repository.HomeworkRepository
 import com.chaeda.domain.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,13 +15,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeworkViewModel @Inject constructor(
-    private val imageRepository: ImageRepository
+    private val imageRepository: ImageRepository,
+    private val homeworkRepository: HomeworkRepository
 ) : ViewModel() {
 
     private var _urlState = MutableStateFlow<FileState>(FileState.Init)
@@ -135,6 +139,33 @@ class HomeworkViewModel @Inject constructor(
                 }
         }
     }
+
+    private var _assignmentState = MutableStateFlow<AssignmentState>(AssignmentState.Init)
+    val assignmentState: StateFlow<AssignmentState> = _assignmentState.asStateFlow()
+
+    fun getAssignmentsByDate(dateString: String, date: LocalDate) {
+        viewModelScope.launch {
+            homeworkRepository.getAssignmentsByDate(dateString, date)
+                .onSuccess {
+                    _assignmentState.value = AssignmentState.GetListSuccess(it)
+                }
+                .onFailure {
+                    _assignmentState.value = AssignmentState.Failure(it.message!!)
+                }
+        }
+    }
+}
+
+sealed interface AssignmentState {
+    object Init: AssignmentState
+    data class GetListSuccess(val list: List<AssignmentDTO>): AssignmentState
+    data class GetByIdSuccess(val assignment: AssignmentDTO): AssignmentState
+    data class PutByIdSuccess(val assignment: AssignmentDTO): AssignmentState
+    object DeleteByIdSuccess: AssignmentState
+    data class UploadSuccess(val assignment: AssignmentDTO): AssignmentState
+    object GetRangeSuccess: AssignmentState
+    object SubmitSuccess: AssignmentState
+    data class Failure(val msg: String): AssignmentState
 }
 
 sealed interface FileState {
