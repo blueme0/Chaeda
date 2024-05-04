@@ -1,10 +1,12 @@
 package com.chaeda.data.service
 
 import com.chaeda.data.model.request.RequestAssignmentDTO
+import com.chaeda.data.model.request.RequestAssignmentResultDTO
 import com.chaeda.data.model.request.RequestImageInfo
 import com.chaeda.data.model.response.PresignedResponse
 import com.chaeda.domain.entity.AssignmentDTO
 import com.chaeda.domain.entity.ImageInfo
+import com.chaeda.domain.entity.ProblemsWithPageDTO
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -73,4 +75,15 @@ interface HomeworkService {
     suspend fun postAssignment(
         @Body request: RequestAssignmentDTO
     ): AssignmentDTO
+
+    @GET("/submission/self-assignments/{assignmentId}")
+    suspend fun getProblemRangeWithPage(
+        @Path("assignmentId") assignmentId: Int
+    ): List<ProblemsWithPageDTO>
+
+    @POST("/submission/self-assignments/{assignmentId}")
+    suspend fun postAssignmentResult(
+        @Path("assignmentId") assignmentId: Int,
+        @Body wrongProblemWithinPageRequests: RequestAssignmentResultDTO
+    ): Response<Unit>
 }

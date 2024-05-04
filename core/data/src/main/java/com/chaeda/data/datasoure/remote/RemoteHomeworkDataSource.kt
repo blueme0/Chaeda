@@ -1,8 +1,10 @@
 package com.chaeda.data.datasoure.remote
 
 import com.chaeda.data.model.request.RequestAssignmentDTO
+import com.chaeda.data.model.request.RequestAssignmentResultDTO
 import com.chaeda.data.service.HomeworkService
 import com.chaeda.domain.entity.AssignmentDTO
+import com.chaeda.domain.entity.ProblemsWithPageDTO
 import javax.inject.Inject
 
 class RemoteHomeworkDataSource @Inject constructor(
@@ -32,9 +34,23 @@ class RemoteHomeworkDataSource @Inject constructor(
     ): List<AssignmentDTO> {
         return homeworkService.getAssignmentsByDate(date)
     }
+
     suspend fun postAssignment(
         request: RequestAssignmentDTO
     ): AssignmentDTO {
         return homeworkService.postAssignment(request)
+    }
+
+    suspend fun getProblemRangeWithPage(
+        id: Int
+    ): List<ProblemsWithPageDTO> {
+        return homeworkService.getProblemRangeWithPage(id)
+    }
+
+    suspend fun postAssignmentResult(
+        id: Int,
+        results: RequestAssignmentResultDTO
+    ): Boolean {
+        return homeworkService.postAssignmentResult(id, results).isSuccessful
     }
 }

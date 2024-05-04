@@ -2,7 +2,10 @@ package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteHomeworkDataSource
 import com.chaeda.data.model.request.RequestAssignmentDTO
+import com.chaeda.data.model.request.RequestAssignmentResultDTO
 import com.chaeda.domain.entity.AssignmentDTO
+import com.chaeda.domain.entity.AssignmentResultDTO
+import com.chaeda.domain.entity.ProblemsWithPageDTO
 import com.chaeda.domain.repository.HomeworkRepository
 import javax.inject.Inject
 
@@ -63,6 +66,24 @@ class HomeworkRepositoryImpl @Inject constructor(
                     assignment.targetDate,
                     textbookId
                 )
+            )
+        }
+    }
+
+    override suspend fun getProblemRangeWithPage(assignmentId: Int): Result<List<ProblemsWithPageDTO>> {
+        return runCatching {
+            remoteHomeworkDataSource.getProblemRangeWithPage(assignmentId)
+        }
+    }
+
+    override suspend fun postAssignmentResult(
+        assignmentId: Int,
+        results: List<AssignmentResultDTO>
+    ): Result<Unit> {
+        return runCatching {
+            remoteHomeworkDataSource.postAssignmentResult(
+                assignmentId,
+                RequestAssignmentResultDTO(results)
             )
         }
     }
