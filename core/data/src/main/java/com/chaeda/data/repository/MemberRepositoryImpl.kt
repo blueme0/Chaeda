@@ -48,4 +48,18 @@ class MemberRepositoryImpl @Inject constructor(
             remoteMemberDataSource.getMember()
         }
     }
+
+    override fun getAutoLogin(): Boolean = dataStore.isLogin
+
+    override fun setAutoLogin(userToken: String, refreshToken: String) {
+        dataStore.isLogin = true
+        dataStore.userToken = "Bearer $userToken"
+        dataStore.refreshToken = "Bearer $refreshToken"
+    }
+
+    override fun disableAutoLogin() {
+        dataStore.isLogin = false
+        dataStore.userToken = ""
+        dataStore.refreshToken = ""
+    }
 }

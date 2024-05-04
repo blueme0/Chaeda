@@ -7,6 +7,7 @@ import com.chaeda.domain.entity.AssignmentDTO
 import com.chaeda.domain.entity.AssignmentResultDTO
 import com.chaeda.domain.entity.ProblemsWithPageDTO
 import com.chaeda.domain.repository.HomeworkRepository
+import java.time.LocalDate
 import javax.inject.Inject
 
 class HomeworkRepositoryImpl @Inject constructor(
@@ -44,12 +45,11 @@ class HomeworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAssignmentsByDate(
-        year: Int,
-        month: Int,
-        date: Int
+        dateString: String,
+        date: LocalDate
     ): Result<List<AssignmentDTO>> {
         return runCatching {
-            remoteHomeworkDataSource.getAssignmentsByDate("$year-$month-$date")
+            remoteHomeworkDataSource.getAssignmentsByDate(dateString, date)
         }
     }
 

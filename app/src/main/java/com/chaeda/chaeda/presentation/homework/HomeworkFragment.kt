@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.chaeda.base.BindingFragment
 import com.chaeda.base.util.extension.setOnSingleClickListener
@@ -14,9 +15,14 @@ import com.chaeda.chaeda.presentation.homework.add.AddHomeworkActivity
 import com.chaeda.chaeda.presentation.homework.calendar.WeekFragmentStateAdapter
 import com.chaeda.chaeda.presentation.homework.collection.IncorrectCollectionActivity
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
-import com.chaeda.domain.entity.Homework
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeworkFragment
@@ -32,6 +38,7 @@ class HomeworkFragment
         initViewPager()
         initView()
         initHomeworkItems()
+        observe()
 
         requireActivity().window?.apply {
 //            this.statusBarColor = Color.TRANSPARENT
@@ -55,7 +62,7 @@ class HomeworkFragment
         homeworkAdapter = TodayHomeworkAdapter {
             // click listener
             Timber.tag("chaeda-hw").d("homework: $it")
-            startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0, it.isDone))
+            startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0, false))
         }
         homeworkAdapter.setAddItemClick {
             startActivity(AddHomeworkActivity.getIntent(requireContext()))
@@ -65,14 +72,7 @@ class HomeworkFragment
     }
 
     private fun initHomeworkItems() {
-        homeworkAdapter.setItems(
-            listOf(
-                Homework("", "", listOf(), isDone = false, range = ""),
-                Homework("$HOMEWORK_TITLE 1", HOMEWORK_CONTENT, listOf("https://i.namu.wiki/i/nXtowZQG8EcHp9eGH8M7yP5a43Ho01PXm97UT5iah1vsvRNqyL8DuokA46-Gh85bBeP0uREHRWYVHsZgtzLScQ.webp"), isDone = false),
-                Homework("$HOMEWORK_TITLE 2", HOMEWORK_CONTENT, listOf("https://lh3.googleusercontent.com/proxy/NBaH02XGRMm5kIHjLaA2ej1ms-o-Vjzm0ccu46r-W76x0saLswinVJfY0puvEDdaTpSaZ-1uO6fxo8fXO2RzG_xooZoen4XgJExJp-siW1ie6anDj1BJPNqlnT22s73xco8aks2Ie9bFM4gZQ4weveuv8yi9tA"), isDone = true),
-                Homework("$HOMEWORK_TITLE 3", HOMEWORK_CONTENT, listOf("https://blog.kakaocdn.net/dn/IwJkz/btqV355Nt9X/ehKnbamCdVPKTjmaKxVIj0/img.png"))
-            )
-        )
+        homeworkAdapter.setItems(null)
     }
 
     private fun initViewPager() {
@@ -81,6 +81,45 @@ class HomeworkFragment
         binding.vp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         fragmentStateAdapter.apply {
             binding.vp.setCurrentItem(this.firstFragmentPosition, false)
+        }
+    }
+
+    private fun convertDateString(date: Date): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+        // Date 객체를 지정된 형식의 문자열로 포맷팅
+        return dateFormat.format(date)
+    }
+
+    private fun convertDateToLocalDate(date: Date): LocalDate {
+        // Date 객체를 Instant 객체로 변환
+        val instant = date.toInstant()
+
+        // 한국 시간대 (Asia/Seoul)를 ZoneId로 지정
+        val zoneId = ZoneId.of("Asia/Seoul")
+
+        // Instant 객체를 한국 시간대에 맞게 LocalDate 객체로 변환
+        return instant.atZone(zoneId).toLocalDate()
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            viewModel.selectedDate.collect { date ->
+                viewModel.getAssignmentsByDate(convertDateString(date), convertDateToLocalDate(date))
+            }
+        }
+        
+        lifecycleScope.launch { 
+            viewModel.assignmentState.collect { state ->
+                when (state) {
+                    is AssignmentState.GetListSuccess -> {
+                        homeworkAdapter.setItems(state.list)
+                    }
+                    else -> {
+                    }
+                            
+                }
+                
+            }
         }
     }
 

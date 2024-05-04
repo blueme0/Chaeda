@@ -1,5 +1,6 @@
 package com.chaeda.data.interceptor
 
+import android.util.Log
 import com.chaeda.data.BuildConfig.BASE_URL
 import com.chaeda.data.model.response.ResponseAuthToken
 import com.chaeda.domain.ChaedaDataStore
@@ -16,6 +17,7 @@ class AuthInterceptor @Inject constructor(
     private val dataStore: ChaedaDataStore,
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
+        Log.d("chaeda-intercept", "interceptor called")
         val originalRequest = chain.request()
         val authRequest = if (dataStore.isLogin) {
             originalRequest.newAuthBuilder().build()
@@ -27,8 +29,9 @@ class AuthInterceptor @Inject constructor(
         when (response.code) {
             CODE_TOKEN_EXPIRED -> {
                 try {
+                    Log.d("chaeda-intercept", "CODE_TOKEN_EXPIRED")
                     val refreshTokenRequest = originalRequest.newBuilder().post("".toRequestBody())
-                        .url("${BASE_URL}auth/reissues")
+                        .url("${BASE_URL}/auth/reissues")
                         .addHeader(HEADER_AUTHORIZATION, dataStore.userToken)
                         .addHeader(HEADER_REFRESH_TOKEN, dataStore.refreshToken)
                         .build()
@@ -72,8 +75,8 @@ class AuthInterceptor @Inject constructor(
         this.newBuilder().addHeader(HEADER_AUTHORIZATION, dataStore.userToken)
 
     companion object {
-        private const val CODE_TOKEN_EXPIRED = 401
+        private const val CODE_TOKEN_EXPIRED = 403
         private const val HEADER_AUTHORIZATION = "Authorization"
-        private const val HEADER_REFRESH_TOKEN = "Authorization-refresh"
+        private const val HEADER_REFRESH_TOKEN = "RefreshToken"
     }
 }

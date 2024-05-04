@@ -7,13 +7,13 @@ import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
-import com.chaeda.domain.entity.Homework
+import com.chaeda.domain.entity.AssignmentDTO
 
-class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
+class TodayHomeworkAdapter(private val itemClick: (AssignmentDTO) -> (Unit))
     : RecyclerView.Adapter<TodayHomeworkAdapter.TodayHomeworkViewHolder>() {
 
-    private val homeworkList = mutableListOf<Homework>()
-    private var newItemClick: (Homework) -> (Unit) = itemClick
+    private val assignmentList = mutableListOf<AssignmentDTO>()
+    private var newItemClick: (AssignmentDTO) -> (Unit) = itemClick
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,32 +27,33 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
         return TodayHomeworkViewHolder(binding,itemClick, newItemClick)
     }
 
-    fun setAddItemClick(itemClick: (Homework) -> (Unit)) {
+    fun setAddItemClick(itemClick: (AssignmentDTO) -> (Unit)) {
         newItemClick = itemClick
     }
 
     override fun onBindViewHolder(holder: TodayHomeworkViewHolder, position: Int) {
-        holder.onBind(homeworkList[position])
+        holder.onBind(assignmentList[position])
     }
 
-    override fun getItemCount(): Int = homeworkList.size
+    override fun getItemCount(): Int = assignmentList.size
 
-    fun setItems(newItems: List<Homework>) {
-        homeworkList.clear()
-        homeworkList.addAll(newItems)
+    fun setItems(newItems: List<AssignmentDTO>?) {
+        assignmentList.clear()
+        assignmentList.add(AssignmentDTO("", 0, 0, "", null))
+        if (newItems != null) assignmentList.addAll(newItems)
         notifyDataSetChanged()
     }
 
     class TodayHomeworkViewHolder(
         private val binding: ItemHomeHomeworkBinding,
-        private val itemClick: (Homework) -> Unit,
-        private val newItemClick: (Homework) -> Unit
+        private val itemClick: (AssignmentDTO) -> Unit,
+        private val newItemClick: (AssignmentDTO) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(item: Homework) {
+        fun onBind(item: AssignmentDTO) {
             binding.tvTitle.text = item.title
-            binding.tvContent.text = item.range
             if (item.title.isEmpty()) {
+                binding.tvContent.text = ""
                 binding.ivThumbnail.setImageResource(R.drawable.ic_homework_add)
                 binding.root.setOnSingleClickListener {
                     // 선생님이 추가하기 클릭 시
@@ -60,7 +61,8 @@ class TodayHomeworkAdapter(private val itemClick: (Homework) -> (Unit))
                 }
 
             } else {
-                binding.ivThumbnail.load(item.photoUrls.first()) {
+                binding.tvContent.text = "${item.startPage}p - ${item.endPage}p"
+                binding.ivThumbnail.load(item.textbook!!.imageUrl) {
 //                transformations(RoundedCornersTransformation(4f))
                 }
                 binding.root.setOnSingleClickListener {

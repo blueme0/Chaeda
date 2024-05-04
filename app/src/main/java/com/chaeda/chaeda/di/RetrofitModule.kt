@@ -52,6 +52,7 @@ object RetrofitModule {
         @Auth authInterceptor: Interceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
+        .addInterceptor(authInterceptor)
         .addFlipperNetworkPlugin()
         .build()
 

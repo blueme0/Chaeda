@@ -5,6 +5,7 @@ import com.chaeda.data.model.request.RequestAssignmentResultDTO
 import com.chaeda.data.service.HomeworkService
 import com.chaeda.domain.entity.AssignmentDTO
 import com.chaeda.domain.entity.ProblemsWithPageDTO
+import java.time.LocalDate
 import javax.inject.Inject
 
 class RemoteHomeworkDataSource @Inject constructor(
@@ -30,9 +31,10 @@ class RemoteHomeworkDataSource @Inject constructor(
     }
 
     suspend fun getAssignmentsByDate(
-        date: String
+        dateString: String,
+        date: LocalDate
     ): List<AssignmentDTO> {
-        return homeworkService.getAssignmentsByDate(date)
+        return homeworkService.getAssignmentsByDate(dateString)
     }
 
     suspend fun postAssignment(

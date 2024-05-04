@@ -50,6 +50,10 @@ interface HomeworkService {
         @Body images: List<ImageInfo>
     ): List<String>
 
+    /**
+     * api related to assignment
+     */
+
     @GET("/assignment/{assignmentId}")
     suspend fun getAssignmentById(
         @Path("assignmentId") assignmentId: Int
@@ -69,6 +73,7 @@ interface HomeworkService {
     @GET("/assignment")
     suspend fun getAssignmentsByDate(
         @Query("date") date: String
+//        @Named("date") @Body d: LocalDate
     ): List<AssignmentDTO>
 
     @POST("/assignment")

@@ -73,7 +73,7 @@
                     android:layout_marginStart="46dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="교재 선택"
+                    android:text="문제집 선택"
                     android:textColor="#828282"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +89,7 @@
                     android:fontFamily="@font/pretendard_regular"
                     android:paddingStart="16dp"
                     android:paddingVertical="12dp"
+                    android:text=""
                     android:paddingEnd="32dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_book" />
@@ -184,34 +185,6 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
                 <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="46dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:text="내용"
-                    android:textColor="#828282"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_title" />
-
-                <EditText
-                    android:id="@+id/et_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="46dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@drawable/shape_rect4_fill_input"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:hint="숙제 내용 입력하기"
-                    android:gravity="start"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="12dp"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_content" />
-
-                <TextView
                     android:id="@+id/tv_deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -222,7 +195,7 @@
                     android:textColor="#828282"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_content" />
+                    app:layout_constraintTop_toBottomOf="@id/et_title" />
 
                 <EditText
                     android:id="@+id/et_deadline"
@@ -232,38 +205,12 @@
                     android:layout_marginTop="7dp"
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
-                    android:hint="2024.04.24. 16:00"
+                    android:hint="2024-04-24"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/tv_deadline" />
 
-                <TextView
-                    android:id="@+id/tv_class"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="46dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:text="클래스명"
-                    android:textColor="#828282"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_deadline" />
-
-                <TextView
-                    android:id="@+id/et_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginHorizontal="46dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@drawable/shape_rect4_fill_input"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:text="클래스를 선택하세요"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="12dp"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_class" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
