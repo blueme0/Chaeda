@@ -10,7 +10,6 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkResultBinding
 import com.chaeda.chaeda.presentation.homework.result.answer.ResultAnswerAdapter
-import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +31,9 @@ class HomeworkResultActivity
     }
 
     private fun initView() {
-        answerAdapter = ResultAnswerAdapter()
+        answerAdapter = ResultAnswerAdapter {
+
+        }
         // 해당 문제에 대한 startActivity 필요
 //            startActivity(AnswerDetailActivity.getIntent(requireContext(), it.))
 //        }
@@ -43,9 +44,6 @@ class HomeworkResultActivity
     private fun initAnswerItems() {
         answerAdapter.setItems(
             listOf(
-                ResultAnswer(index = 1),
-                ResultAnswer(index = 2),
-                ResultAnswer(index = 3),
             )
         )
     }
