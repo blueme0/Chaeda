@@ -3,11 +3,9 @@ package com.chaeda.chaeda.presentation.homework
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.domain.entity.AssignmentDTO
-import com.chaeda.domain.entity.AssignmentResultDTO
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedDetailInfo
-import com.chaeda.domain.entity.ProblemsWithPageDTO
 import com.chaeda.domain.repository.HomeworkRepository
 import com.chaeda.domain.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -156,54 +154,6 @@ class HomeworkViewModel @Inject constructor(
                 }
         }
     }
-
-    fun getAssignmentById(id: Int) {
-        viewModelScope.launch {
-            homeworkRepository.getAssignmentById(id)
-                .onSuccess {
-                    _assignmentState.value = AssignmentState.GetByIdSuccess(it)
-                }
-                .onFailure {
-                    _assignmentState.value = AssignmentState.Failure(it.message!!)
-                }
-        }
-    }
-
-    fun postAssignment(title: String, sp: Int, ep: Int, td: String, tbId: Int) {
-        viewModelScope.launch {
-            homeworkRepository.postAssignment(AssignmentDTO(title, sp, ep, td, null), tbId)
-                .onSuccess {
-                    _assignmentState.value = AssignmentState.UploadSuccess(it)
-                }
-                .onFailure {
-                    _assignmentState.value = AssignmentState.Failure(it.message!!)
-                }
-        }
-    }
-
-    fun getProblemRange(id: Int) {
-        viewModelScope.launch {
-            homeworkRepository.getProblemRangeWithPage(id)
-                .onSuccess {
-                    _assignmentState.value = AssignmentState.GetRangeSuccess(it)
-                }
-                .onFailure {
-                    _assignmentState.value = AssignmentState.Failure(it.message!!)
-                }
-        }
-    }
-
-    fun postResult(id: Int, results: List<AssignmentResultDTO>) {
-        viewModelScope.launch {
-            homeworkRepository.postAssignmentResult(id, results)
-                .onSuccess {
-                    _assignmentState.value = AssignmentState.SubmitSuccess
-                }
-                .onFailure {
-                    _assignmentState.value = AssignmentState.Failure(it.message!!)
-                }
-        }
-    }
 }
 
 sealed interface AssignmentState {
@@ -213,7 +163,7 @@ sealed interface AssignmentState {
     data class PutByIdSuccess(val assignment: AssignmentDTO): AssignmentState
     object DeleteByIdSuccess: AssignmentState
     data class UploadSuccess(val assignment: AssignmentDTO): AssignmentState
-    data class GetRangeSuccess(val list: List<ProblemsWithPageDTO>): AssignmentState
+    object GetRangeSuccess: AssignmentState
     object SubmitSuccess: AssignmentState
     data class Failure(val msg: String): AssignmentState
 }

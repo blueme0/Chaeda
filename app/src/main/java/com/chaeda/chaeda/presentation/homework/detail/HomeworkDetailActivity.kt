@@ -6,15 +6,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.boolExtra
 import com.chaeda.base.util.extension.intExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkDetailBinding
+import com.chaeda.chaeda.presentation.homework.AssignmentState
 import com.chaeda.chaeda.presentation.homework.result.HomeworkResultActivity
 import com.chaeda.chaeda.presentation.homework.result.submit.ResultSubmitActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeworkDetailActivity
@@ -23,13 +27,18 @@ class HomeworkDetailActivity
     private val id by intExtra()
     private val isDone by boolExtra()
 
+    private val assignmentDetailViewModel by viewModels<AssignmentDetailViewModel>()
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
+    private var sp = 0
+    private var ep = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initListener()
         setResultLauncher()
+        observe()
     }
 
     private fun setResultLauncher() {
@@ -50,10 +59,32 @@ class HomeworkDetailActivity
                 finish()
             }
             fab.setOnSingleClickListener {
-                if (isDone) startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity))
+                if (isDone) startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity, id))
                 else {
 //                    resultLauncher.launch(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
-                    startActivity(ResultSubmitActivity.getIntent(this@HomeworkDetailActivity))
+                    startActivity(ResultSubmitActivity.getIntent(this@HomeworkDetailActivity, id, tvTitle.text.toString(), sp, ep))
+                }
+            }
+        }
+        assignmentDetailViewModel.getAssignmentById(id = id)
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            assignmentDetailViewModel.assignmentState.collect { state ->
+                when (state) {
+                    is AssignmentState.GetByIdSuccess -> {
+                        val assignment = state.assignment
+                        with(binding) {
+                            tvTitle.text = assignment.title
+                            tvRange.text = "${assignment.startPage}p - ${assignment.endPage}"
+                            sp = assignment.startPage
+                            ep = assignment.endPage
+                            tvDeadline.text = assignment.targetDate
+                            tvTextbook.text = assignment.textbook?.name
+                        }
+                    }
+                    else -> { }
                 }
             }
         }

@@ -4,17 +4,28 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
+import com.chaeda.base.util.extension.intExtra
+import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.base.util.extension.stringExtra
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityResultSubmitBinding
+import com.chaeda.chaeda.presentation.homework.AssignmentState
 import com.chaeda.chaeda.presentation.homework.result.ResultViewModel
 import com.chaeda.chaeda.presentation.homework.result.answer.ResultAnswerAdapter
 import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ResultSubmitActivity
     : BindingActivity<ActivityResultSubmitBinding> (R.layout.activity_result_submit) {
+
+    private val id by intExtra()
+    private val title by stringExtra()
+    private val sp by intExtra()
+    private val ep by intExtra()
 
     private val resultViewModel by viewModels<ResultViewModel>()
     private lateinit var answerAdapter: ResultAnswerAdapter
@@ -25,28 +36,95 @@ class ResultSubmitActivity
         binding.lifecycleOwner = this
         initView()
         initAnswerItems()
+        initListeners()
+        observe()
     }
 
     private fun initView() {
-        answerAdapter = ResultAnswerAdapter()
+        answerAdapter = ResultAnswerAdapter {
+            resultViewModel.updateRecords(
+                resultViewModel.currentPage.value,
+                it.index,
+                if (it.checked) it.level else null
+            )
+        }
         // 해당 문제에 대한 startActivity 필요
 //            startActivity(AnswerDetailActivity.getIntent(requireContext(), it.))
 //        }
-
+        with(binding) {
+            tvTitle.text = title
+            ivLeft.setOnSingleClickListener {
+                if (resultViewModel.currentPage.value > sp)
+                    resultViewModel.updateCurrentPage(resultViewModel.currentPage.value - 1)
+            }
+            ivRight.setOnSingleClickListener {
+                if (resultViewModel.currentPage.value < ep)
+                    resultViewModel.updateCurrentPage(resultViewModel.currentPage.value + 1)
+            }
+        }
         binding.rvAnswer.adapter = answerAdapter
+
+        resultViewModel.getProblemRanges(id)
     }
 
     private fun initAnswerItems() {
         answerAdapter.setItems(
             listOf(
-                ResultAnswer(index = 1),
-                ResultAnswer(index = 2),
-                ResultAnswer(index = 3),
             )
         )
     }
 
+    private fun initListeners() {
+        with(binding) {
+            fab.setOnSingleClickListener {
+                resultViewModel.postAssignmentResult(id)
+            }
+        }
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            resultViewModel.assignmentState.collect { state ->
+                when (state) {
+                    is AssignmentState.SubmitSuccess -> {
+                        finish()
+                    }
+                    is AssignmentState.GetRangeSuccess -> {
+                        resultViewModel.updateCurrentPage(sp)
+                    }
+                    is AssignmentState.Failure -> {
+
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            resultViewModel.currentPage.collect { pageNum ->
+                val page = resultViewModel.getPage(pageNum)
+                val list = mutableListOf<ResultAnswer>()
+                page?.forEach { problem ->
+                    val result = resultViewModel.findWrong(pageNum, problem)
+                    list.add(ResultAnswer(
+                        checked = result != null,
+                        index = problem,
+                        level = result ?: "미풀이"
+                    ))
+                }
+                answerAdapter.setItems(list)
+            }
+        }
+    }
+
     companion object {
-        fun getIntent(context: Context) = Intent(context, ResultSubmitActivity::class.java)
+        fun getIntent(context: Context, id: Int, title: String, sp: Int, ep: Int) = Intent(context, ResultSubmitActivity::class.java).apply {
+            putExtra("id", id)
+            putExtra("title", title)
+            putExtra("startPage", sp)
+            putExtra("endPage", ep)
+        }
     }
 }
