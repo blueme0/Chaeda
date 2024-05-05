@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,8 +36,15 @@ class AddHomeworkActivity
     private fun initListener() {
         with(binding) {
             fab.setOnSingleClickListener {
-                if (addAssignmentViewModel.assignmentValid.value)
+                Log.d("chaeda-post", "title: ${addAssignmentViewModel.title.value}")
+                Log.d("chaeda-post", "startRange: ${addAssignmentViewModel.startRange.value}")
+                Log.d("chaeda-post", "endRange: ${addAssignmentViewModel.endRange.value}")
+                Log.d("chaeda-post", "due: ${addAssignmentViewModel.due.value}")
+                Log.d("chaeda-post", "textbookId: ${addAssignmentViewModel.textbookId.value}")
+
+                if (addAssignmentViewModel.assignmentValid.value) {
                     addAssignmentViewModel.postAssignment()
+                }
                 else {
                     Toast.makeText(this@AddHomeworkActivity, "입력을 완료해주세요.", Toast.LENGTH_SHORT).show()
                 }
@@ -129,6 +137,9 @@ class AddHomeworkActivity
                 if (bookName != null) {
                     addAssignmentViewModel.updateTextbookId(bookId)
                     addAssignmentViewModel.updateTextbook(bookName)
+                    with(binding) {
+                        etBook.text = bookName
+                    }
                 }
             }
         }

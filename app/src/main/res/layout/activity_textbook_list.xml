@@ -88,43 +88,5 @@
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="133dp"
-            android:layout_height="47dp"
-            android:layout_gravity="end|bottom"
-            android:layout_marginBottom="32dp"
-            app:backgroundTint="#00FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/shape_rect30_fab"
-            app:layout_constraintTop_toTopOf="@id/fab"
-            app:layout_constraintBottom_toBottomOf="@id/fab"
-            app:layout_constraintStart_toStartOf="@id/fab"
-            app:layout_constraintEnd_toEndOf="@id/fab"
-            android:elevation="6dp"
-            />
-
-        <TextView
-            android:id="@+id/tv_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="문제집 선택하기"
-            app:layout_constraintStart_toStartOf="@id/fab"
-            app:layout_constraintEnd_toEndOf="@id/fab"
-            app:layout_constraintTop_toTopOf="@id/fab"
-            app:layout_constraintBottom_toBottomOf="@id/fab"
-            android:elevation="7dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/nanumsquare_regular"
-            android:textColor="#683F21"
-            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
