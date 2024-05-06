@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeda.base.BindingActivity
-import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityTextbookListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +33,12 @@ class TextbookListActivity
         listAdapter = TextbookListAdapter {
             // 리스너 달 거 있음 달기
             textbookViewModel.updateTextbook(it.id, it.name)
+            val resultIntent = Intent().apply {
+                putExtra("textbookId", textbookViewModel.textbookId.value)
+                putExtra("textbookName", textbookViewModel.textbookName.value)
+            }
+            setResult(RESULT_OK, resultIntent)
+            finish()
         }
         with(binding.rvTextbook) {
             this.adapter = listAdapter
@@ -47,15 +52,15 @@ class TextbookListActivity
 
     private fun initListener() {
         with(binding) {
-            fab.setOnSingleClickListener {
-                // 결과를 전달하기 위해 Intent를 생성합니다.
-                val resultIntent = Intent().apply {
-                    putExtra("textbookId", textbookViewModel.textbookId.value)
-                    putExtra("textbookName", textbookViewModel.textbookName.value)
-                }
-                setResult(RESULT_OK, resultIntent)
-                finish()
-            }
+//            fab.setOnSingleClickListener {
+//                // 결과를 전달하기 위해 Intent를 생성합니다.
+//                val resultIntent = Intent().apply {
+//                    putExtra("textbookId", textbookViewModel.textbookId.value)
+//                    putExtra("textbookName", textbookViewModel.textbookName.value)
+//                }
+//                setResult(RESULT_OK, resultIntent)
+//                finish()
+//            }
         }
     }
 

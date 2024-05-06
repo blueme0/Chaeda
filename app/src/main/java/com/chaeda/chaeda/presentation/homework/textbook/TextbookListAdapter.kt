@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chaeda.base.util.extension.setOnSingleClickListener
-import com.chaeda.chaeda.databinding.ItemClassListBinding
+import com.chaeda.chaeda.databinding.ItemTextbookListBinding
 import com.chaeda.domain.entity.TextbookDTO
 
 class TextbookListAdapter (private val itemClick: (TextbookDTO) -> (Unit))
@@ -16,7 +16,7 @@ class TextbookListAdapter (private val itemClick: (TextbookDTO) -> (Unit))
         parent: ViewGroup,
         viewType: Int
     ): TextbookListViewHolder {
-        val binding = ItemClassListBinding.inflate(
+        val binding = ItemTextbookListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -38,7 +38,7 @@ class TextbookListAdapter (private val itemClick: (TextbookDTO) -> (Unit))
     }
 
     class TextbookListViewHolder(
-        private val binding: ItemClassListBinding,
+        private val binding: ItemTextbookListBinding,
         private val itemClick: (TextbookDTO) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

@@ -5,7 +5,6 @@ import android.view.View
 import com.chaeda.base.BindingFragment
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentResultAnswerBinding
-import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +21,9 @@ class ResultAnswerFragment
     }
 
     private fun initView() {
-        answerAdapter = ResultAnswerAdapter()
+        answerAdapter = ResultAnswerAdapter {
+
+        }
             // 해당 문제에 대한 startActivity 필요
 //            startActivity(AnswerDetailActivity.getIntent(requireContext(), it.))
 //        }
@@ -33,9 +34,6 @@ class ResultAnswerFragment
     private fun initAnswerItems() {
         answerAdapter.setItems(
             listOf(
-                ResultAnswer(index = 1),
-                ResultAnswer(index = 2),
-                ResultAnswer(index = 3),
             )
         )
     }

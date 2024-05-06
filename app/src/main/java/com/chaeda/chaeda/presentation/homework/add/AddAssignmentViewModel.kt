@@ -99,6 +99,6 @@ class AddAssignmentViewModel @Inject constructor(
     }
 
     companion object {
-        private const val DATE_REGEX = "^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})\$"
+        private const val DATE_REGEX = "^(\\d{4})-(\\d{2})-(\\d{2})\$"
     }
 }
