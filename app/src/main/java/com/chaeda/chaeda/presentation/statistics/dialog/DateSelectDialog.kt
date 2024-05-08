@@ -70,12 +70,15 @@ class DateSelectDialog (
             val currentDate: LocalDate = LocalDate.now()
             npYear.minValue = 2023
             npYear.maxValue = currentDate.year
+            npYear.value = date.year
 
             npMonth.minValue = 1
             npMonth.maxValue = 12
+            npMonth.value = date.monthValue
 
             npDate.minValue = 1
             npDate.maxValue = 31
+            npDate.value = date.dayOfMonth
 
             updateDateNumberPicker()
 

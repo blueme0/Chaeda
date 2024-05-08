@@ -41,6 +41,7 @@ class StatisticsCountFragment
             ivBack.setOnSingleClickListener {
                 navigateTo<StatisticsFragment>()
             }
+            tvStandardText.text = "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 (${DAY_OF_WEEK[date.dayOfWeek.value - 1]})"
         }
     }
 
@@ -66,6 +67,7 @@ class StatisticsCountFragment
 
     override fun onYesButtonClick(date: LocalDate) {
         this.date = date
+        binding.tvStandardText.text = "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 (${DAY_OF_WEEK[date.dayOfWeek.value - 1]})"
     }
 
     private inline fun <reified T : Fragment> navigateTo() {
@@ -78,5 +80,6 @@ class StatisticsCountFragment
         private const val MODE_DATE = "mode_date"
         private const val MODE_WEEK = "mode_week"
         private const val MODE_MONTH = "mode_month"
+        private val DAY_OF_WEEK = arrayOf("월", "화", "수", "목", "금", "토", "일")
     }
 }
