@@ -36,7 +36,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/statistics_count_title"
+            android:text="@string/statistics_wrong_title"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="#683F21"
             android:textSize="20sp"
@@ -61,7 +61,7 @@
                 >
 
                 <LinearLayout
-                    android:id="@+id/ll_check_date"
+                    android:id="@+id/ll_check_week"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -71,39 +71,10 @@
                     android:gravity="center"
                     >
                     <ImageView
-                        android:id="@+id/iv_check_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_radio_checked"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_check_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="날짜별"
-                        android:fontFamily="@font/pretendard_semibold"
-                        android:textColor="#683F21"
-                        android:textSize="16sp"
-                        android:layout_marginStart="10dp"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_check_week"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/ll_check_date"
-                    android:gravity="center"
-                    >
-                    <ImageView
                         android:id="@+id/iv_check_week"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_radio_unchecked"
+                        android:src="@drawable/ic_radio_checked"
                         />
 
                     <TextView
@@ -123,10 +94,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/ll_check_date"
+                    app:layout_constraintTop_toTopOf="@id/ll_check_week"
                     android:gravity="center"
-                    android:layout_marginEnd="20dp"
                     >
                     <ImageView
                         android:id="@+id/iv_check_month"
@@ -151,11 +122,11 @@
                     android:id="@+id/tv_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/statistics_count_date_comment"
+                    android:text="@string/statistics_count_week_comment"
                     android:fontFamily="@font/pretendard_regular"
                     android:textSize="13sp"
                     android:textColor="#717171"
-                    app:layout_constraintTop_toBottomOf="@id/ll_check_date"
+                    app:layout_constraintTop_toBottomOf="@id/ll_check_week"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="18dp"
                     />
