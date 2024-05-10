@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".presentation.statistics.count.StatisticsCountFragment">
+
+    <data>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@color/appbar_background"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            android:layout_marginStart="25dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_wrong_title"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="#683F21"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/background"
+            android:layout_marginBottom="12dp"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="30dp"
+            android:layout_marginHorizontal="25dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:id="@+id/ll_check_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_check_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_radio_checked"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_check_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="주차별"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:textColor="#683F21"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_check_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ll_check_week"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_check_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_radio_unchecked"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_check_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="월별"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:textColor="#683F21"
+                        android:textSize="16sp"
+                        android:layout_marginStart="10dp"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_count_week_comment"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="13sp"
+                    android:textColor="#717171"
+                    app:layout_constraintTop_toBottomOf="@id/ll_check_week"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_standard_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기준 날짜"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:textColor="#683F21"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_comment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="18dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_standard_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2024년 5월 7일 (화)"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textColor="#683F21"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/tv_standard_title"
+                    android:layout_marginStart="18dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_standard_title"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_standard_title"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_standard_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="날짜 선택하기"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textColor="#717171"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_standard_title"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_standard_title"
+                    />
+
+                <com.anychart.AnyChartView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_standard_select"
+                    android:layout_marginTop="40dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

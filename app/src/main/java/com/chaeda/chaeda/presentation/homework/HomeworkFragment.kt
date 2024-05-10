@@ -123,6 +123,16 @@ class HomeworkFragment
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window?.apply {
+//            this.statusBarColor = Color.TRANSPARENT
+            this.statusBarColor = Color.parseColor("#FFD571")
+//            decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().window?.apply {

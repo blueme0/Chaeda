@@ -78,6 +78,9 @@
         <activity
             android:name=".presentation.homework.textbook.TextbookListActivity"
             android:exported="true" />
+        <activity
+            android:name=".presentation.statistics.type.StatisticsTypeDetailActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

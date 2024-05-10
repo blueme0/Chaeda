@@ -33,6 +33,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
 //                apply("com.google.gms.google-services")
 //                apply("com.google.firebase.appdistribution")
 //                apply("com.google.firebase.crashlytics")
+//                apply("com.github.AnyChart")
             }
 
 
@@ -142,6 +143,8 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 kapt(libs.getLibrary("hiltWorkManagerCompiler"))
 
                 implementation(libs.getBundle("appModuleLibraryEtc"))
+
+                implementation(libs.getBundle("anychart"))
             }
         }
 }

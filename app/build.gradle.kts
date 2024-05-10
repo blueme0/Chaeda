@@ -16,4 +16,5 @@ dependencies {
     implementation(libs.google.oss.plugin)
     implementation(libs.play.services.location)
     implementation(libs.flexbox)
+    implementation(libs.anychart)
 }

@@ -12,6 +12,7 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityMainBinding
 import com.chaeda.chaeda.presentation.homework.HomeworkFragment
 import com.chaeda.chaeda.presentation.setting.SettingFragment
+import com.chaeda.chaeda.presentation.statistics.StatisticsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +46,7 @@ class MainActivity
 
                 R.id.menu_homework -> navigateTo<HomeworkFragment>()
                 R.id.menu_analysis -> {
-//                    navigateTo<AnalysisFragment>()
+                    navigateTo<StatisticsFragment>()
                 }
                 R.id.menu_upload -> {
 

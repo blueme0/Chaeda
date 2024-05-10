@@ -4,6 +4,7 @@ import com.chaeda.data.service.HomeworkService
 import com.chaeda.data.service.ImageService
 import com.chaeda.data.service.MemberService
 import com.chaeda.data.service.SampleService
+import com.chaeda.data.service.StatisticsService
 import com.chaeda.data.service.TextbookService
 import dagger.Module
 import dagger.Provides
@@ -40,4 +41,9 @@ object ServiceModule {
     @Provides
     fun provideTextbookService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
         chaedaRetrofit.create(TextbookService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideStatisticsService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
+        chaedaRetrofit.create(StatisticsService::class.java)
 }
