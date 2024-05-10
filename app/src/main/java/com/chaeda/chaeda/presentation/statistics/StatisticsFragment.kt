@@ -59,6 +59,16 @@ class StatisticsFragment
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window?.apply {
+//            this.statusBarColor = Color.TRANSPARENT
+            this.statusBarColor = Color.parseColor("#FFD571")
+//            decorView.systemUiVisibility =
+//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
+    }
+
     private inline fun <reified T : Fragment> navigateTo() {
         requireActivity().supportFragmentManager.commit {
             replace<T>(R.id.fcv_main, T::class.java.canonicalName)

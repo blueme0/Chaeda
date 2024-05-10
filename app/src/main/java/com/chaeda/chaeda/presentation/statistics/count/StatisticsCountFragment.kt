@@ -28,6 +28,10 @@ class StatisticsCountFragment
 
         initView()
         initListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
         requireActivity().window?.apply {
 //            this.statusBarColor = Color.TRANSPARENT
             this.statusBarColor = Color.parseColor("#FFD571")
@@ -51,6 +55,27 @@ class StatisticsCountFragment
                 val dialog = DateSelectDialog(this@StatisticsCountFragment, date, mode)
                 dialog.isCancelable = false
                 dialog.show(requireActivity().supportFragmentManager, "DateSelectDialog")
+            }
+
+            ivCheckDate.setOnSingleClickListener {
+                ivCheckDate.setImageResource(R.drawable.ic_radio_checked)
+                ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
+                ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
+                mode = MODE_DATE
+            }
+
+            ivCheckWeek.setOnSingleClickListener {
+                ivCheckDate.setImageResource(R.drawable.ic_radio_unchecked)
+                ivCheckWeek.setImageResource(R.drawable.ic_radio_checked)
+                ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
+                mode = MODE_WEEK
+            }
+
+            ivCheckMonth.setOnSingleClickListener {
+                ivCheckDate.setImageResource(R.drawable.ic_radio_unchecked)
+                ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
+                ivCheckMonth.setImageResource(R.drawable.ic_radio_checked)
+                mode = MODE_MONTH
             }
         }
     }

@@ -3,6 +3,7 @@ package com.chaeda.chaeda.presentation.statistics.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,11 +28,13 @@ class DateSelectDialog (
     private var date: LocalDate = LocalDate.now()
 
     private var mode: String? = null
+    private val weekDates = ArrayList<String>()
 
     init {
         this.date = date
         this.dateSelectDialogInterface = dateSelectDialogInterface
         this.mode = mode
+        if (mode == MODE_MONTH) this.date = LocalDate.of(date.year, date.monthValue, 1)
     }
 
     override fun onCreateView(
@@ -59,6 +62,19 @@ class DateSelectDialog (
                 dismiss()
             }
 
+            initDateNumberPicker()
+
+            when (mode) {
+                MODE_DATE -> initForModeDate()
+                MODE_WEEK -> initForModeWeek()
+                MODE_MONTH -> initForModeMonth()
+            }
+
+        }
+    }
+
+    private fun initDateNumberPicker() {
+        with(binding) {
             npYear.wrapSelectorWheel = false
             npMonth.wrapSelectorWheel = false
             npDate.wrapSelectorWheel = false
@@ -76,53 +92,189 @@ class DateSelectDialog (
             npMonth.maxValue = 12
             npMonth.value = date.monthValue
 
-            npDate.minValue = 1
-            npDate.maxValue = 31
-            npDate.value = date.dayOfMonth
+            npDate.visibility = View.VISIBLE
+            when (mode) {
+                MODE_DATE -> {
+                    npDate.minValue = 1
+                    npDate.maxValue = 31
+                    npDate.value = date.dayOfMonth
+                }
+                MODE_WEEK -> {
+                    weekDates.clear()
+                    for (i in 1 .. YearMonth.of(date.year, date.monthValue).lengthOfMonth()) {
+                        val cur = LocalDate.of(date.year, date.monthValue, i)
+                        if (cur.dayOfWeek.value == 1 && cur.isBefore(LocalDate.now())) {
+                            weekDates.add("$i")
+                        }
+                    }
+                    if (weekDates.size == 0) {
+                        weekDates.clear()
+                        date = date.minusMonths(1)
+                        date = LocalDate.of(date.year, date.monthValue, YearMonth.of(date.year, date.monthValue).lengthOfMonth())
+                        for (i in 1 .. YearMonth.of(date.year, date.monthValue).lengthOfMonth()) {
+                            val cur = LocalDate.of(date.year, date.monthValue, i)
+                            if (cur.dayOfWeek.value == 1 && cur.isBefore(LocalDate.now())) {
+                                weekDates.add("$i")
+                            }
+                        }
+                    }
+                    npDate.minValue = 0
+                    npDate.maxValue = weekDates.size - 1
+                    npDate.displayedValues = weekDates.toTypedArray()
+                    npDate.value = 0
+                }
+                MODE_MONTH -> {
+                    npDate.value = 1
+                    npDate.visibility = View.GONE
+                }
+            }
 
-            updateDateNumberPicker()
+        }
+    }
 
+    private fun initForModeDate() {
+        updateDateNumberPicker()
+
+        with(binding) {
             npYear.setOnValueChangedListener { _, _, newYear ->
-                date = LocalDate.of(newYear, date.monthValue, date.dayOfMonth)
+                if (date.dayOfMonth > YearMonth.of(newYear, date.monthValue).lengthOfMonth()) {
+                    date = LocalDate.of(newYear, date.monthValue, YearMonth.of(newYear, date.monthValue).lengthOfMonth())
+                } else
+                    date = LocalDate.of(newYear, date.monthValue, date.dayOfMonth)
+                validateDateNumber()
                 updateDateNumberPicker()
             }
 
             npMonth.setOnValueChangedListener { _, _, newMonth ->
                 if (date.dayOfMonth > YearMonth.of(date.year, newMonth).lengthOfMonth()) {
-                    LocalDate.of(date.year, YearMonth.of(date.year, newMonth).lengthOfMonth(), date.dayOfMonth)
-                } else {
+                    date = LocalDate.of(date.year, newMonth, YearMonth.of(date.year, newMonth).lengthOfMonth())
+                } else
                     date = LocalDate.of(date.year, newMonth, date.dayOfMonth)
-                }
+                validateDateNumber()
                 updateDateNumberPicker()
             }
 
             npDate.setOnValueChangedListener { _, _, newDate ->
                 date = LocalDate.of(date.year, date.monthValue, newDate)
+                validateDateNumber()
             }
         }
     }
 
+    private fun initForModeWeek() {
+        updateDateNumberPicker()
+
+        with(binding) {
+            npYear.setOnValueChangedListener { _, _, newYear ->
+                if (date.dayOfMonth > YearMonth.of(newYear, date.monthValue).lengthOfMonth()) {
+                    date = LocalDate.of(newYear, date.monthValue, YearMonth.of(newYear, date.monthValue).lengthOfMonth())
+                } else
+                    date = LocalDate.of(newYear, date.monthValue, date.dayOfMonth)
+                validateDateNumber()
+                updateDateNumberPicker()
+                updateWeekDates(false)
+            }
+
+            npMonth.setOnValueChangedListener { _, _, newMonth ->
+                if (date.dayOfMonth > YearMonth.of(date.year, newMonth).lengthOfMonth()) {
+                    date = LocalDate.of(date.year, newMonth, YearMonth.of(date.year, newMonth).lengthOfMonth())
+                } else
+                    date = LocalDate.of(date.year, newMonth, date.dayOfMonth)
+                validateDateNumber()
+                updateDateNumberPicker()
+                updateWeekDates(false)
+            }
+
+            npDate.setOnValueChangedListener { _, _, newDate ->
+                Log.d("chaeda-npdate", "newDate: $newDate")
+                date = LocalDate.of(date.year, date.monthValue, weekDates[newDate].toInt())
+                validateDateNumber()
+                updateWeekDates(true)
+            }
+        }
+    }
+
+    private fun updateWeekDates(isDate: Boolean) {
+        weekDates.clear()
+        for (i in 1 .. YearMonth.of(date.year, date.monthValue).lengthOfMonth()) {
+            val cur = LocalDate.of(date.year, date.monthValue, i)
+            if (cur.dayOfWeek.value == 1 && cur.isBefore(LocalDate.now())) {
+                weekDates.add("$i")
+            }
+        }
+        if (weekDates.size == 0) {
+            weekDates.clear()
+            date = date.minusMonths(1)
+            date = LocalDate.of(date.year, date.monthValue, YearMonth.of(date.year, date.monthValue).lengthOfMonth())
+            for (i in 1 .. YearMonth.of(date.year, date.monthValue).lengthOfMonth()) {
+                val cur = LocalDate.of(date.year, date.monthValue, i)
+                if (cur.dayOfWeek.value == 1 && cur.isBefore(LocalDate.now())) {
+                    weekDates.add("$i")
+                }
+            }
+        }
+        with(binding) {
+            Log.d("chaeda-numberpicker", "npDate - value: ${npDate.value} => ${npDate.displayedValues[npDate.value]}, maxValue: ${npDate.maxValue}")
+//            npDate.value = 0
+            if (!isDate) {
+                npDate.value = 0
+                npDate.maxValue = 0
+            }
+            Log.d("chaeda-numberpicker", "npDate - value: ${npDate.value} => ${npDate.displayedValues[npDate.value]}, maxValue: ${npDate.maxValue}")
+            Log.d("chaeda-numberpicker", "weekdates: ${weekDates.toList()}, size: ${weekDates.size}")
+//            if (npDate.maxValue <)
+            npDate.displayedValues = weekDates.toTypedArray()
+            npDate.maxValue = weekDates.size - 1
+            Log.d("chaeda-numberpicker", "npDate - value: ${npDate.value} => ${npDate.displayedValues[npDate.value]}, maxValue: ${npDate.maxValue}")
+//            npDate.value = npDate.maxValue
+            Log.d("chaeda-numberpicker", "npDate - value: ${npDate.value} => ${npDate.displayedValues[npDate.value]}, maxValue: ${npDate.maxValue}")
+            date = LocalDate.of(date.year, date.monthValue, weekDates[npDate.value].toInt())
+        }
+    }
+
+    private fun initForModeMonth() {
+        updateDateNumberPicker()
+
+        with(binding) {
+            npYear.setOnValueChangedListener { _, _, newYear ->
+                date = LocalDate.of(newYear, date.monthValue, 1)
+                validateDateNumber()
+                updateDateNumberPicker()
+            }
+
+            npMonth.setOnValueChangedListener { _, _, newMonth ->
+                date = LocalDate.of(date.year, newMonth, 1)
+                validateDateNumber()
+                updateDateNumberPicker()
+            }
+        }
+    }
+
+    private fun validateDateNumber() {
+        if (date.isAfter(LocalDate.now())) {
+            date = LocalDate.now()
+            if (mode == MODE_MONTH) date = LocalDate.of(date.year, date.monthValue, 1)
+        }
+    }
+
     private fun updateDateNumberPicker() {
-        val currentDate: LocalDate = LocalDate.now()
+        with(binding) {
+            npYear.value = date.year
+            npMonth.value = date.monthValue
 
-        val selectedYear = binding.npYear.value
-        val selectedMonth = binding.npMonth.value
-
-        val yearMonth = YearMonth.of(selectedYear, selectedMonth)
-        val lastDayOfMonth = yearMonth.lengthOfMonth()
-
-        if (selectedYear == currentDate.year) {
-            binding.npMonth.maxValue = currentDate.monthValue
-            if (binding.npMonth.value > currentDate.monthValue) binding.npMonth.value = currentDate.monthValue
-            if (selectedMonth == currentDate.monthValue) {
-                binding.npDate.maxValue = currentDate.dayOfMonth
+            val today = LocalDate.now()
+            if (mode == MODE_DATE) {
+                npDate.value = date.dayOfMonth
+                npDate.maxValue = YearMonth.of(date.year, date.monthValue).lengthOfMonth()
             }
-            else {
-                binding.npDate.maxValue = lastDayOfMonth
+            if (npYear.value == today.year) {
+                npMonth.maxValue = today.monthValue
+                if (mode == MODE_DATE && npMonth.value == today.monthValue) {
+                    npDate.maxValue = today.dayOfMonth
+                }
+            } else {
+                npMonth.maxValue = 12
             }
-        } else {
-            binding.npMonth.maxValue = 12
-            binding.npDate.maxValue = lastDayOfMonth
         }
     }
 
