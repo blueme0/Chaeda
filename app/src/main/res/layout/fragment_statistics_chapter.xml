@@ -86,7 +86,7 @@
                     />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinner_grade"
+                    android:id="@+id/spinner_subject"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:paddingStart="10dp"
@@ -110,7 +110,7 @@
                     android:background="@drawable/shape_rect4_fill_input"
                     android:paddingVertical="5dp"
                     android:layout_marginTop="7dp"
-                    app:layout_constraintTop_toBottomOf="@id/spinner_grade"
+                    app:layout_constraintTop_toBottomOf="@id/spinner_subject"
                     />
 
                 <com.anychart.AnyChartView
