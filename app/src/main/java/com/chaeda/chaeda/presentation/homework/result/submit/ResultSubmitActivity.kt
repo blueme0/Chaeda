@@ -12,20 +12,24 @@ import com.chaeda.base.util.extension.stringExtra
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityResultSubmitBinding
 import com.chaeda.chaeda.presentation.homework.AssignmentState
+import com.chaeda.chaeda.presentation.homework.dialog.SimpleAlertDialog
+import com.chaeda.chaeda.presentation.homework.dialog.SimpleAlertDialogInterface
 import com.chaeda.chaeda.presentation.homework.result.ResultViewModel
 import com.chaeda.chaeda.presentation.homework.result.answer.ResultAnswerAdapter
 import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class ResultSubmitActivity
-    : BindingActivity<ActivityResultSubmitBinding> (R.layout.activity_result_submit) {
+    : BindingActivity<ActivityResultSubmitBinding> (R.layout.activity_result_submit), SimpleAlertDialogInterface {
 
     private val id by intExtra()
     private val title by stringExtra()
     private val sp by intExtra()
     private val ep by intExtra()
+    private val deadline by stringExtra()
 
     private val resultViewModel by viewModels<ResultViewModel>()
     private lateinit var answerAdapter: ResultAnswerAdapter
@@ -82,12 +86,23 @@ class ResultSubmitActivity
         }
     }
 
+    private fun isAfterToday(dateString: String): Boolean {
+        val date = LocalDate.parse(dateString)
+        val today = LocalDate.now()
+        return date.isAfter(today)
+    }
+
     private fun observe() {
         lifecycleScope.launch {
             resultViewModel.assignmentState.collect { state ->
                 when (state) {
                     is AssignmentState.SubmitSuccess -> {
-                        finish()
+                        if (deadline != null && isAfterToday(deadline!!)) {
+                            val dialog = SimpleAlertDialog(this@ResultSubmitActivity)
+                            dialog.isCancelable = false
+                            dialog.show(supportFragmentManager, "SimpleAlertDialog")
+                        }
+                        else finish()
                     }
                     is AssignmentState.GetRangeSuccess -> {
                         resultViewModel.updateCurrentPage(sp)
@@ -119,12 +134,17 @@ class ResultSubmitActivity
         }
     }
 
+    override fun onYesButtonClick() {
+        finish()
+    }
+
     companion object {
-        fun getIntent(context: Context, id: Int, title: String, sp: Int, ep: Int) = Intent(context, ResultSubmitActivity::class.java).apply {
+        fun getIntent(context: Context, id: Int, title: String, sp: Int, ep: Int, deadline: String) = Intent(context, ResultSubmitActivity::class.java).apply {
             putExtra("id", id)
             putExtra("title", title)
             putExtra("startPage", sp)
             putExtra("endPage", ep)
+            putExtra("deadline", deadline)
         }
     }
 }

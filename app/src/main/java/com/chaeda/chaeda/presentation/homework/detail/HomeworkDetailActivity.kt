@@ -62,7 +62,7 @@ class HomeworkDetailActivity
                 if (isDone) startActivity(HomeworkResultActivity.getIntent(this@HomeworkDetailActivity, id))
                 else {
 //                    resultLauncher.launch(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
-                    startActivity(ResultSubmitActivity.getIntent(this@HomeworkDetailActivity, id, tvTitle.text.toString(), sp, ep))
+                    startActivity(ResultSubmitActivity.getIntent(this@HomeworkDetailActivity, id, tvTitle.text.toString(), sp, ep, tvDeadline.text.toString()))
                 }
             }
         }
