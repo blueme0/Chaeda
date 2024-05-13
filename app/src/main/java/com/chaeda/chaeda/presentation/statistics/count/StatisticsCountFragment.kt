@@ -6,6 +6,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.anychart.AnyChart
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.data.Set
+import com.anychart.enums.Anchor
+import com.anychart.enums.MarkerType
+import com.anychart.enums.TooltipPositionMode
+import com.anychart.graphics.vector.Stroke
 import com.chaeda.base.BindingFragment
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
@@ -28,6 +36,7 @@ class StatisticsCountFragment
 
         initView()
         initListener()
+        initGraph()
     }
 
     override fun onResume() {
@@ -38,6 +47,51 @@ class StatisticsCountFragment
 //            decorView.systemUiVisibility =
 //                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
+    }
+
+    private fun initGraph() {
+        binding.anychart.setProgressBar(binding.progressBar)
+        val cartesian = AnyChart.line()
+        cartesian.animation(true)
+        cartesian.padding(10, 20, 5, 20)
+        cartesian.crosshair().enabled(true)
+        cartesian.crosshair()
+            .yLabel(true)
+            .yStroke(null as Stroke?, null, null, null as String?, null as String?)
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+
+        cartesian.title("")
+        cartesian.yAxis(0).title("문제 수")
+        cartesian.xAxis(0).labels().padding(5, 5, 5, 5)
+
+        val seriesData = ArrayList<DataEntry>()
+        seriesData.add(SolvedCount("5/7", 1))
+        seriesData.add(SolvedCount("5/8", 3))
+        seriesData.add(SolvedCount("5/9", 2))
+        seriesData.add(SolvedCount("5/10", 4))
+        seriesData.add(SolvedCount("5/11", 7))
+        seriesData.add(SolvedCount("5/12", 5))
+        seriesData.add(SolvedCount("5/13", 2))
+        val set = Set.instantiate()
+        set.data(seriesData)
+        val mapping = set.mapAs("{ x: 'date', value: 'count' }")
+        val series1 = cartesian.line(mapping)
+        series1.name("문제 수")
+        series1.hovered().markers().enabled(true)
+        series1.hovered().markers()
+            .type(MarkerType.CIRCLE)
+            .size(4)
+        series1.tooltip()
+            .position("right")
+            .anchor(Anchor.LEFT_CENTER)
+            .offsetX(5)
+            .offsetY(5)
+
+        cartesian.legend().enabled(true)
+        cartesian.legend().fontSize(13)
+        cartesian.legend().padding(0, 0, 0, 0)
+        binding.anychart.setChart(cartesian)
+
     }
 
     private fun initView() {
@@ -62,6 +116,7 @@ class StatisticsCountFragment
                 ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
                 mode = MODE_DATE
+                setStandardText()
                 tvStandardTitle.text = "기준 날짜"
                 tvComment.text = getString(R.string.statistics_count_date_comment)
             }
@@ -71,6 +126,7 @@ class StatisticsCountFragment
                 ivCheckWeek.setImageResource(R.drawable.ic_radio_checked)
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
                 mode = MODE_WEEK
+                setStandardText()
                 tvStandardTitle.text = "기준 주차"
                 tvComment.text = getString(R.string.statistics_count_week_comment)
 
@@ -81,6 +137,7 @@ class StatisticsCountFragment
                 ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_checked)
                 mode = MODE_MONTH
+                setStandardText()
                 tvStandardTitle.text = "기준 월"
                 tvComment.text = getString(R.string.statistics_count_month_comment)
             }
@@ -99,6 +156,10 @@ class StatisticsCountFragment
 
     override fun onYesButtonClick(date: LocalDate) {
         this.date = date
+        setStandardText()
+    }
+
+    private fun setStandardText() {
         val endOfWeek = date.plusDays(6)
         binding.tvStandardText.text = when (mode) {
             MODE_DATE -> "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 (${DAY_OF_WEEK[date.dayOfWeek.value - 1]})"
@@ -121,3 +182,6 @@ class StatisticsCountFragment
         private val DAY_OF_WEEK = arrayOf("월", "화", "수", "목", "금", "토", "일")
     }
 }
+
+data class SolvedCount(val date: String, val count: Int): ValueDataEntry(date, count)
+

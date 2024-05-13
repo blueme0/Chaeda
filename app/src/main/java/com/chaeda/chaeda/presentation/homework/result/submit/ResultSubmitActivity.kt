@@ -87,7 +87,7 @@ class ResultSubmitActivity
     }
 
     private fun isAfterToday(dateString: String): Boolean {
-        val date = LocalDate.parse(dateString)
+        val date = LocalDate.parse(dateString.split(" ")[0])
         val today = LocalDate.now()
         return date.isAfter(today)
     }

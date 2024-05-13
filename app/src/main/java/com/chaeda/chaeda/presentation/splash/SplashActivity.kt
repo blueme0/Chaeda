@@ -47,6 +47,7 @@ class SplashActivity
 //        }, 3000)
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(LoginActivity.getIntent(this))
+            finish()
         }, 3000)
     }
 }

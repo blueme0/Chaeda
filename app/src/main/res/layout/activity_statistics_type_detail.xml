@@ -129,6 +129,65 @@
             app:layout_constraintTop_toBottomOf="@id/tv_chapter_title"
             />
 
+        <LinearLayout
+            android:id="@+id/ll_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="30dp"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/iv_check_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_radio_checked"
+                />
+
+            <TextView
+                android:id="@+id/tv_check_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="누적"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textColor="#683F21"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_check_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            app:layout_constraintStart_toEndOf="@id/ll_check_all"
+            app:layout_constraintTop_toTopOf="@id/ll_check_all"
+            android:gravity="center"
+            >
+            <ImageView
+                android:id="@+id/iv_check_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_radio_unchecked"
+                />
+
+            <TextView
+                android:id="@+id/tv_check_month"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="월간"
+                android:textColor="#683F21"
+                android:textSize="16sp" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tv_solved_title"
             android:layout_width="wrap_content"
@@ -137,7 +196,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:textSize="14sp"
             android:textColor="#683F21"
-            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/ll_check_month"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
@@ -197,7 +256,7 @@
             android:id="@+id/tv_wrong_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="틀린 문제에 대해 사용자가 느낀 난이도"
+            android:text="사용자가 느낀 난이도 별 틀린 문제 수"
             android:fontFamily="@font/pretendard_semibold"
             android:textSize="16sp"
             android:textColor="#683F21"

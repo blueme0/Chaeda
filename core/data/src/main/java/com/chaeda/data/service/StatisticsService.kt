@@ -7,17 +7,17 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface StatisticsService {
-    @GET("/")
+    @GET("/statistics/solvedCount/7days")
     suspend fun getSolvedCountByDate(
         @Query("date") date: String
     ): Map<String, Int>
 
-    @GET("/")
+    @GET("/statistics/solvedCount/8weeks")
     suspend fun getSolvedCountByWeek(
         @Query("date") date: String
     ): Map<String, Int>
 
-    @GET("/")
+    @GET("/statistics/solvedCount/6months")
     suspend fun getSolvedCountByMonth(
         @Query("date") date: String
     ): Map<String, Int>
@@ -37,7 +37,7 @@ interface StatisticsService {
         @Query("typeId") typeId: Int
     ): ConceptDetailDTO
 
-    @GET("/")
+    @GET("/statistics/chapter/list")
     suspend fun getChapterListBySubject(
         @Query("subject") subject: String
     ): List<ChapterDTO>
