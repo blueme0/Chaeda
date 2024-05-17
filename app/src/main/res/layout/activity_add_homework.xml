@@ -105,6 +105,32 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_range_inform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="46dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="범위 안내"
+                    android:textColor="#828282"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_book" />
+
+                <TextView
+                    android:id="@+id/tv_range_inform_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="시작페이지p ~ 마지막페이지p"
+                    android:textColor="#828282"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/tv_range_inform"
+                    app:layout_constraintTop_toBottomOf="@id/et_book" />
+
+                <TextView
                     android:id="@+id/tv_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,7 +141,7 @@
                     android:textColor="#828282"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_book" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_range_inform" />
 
                 <EditText
                     android:id="@+id/et_range_start"

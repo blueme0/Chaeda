@@ -15,6 +15,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivitySignupBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SignUpActivity
@@ -170,6 +171,7 @@ class SignUpActivity
             signUpViewModel.signUpState.collect { state ->
                 when (state) {
                     is SignUpUiState.Success -> {
+                        Timber.tag("chaeda-signup").d("signup success")
                         finish()
                     }
                     is SignUpUiState.Failure -> {

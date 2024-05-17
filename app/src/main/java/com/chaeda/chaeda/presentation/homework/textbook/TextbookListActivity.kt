@@ -36,6 +36,8 @@ class TextbookListActivity
             val resultIntent = Intent().apply {
                 putExtra("textbookId", textbookViewModel.textbookId.value)
                 putExtra("textbookName", textbookViewModel.textbookName.value)
+                putExtra("startPage", it.startPage)
+                putExtra("lastPage", it.lastPage)
             }
             setResult(RESULT_OK, resultIntent)
             finish()

@@ -1,10 +1,13 @@
 package com.chaeda.chaeda.presentation.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.chaeda.base.BindingFragment
+import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentSettingBinding
+import com.chaeda.chaeda.presentation.splash.SplashActivity
 import com.chaeda.domain.entity.Academy
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +35,10 @@ class SettingFragment
 
     private fun initListener() {
         with(binding) {
+            tvLogout.setOnSingleClickListener {
+                startActivity(Intent(requireActivity(), SplashActivity::class.java))
+                requireActivity().finish()
+            }
         }
     }
 

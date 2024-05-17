@@ -56,18 +56,18 @@ interface HomeworkService {
 
     @GET("/assignment/{assignmentId}")
     suspend fun getAssignmentById(
-        @Path("assignmentId") assignmentId: Int
+        @Path("assignmentId") assignmentId: Long
     ): AssignmentDTO
 
     @PUT("/assignment/{assignmentId}")
     suspend fun putAssignmentById(
-        @Path("assignmentId") assignmentId: Int,
+        @Path("assignmentId") assignmentId: Long,
         @Body assignment: RequestAssignmentDTO
     ): AssignmentDTO
 
     @DELETE("/assignment/{assignmentId}")
     suspend fun deleteAssignmentById(
-        @Path("assignmentId") assignmentId: Int
+        @Path("assignmentId") assignmentId: Long
     ): Response<Unit>
 
     @GET("/assignment")
@@ -83,12 +83,12 @@ interface HomeworkService {
 
     @GET("/submission/self-assignments/{assignmentId}")
     suspend fun getProblemRangeWithPage(
-        @Path("assignmentId") assignmentId: Int
+        @Path("assignmentId") assignmentId: Long
     ): List<ProblemsWithPageDTO>
 
     @POST("/submission/self-assignments/{assignmentId}")
     suspend fun postAssignmentResult(
-        @Path("assignmentId") assignmentId: Int,
+        @Path("assignmentId") assignmentId: Long,
         @Body wrongProblemWithinPageRequests: RequestAssignmentResultDTO
     ): Response<Unit>
 }

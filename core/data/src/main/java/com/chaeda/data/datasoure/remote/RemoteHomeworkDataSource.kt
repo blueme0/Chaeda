@@ -12,20 +12,20 @@ class RemoteHomeworkDataSource @Inject constructor(
     private val homeworkService: HomeworkService,
 ) {
     suspend fun getAssignmentById(
-        id: Int
+        id: Long
     ): AssignmentDTO {
         return homeworkService.getAssignmentById(id)
     }
 
     suspend fun putAssignmentById(
-        id: Int,
+        id: Long,
         request: RequestAssignmentDTO
     ): AssignmentDTO {
         return homeworkService.putAssignmentById(id, request)
     }
 
     suspend fun deleteAssignmentById(
-        id: Int
+        id: Long
     ): Boolean {
         return homeworkService.deleteAssignmentById(id).isSuccessful
     }
@@ -44,13 +44,13 @@ class RemoteHomeworkDataSource @Inject constructor(
     }
 
     suspend fun getProblemRangeWithPage(
-        id: Int
+        id: Long
     ): List<ProblemsWithPageDTO> {
         return homeworkService.getProblemRangeWithPage(id)
     }
 
     suspend fun postAssignmentResult(
-        id: Int,
+        id: Long,
         results: RequestAssignmentResultDTO
     ): Boolean {
         return homeworkService.postAssignmentResult(id, results).isSuccessful

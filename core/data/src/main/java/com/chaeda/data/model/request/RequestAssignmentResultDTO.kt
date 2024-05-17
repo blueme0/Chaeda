@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RequestAssignmentResultDTO (
-    val wrongProblemWithinPageRequests: List<AssignmentResultDTO>
+    val wrongProblemListPerPageRequests: List<AssignmentResultDTO>
 )

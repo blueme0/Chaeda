@@ -90,10 +90,17 @@ class AddHomeworkActivity
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
-                    addAssignmentViewModel.updateRange(
-                        p0.toString().toInt(),
-                        addAssignmentViewModel.endRange.value
-                    )
+                    var p0Int = 0
+                    try {
+                        p0Int = p0.toString().toInt()
+                    } catch (e: NumberFormatException) {
+                        p0Int = addAssignmentViewModel.startRange.value
+                    } finally {
+                        addAssignmentViewModel.updateRange(
+                            p0Int,
+                            addAssignmentViewModel.endRange.value
+                        )
+                    }
                 }
             })
 
@@ -105,10 +112,17 @@ class AddHomeworkActivity
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
-                    addAssignmentViewModel.updateRange(
-                        addAssignmentViewModel.startRange.value,
-                        p0.toString().toInt()
-                    )
+                    var p0Int = 0
+                    try {
+                        p0Int = p0.toString().toInt()
+                    } catch (e: NumberFormatException) {
+                        p0Int = addAssignmentViewModel.endRange.value
+                    } finally {
+                        addAssignmentViewModel.updateRange(
+                            addAssignmentViewModel.startRange.value,
+                            p0Int
+                        )
+                    }
                 }
             })
         }
@@ -139,6 +153,14 @@ class AddHomeworkActivity
                     addAssignmentViewModel.updateTextbook(bookName)
                     with(binding) {
                         etBook.text = bookName
+                    }
+                }
+                val startPage = it.getIntExtra("startPage", 0)
+                val lastPage = it.getIntExtra("lastPage", 0)
+                if (startPage != 0 && lastPage != 0) {
+                    with(binding) {
+                        addAssignmentViewModel.updatePageLimit(startPage, lastPage)
+                        tvRangeInformNum.text = "${startPage}p ~ ${lastPage}p"
                     }
                 }
             }

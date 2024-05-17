@@ -64,14 +64,28 @@ class AddAssignmentViewModel @Inject constructor(
         _due.value = date
     }
 
-    val assignmentValid: StateFlow<Boolean> = combine(
-        title,
+    private val _pageLimit = MutableStateFlow<Pair<Int, Int>>(Pair(0, 0))
+    val pageLimit: StateFlow<Pair<Int, Int>> = _pageLimit.asStateFlow()
+
+    fun updatePageLimit(startPage: Int, lastPage: Int) {
+        _pageLimit.value = Pair(startPage, lastPage)
+    }
+
+    val rangeValid: StateFlow<Boolean> = combine(
         startRange,
         endRange,
+        pageLimit
+    ) { sr, er, pl ->
+        sr >= pl.first && er <= pl.second && sr <= er
+    }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
+
+    val assignmentValid: StateFlow<Boolean> = combine(
+        title,
+        rangeValid,
         due,
         textbookId
-    ) { ts, sr, er, td, tId ->
-        ts.isNotBlank() && sr > 0 && sr <= er && Pattern.matches(DATE_REGEX, td) && tId >= 0
+    ) { ts, rv, td, tId ->
+        ts.isNotBlank() && rv && Pattern.matches(DATE_REGEX, td) && tId >= 0
     }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
 
     private var _assignmentState = MutableStateFlow<AssignmentState>(AssignmentState.Init)
@@ -81,10 +95,12 @@ class AddAssignmentViewModel @Inject constructor(
         viewModelScope.launch {
             homeworkRepository.postAssignment(
                 AssignmentDTO(
+                    null,
                     _title.value,
                     _startRange.value,
                     _endRange.value,
                     _due.value,
+                    null,
                     null
                 ),
                 _textbookId.value

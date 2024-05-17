@@ -19,7 +19,7 @@ class AssignmentDetailViewModel @Inject constructor(
     private var _assignmentState = MutableStateFlow<AssignmentState>(AssignmentState.Init)
     val assignmentState: StateFlow<AssignmentState> = _assignmentState.asStateFlow()
 
-    fun getAssignmentById(id: Int) {
+    fun getAssignmentById(id: Long) {
         viewModelScope.launch {
             homeworkRepository.getAssignmentById(id)
                 .onSuccess {

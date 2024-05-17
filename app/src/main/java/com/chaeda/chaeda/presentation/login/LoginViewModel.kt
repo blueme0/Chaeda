@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
     val loginState: StateFlow<LoginUiState> = _loginState.asStateFlow()
 
     fun postLogin() {
-        if (memberRepository.getAutoLogin()) {
+        if (loginId.value.isEmpty() && memberRepository.getAutoLogin()) {
             _loginState.value = LoginUiState.Success
             return
         }
@@ -63,3 +63,20 @@ sealed interface LoginUiState {
     object Success: LoginUiState
     data class Failure(val msg: String): LoginUiState
 }
+
+/**
+ *
+ * 이미 예~전부터 쓰던 아이디
+ * blueme0@konkuk.ac.kr
+ *
+ * 평소에는 잘 돼
+ *
+ * 근데 배포를 새로 한 것 같을 때
+ * : 가입되지 않은 아이디입니다 401
+ *
+ * 그래서 회원가입을 저 아이디로 다시 해
+ * : 이미 가입된 이메일입니다 400
+ *
+ * 다시 뒤로 가서 그 아이디로 로그인을 해
+ * : success......
+ */

@@ -39,7 +39,7 @@ class TodayHomeworkAdapter(private val itemClick: (AssignmentDTO) -> (Unit))
 
     fun setItems(newItems: List<AssignmentDTO>?) {
         assignmentList.clear()
-        assignmentList.add(AssignmentDTO("", 0, 0, "", null))
+        assignmentList.add(AssignmentDTO(null, "", 0, 0, "", null, null))
         if (newItems != null) assignmentList.addAll(newItems)
         notifyDataSetChanged()
     }

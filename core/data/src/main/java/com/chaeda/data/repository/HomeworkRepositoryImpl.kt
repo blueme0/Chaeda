@@ -13,14 +13,14 @@ import javax.inject.Inject
 class HomeworkRepositoryImpl @Inject constructor(
     private val remoteHomeworkDataSource: RemoteHomeworkDataSource
 ) : HomeworkRepository {
-    override suspend fun getAssignmentById(id: Int): Result<AssignmentDTO> {
+    override suspend fun getAssignmentById(id: Long): Result<AssignmentDTO> {
         return runCatching {
             remoteHomeworkDataSource.getAssignmentById(id)
         }
     }
 
     override suspend fun putAssignmentById(
-        id: Int,
+        id: Long,
         assignment: AssignmentDTO,
         textbookId: Int
     ): Result<AssignmentDTO> {
@@ -38,7 +38,7 @@ class HomeworkRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteAssignmentById(id: Int): Result<Unit> {
+    override suspend fun deleteAssignmentById(id: Long): Result<Unit> {
         return runCatching {
             remoteHomeworkDataSource.deleteAssignmentById(id)
         }
@@ -70,14 +70,14 @@ class HomeworkRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProblemRangeWithPage(assignmentId: Int): Result<List<ProblemsWithPageDTO>> {
+    override suspend fun getProblemRangeWithPage(assignmentId: Long): Result<List<ProblemsWithPageDTO>> {
         return runCatching {
             remoteHomeworkDataSource.getProblemRangeWithPage(assignmentId)
         }
     }
 
     override suspend fun postAssignmentResult(
-        assignmentId: Int,
+        assignmentId: Long,
         results: List<AssignmentResultDTO>
     ): Result<Unit> {
         return runCatching {
