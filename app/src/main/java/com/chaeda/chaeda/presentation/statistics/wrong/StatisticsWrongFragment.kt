@@ -4,13 +4,16 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.lifecycle.lifecycleScope
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.chart.common.listener.Event
 import com.anychart.chart.common.listener.ListenersInterface
+import com.anychart.charts.Pie
 import com.anychart.enums.Align
 import com.anychart.enums.LegendLayout
 import com.chaeda.base.BindingFragment
@@ -18,11 +21,18 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentStatisticsWrongBinding
 import com.chaeda.chaeda.presentation.statistics.StatisticsFragment
+import com.chaeda.chaeda.presentation.statistics.StatisticsState
+import com.chaeda.chaeda.presentation.statistics.StatisticsViewModel
 import com.chaeda.chaeda.presentation.statistics.dialog.DateSelectDialog
 import com.chaeda.chaeda.presentation.statistics.dialog.DateSelectDialogInterface
 import com.chaeda.chaeda.presentation.statistics.type.StatisticsTypeDetailActivity
+import com.chaeda.domain.entity.WrongCountWithConceptDTO
+import com.chaeda.domain.enumSet.Concept
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @AndroidEntryPoint
@@ -30,8 +40,12 @@ class StatisticsWrongFragment
     : BindingFragment<FragmentStatisticsWrongBinding>(R.layout.fragment_statistics_wrong),
     DateSelectDialogInterface {
 
+    private val viewModel by activityViewModels<StatisticsViewModel>()
+
     private var date = LocalDate.now()
     private var mode = MODE_WEEK
+
+    private lateinit var pie: Pie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,11 +59,12 @@ class StatisticsWrongFragment
 //                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         initGraph()
+        observe()
     }
 
     private fun initGraph() {
         binding.anychart.setProgressBar(binding.progressBar)
-        val pie = AnyChart.pie()
+        pie = AnyChart.pie()
         pie.setOnClickListener(object :
             ListenersInterface.OnClickListener(arrayOf<String>("x", "value")) {
             override fun onClick(event: Event) {
@@ -58,7 +73,14 @@ class StatisticsWrongFragment
 //                    event.data["x"] + ":" + event.data["value"],
 //                    Toast.LENGTH_SHORT
 //                ).show()
-                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), event.data["x"].toString(), mode))
+                var englishName = event.data["x"].toString()
+                for (item in Concept.values()) {
+                    if (item.koreanName == englishName) {
+                        englishName = item.name
+                        break
+                    }
+                }
+                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), englishName, mode))
             }
         })
 
@@ -105,6 +127,7 @@ class StatisticsWrongFragment
             val endOfWeek = date.plusDays(6)
             tvStandardText.text = "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 ~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
         }
+        requestWrongCount()
     }
 
     private fun initListener() {
@@ -127,6 +150,7 @@ class StatisticsWrongFragment
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
                 mode = MODE_WEEK
                 setStandardText()
+                requestWrongCount()
                 tvStandardTitle.text = "기준 주차"
                 tvComment.text = getString(R.string.statistics_count_week_comment)
 
@@ -137,10 +161,22 @@ class StatisticsWrongFragment
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_checked)
                 mode = MODE_MONTH
                 setStandardText()
+                requestWrongCount()
                 tvStandardTitle.text = "기준 월"
                 tvComment.text = getString(R.string.statistics_count_month_comment)
             }
         }
+    }
+
+    private fun setGraph(list: List<WrongCountWithConceptDTO>) {
+        val data = ArrayList<DataEntry>()
+
+        for (item in list) {
+            Timber.tag("chaeda-wrong").d("setGraph: ${item.toString()}")
+            data.add(ValueDataEntry(Concept.valueOf(item.subConcept).koreanName, item.wrongCount))
+        }
+        pie.data(data)
+        binding.anychart.invalidate()
     }
 
     override fun onDestroyView() {
@@ -156,6 +192,7 @@ class StatisticsWrongFragment
     override fun onYesButtonClick(date: LocalDate) {
         this.date = date
         setStandardText()
+        requestWrongCount()
     }
 
     private fun setStandardText() {
@@ -180,6 +217,43 @@ class StatisticsWrongFragment
     private inline fun <reified T : Fragment> navigateTo() {
         requireActivity().supportFragmentManager.commit {
             replace<T>(R.id.fcv_main, T::class.java.canonicalName)
+        }
+    }
+
+    fun formatDate(localDate: LocalDate): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return localDate.format(formatter)
+    }
+
+    fun formatMonth(localDate: LocalDate): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM")
+        return localDate.format(formatter)
+    }
+
+    private fun requestWrongCount() {
+        when (mode) {
+            MODE_WEEK -> {
+                viewModel.getWrongRateByWeek(formatDate(date))
+            }
+            MODE_MONTH -> {
+                viewModel.getWrongRateByMonth(formatMonth(date))
+            }
+        }
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            viewModel.statisticsState.collect {state ->
+                when (state) {
+                    is StatisticsState.GetWrongByMonthSuccess -> {
+                        setGraph(state.list)
+                    }
+                    is StatisticsState.GetWrongByWeekSuccess -> {
+                        setGraph(state.list)
+                    }
+                    else -> { }
+                }
+            }
         }
     }
 

@@ -74,7 +74,7 @@ class StatisticsViewModel @Inject constructor(
 
     fun getWrongRateByMonth(date: String) {
         viewModelScope.launch {
-            statisticsRepository.getWrongRateByMonth(date)
+            statisticsRepository.getWrongRateByMonth("${date}-01")
                 .onSuccess {
                     _statisticsState.value = StatisticsState.GetWrongByMonthSuccess(it)
                 }
@@ -136,7 +136,12 @@ class StatisticsViewModel @Inject constructor(
         viewModelScope.launch {
             statisticsRepository.getWrongCountByChapter(chapter)
                 .onSuccess {
-                    _statisticsState.value = StatisticsState.GetWrongByChapterSuccess(it)
+                    val map = mutableMapOf<String, ConceptDetailDTO>()
+                    val list = it
+                    for (i in list) {
+                        map[i.subConcept] = i
+                    }
+                    _statisticsState.value = StatisticsState.GetWrongByChapterSuccess(map)
                 }
                 .onFailure {
                     _statisticsState.value = StatisticsState.Failure(it.message!!)
@@ -161,6 +166,6 @@ sealed interface StatisticsState {
     data class GetMontlyStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
     data class GetWeeklyStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
     data class GetChapterListSuccess(val list: List<ChapterDTO>): StatisticsState
-    data class GetWrongByChapterSuccess(val list: List<ConceptDetailDTO>): StatisticsState
+    data class GetWrongByChapterSuccess(val map: Map<String, ConceptDetailDTO>): StatisticsState
     data class Failure(val msg: String): StatisticsState
 }

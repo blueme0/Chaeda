@@ -54,7 +54,7 @@ interface StatisticsService {
         @Query("subject") subject: String
     ): List<ChapterDTO>
 
-    @GET("/statistics/statistics/accumulated/{chapter}")
+    @GET("/statistics/statistics/accumulated/{chapter}/list")
     suspend fun getWrongCountByChapter(
         @Path("chapter") chapter: String
     ): List<ConceptDetailDTO>
