@@ -40,9 +40,21 @@ class StatisticsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getStatisticsByType(typeId: Int): Result<ConceptDetailDTO> {
+    override suspend fun getAccumulatedStatisticsByType(subConcept: String): Result<ConceptDetailDTO> {
         return runCatching {
-            remoteStatisticsDataSource.getStatisticsByType(typeId)
+            remoteStatisticsDataSource.getAccumulatedStatisticsByType(subConcept)
+        }
+    }
+
+    override suspend fun getMonthlyStatisticsByType(subConcept: String): Result<ConceptDetailDTO> {
+        return runCatching {
+            remoteStatisticsDataSource.getMonthlyStatisticsByType(subConcept)
+        }
+    }
+
+    override suspend fun getWeeklyStatisticsByType(subConcept: String): Result<ConceptDetailDTO> {
+        return runCatching {
+            remoteStatisticsDataSource.getWeeklyStatisticsByType(subConcept)
         }
     }
 
@@ -52,9 +64,9 @@ class StatisticsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getWrongRateByChapter(chapterId: Int): Result<List<WrongCountWithConceptDTO>> {
+    override suspend fun getWrongCountByChapter(chapter: String): Result<List<ConceptDetailDTO>> {
         return runCatching {
-            remoteStatisticsDataSource.getWrongRateByChapter(chapterId)
+            remoteStatisticsDataSource.getWrongCountByChapter(chapter)
         }
     }
 }

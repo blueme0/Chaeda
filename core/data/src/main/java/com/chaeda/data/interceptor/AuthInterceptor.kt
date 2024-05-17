@@ -54,11 +54,10 @@ class AuthInterceptor @Inject constructor(
                             userToken = "Bearer ${responseToken.accessToken}" ?: ""
                             refreshToken = "Bearer ${responseToken.refreshToken}" ?: ""
                         }
-
-//                        val newRequest = originalRequest.newAuthBuilder().build()
                         refreshTokenResponse.close()
+                        val newRequest = originalRequest.newAuthBuilder().build()
 
-                        return refreshTokenResponse
+                        return chain.proceed(newRequest)
                     } else {
                         with(dataStore) {
                             isLogin = false

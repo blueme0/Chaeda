@@ -78,7 +78,7 @@ class StatisticsChapterFragment
 //                    event.data["x"] + ":" + event.data["value"],
 //                    Toast.LENGTH_SHORT
 //                ).show()
-                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), event.data["x"].toString()))
+                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), event.data["x"].toString(), mode = "mode_all"))
             }
         })
 
@@ -120,6 +120,8 @@ class StatisticsChapterFragment
             val subjects = Subject.values()
             var chapters = Subject.Math_high.chapters
             initGraph(chapters[0])
+            resetSpinnerChapter(chapters)
+            spinnerChapter.setSelection(0)
 
             spinnerSubject.adapter = object : ArrayAdapter<Subject>(requireContext(), R.layout.item_spinner, subjects) {
                 // getView() 메서드 오버라이드하여 원하는 속성을 표시
@@ -143,7 +145,7 @@ class StatisticsChapterFragment
 
             // Spinner에 OnItemSelectedListener 설정
             spinnerSubject.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // 선택된 아이템의 텍스트 가져오기
                     val selectedItem = parent.getItemAtPosition(position) as Subject
                     chapters = selectedItem.chapters
@@ -161,7 +163,7 @@ class StatisticsChapterFragment
 
             // Spinner에 OnItemSelectedListener 설정
             spinnerChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // 선택된 아이템의 텍스트 가져오기
                     val selectedItem = parent.getItemAtPosition(position) as Chapter
                     Toast.makeText(requireActivity(), "${selectedItem.koreanName}", Toast.LENGTH_SHORT).show()

@@ -10,7 +10,9 @@ interface StatisticsRepository {
     suspend fun getSolvedCountByMonth(date: String): Result<Map<String, Int>>
     suspend fun getWrongRateByWeek(date: String): Result<List<WrongCountWithConceptDTO>>
     suspend fun getWrongRateByMonth(month: String): Result<List<WrongCountWithConceptDTO>>
-    suspend fun getStatisticsByType(typeId: Int): Result<ConceptDetailDTO>
+    suspend fun getAccumulatedStatisticsByType(subConcept: String): Result<ConceptDetailDTO>
+    suspend fun getMonthlyStatisticsByType(subConcept: String): Result<ConceptDetailDTO>
+    suspend fun getWeeklyStatisticsByType(subConcept: String): Result<ConceptDetailDTO>
     suspend fun getChapterListBySubject(subject: String): Result<List<ChapterDTO>>
-    suspend fun getWrongRateByChapter(chapterId: Int): Result<List<WrongCountWithConceptDTO>>
+    suspend fun getWrongCountByChapter(chapter: String): Result<List<ConceptDetailDTO>>
 }

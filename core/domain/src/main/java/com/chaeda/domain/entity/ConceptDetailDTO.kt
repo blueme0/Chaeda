@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ConceptDetailDTO (
-    val subject: String, //
-    val chapter: String,
+    val subject: String?, //
+    val chapter: String?,
     val subConcept: String,
     val problemCount: Int, // 푼 문항 수
     val wrongCount: Int, // 틀린 문항 수

@@ -84,11 +84,35 @@ class StatisticsViewModel @Inject constructor(
         }
     }
 
-    fun getStatisticsByType(typeId: Int) {
+    fun getAccumulatedStatisticsByType(subConcept: String) {
         viewModelScope.launch {
-            statisticsRepository.getStatisticsByType(typeId)
+            statisticsRepository.getAccumulatedStatisticsByType(subConcept)
                 .onSuccess {
-                    _statisticsState.value = StatisticsState.GetStatisticsDetail(it)
+                    _statisticsState.value = StatisticsState.GetAccumulatedStatisticsDetail(it)
+                }
+                .onFailure {
+                    _statisticsState.value = StatisticsState.Failure(it.message!!)
+                }
+        }
+    }
+
+    fun getMonthlyStatisticsByType(subConcept: String) {
+        viewModelScope.launch {
+            statisticsRepository.getMonthlyStatisticsByType(subConcept)
+                .onSuccess {
+                    _statisticsState.value = StatisticsState.GetMontlyStatisticsDetail(it)
+                }
+                .onFailure {
+                    _statisticsState.value = StatisticsState.Failure(it.message!!)
+                }
+        }
+    }
+
+    fun getWeeklyStatisticsByType(subConcept: String) {
+        viewModelScope.launch {
+            statisticsRepository.getWeeklyStatisticsByType(subConcept)
+                .onSuccess {
+                    _statisticsState.value = StatisticsState.GetWeeklyStatisticsDetail(it)
                 }
                 .onFailure {
                     _statisticsState.value = StatisticsState.Failure(it.message!!)
@@ -108,9 +132,9 @@ class StatisticsViewModel @Inject constructor(
         }
     }
 
-    fun getWrongRateByChapter(chapterId: Int) {
+    fun getWrongCountByChapter(chapter: String) {
         viewModelScope.launch {
-            statisticsRepository.getWrongRateByChapter(chapterId)
+            statisticsRepository.getWrongCountByChapter(chapter)
                 .onSuccess {
                     _statisticsState.value = StatisticsState.GetWrongByChapterSuccess(it)
                 }
@@ -133,8 +157,10 @@ sealed interface StatisticsState {
     data class GetCountByMonthSuccess(val map: Map<String, Int>): StatisticsState
     data class GetWrongByWeekSuccess(val list: List<WrongCountWithConceptDTO>): StatisticsState
     data class GetWrongByMonthSuccess(val list: List<WrongCountWithConceptDTO>): StatisticsState
-    data class GetStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
+    data class GetAccumulatedStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
+    data class GetMontlyStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
+    data class GetWeeklyStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
     data class GetChapterListSuccess(val list: List<ChapterDTO>): StatisticsState
-    data class GetWrongByChapterSuccess(val list: List<WrongCountWithConceptDTO>): StatisticsState
+    data class GetWrongByChapterSuccess(val list: List<ConceptDetailDTO>): StatisticsState
     data class Failure(val msg: String): StatisticsState
 }

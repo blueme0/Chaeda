@@ -58,7 +58,7 @@ class StatisticsWrongFragment
 //                    event.data["x"] + ":" + event.data["value"],
 //                    Toast.LENGTH_SHORT
 //                ).show()
-                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), event.data["x"].toString()))
+                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), event.data["x"].toString(), mode))
             }
         })
 

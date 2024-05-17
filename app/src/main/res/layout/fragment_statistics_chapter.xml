@@ -71,7 +71,7 @@
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_count_date_comment"
+                android:text="@string/statistics_chapter_comment"
                 android:fontFamily="@font/pretendard_regular"
                 android:textSize="13sp"
                 android:textColor="#717171"

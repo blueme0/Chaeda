@@ -8,5 +8,6 @@ data class AssignmentDTO (
     val startPage: Int,
     val endPage: Int,
     val targetDate: String,
-    val textbook: TextbookDTO?
+    val textbook: TextbookDTO?,
+    val isCompleted: Boolean?
 )

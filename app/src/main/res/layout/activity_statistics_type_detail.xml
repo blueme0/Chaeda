@@ -130,7 +130,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/ll_check_all"
+            android:id="@+id/ll_check_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -142,17 +142,17 @@
             >
 
             <ImageView
-                android:id="@+id/iv_check_all"
+                android:id="@+id/iv_check_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_radio_checked"
                 />
 
             <TextView
-                android:id="@+id/tv_check_all"
+                android:id="@+id/tv_check_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="누적"
+                android:text="주간"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textColor="#683F21"
                 android:textSize="16sp"
@@ -166,8 +166,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="30dp"
-            app:layout_constraintStart_toEndOf="@id/ll_check_all"
-            app:layout_constraintTop_toTopOf="@id/ll_check_all"
+            app:layout_constraintStart_toEndOf="@id/ll_check_week"
+            app:layout_constraintTop_toTopOf="@id/ll_check_week"
             android:gravity="center"
             >
             <ImageView
@@ -186,6 +186,36 @@
                 android:text="월간"
                 android:textColor="#683F21"
                 android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            app:layout_constraintStart_toEndOf="@id/ll_check_month"
+            app:layout_constraintTop_toTopOf="@id/ll_check_month"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/iv_check_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_radio_unchecked"
+                />
+
+            <TextView
+                android:id="@+id/tv_check_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="누적"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textColor="#683F21"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                />
         </LinearLayout>
 
         <TextView

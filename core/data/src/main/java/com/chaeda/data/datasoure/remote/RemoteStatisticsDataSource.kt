@@ -39,10 +39,22 @@ class RemoteStatisticsDataSource @Inject constructor(
         return statisticsService.getWrongRateByMonth(date)
     }
 
-    suspend fun getStatisticsByType(
-        typeId: Int
+    suspend fun getAccumulatedStatisticsByType(
+        subConcept: String
     ): ConceptDetailDTO {
-        return statisticsService.getStatisticsByType(typeId)
+        return statisticsService.getAccumulatedStatisticsByType(subConcept)
+    }
+
+    suspend fun getMonthlyStatisticsByType(
+        subConcept: String
+    ): ConceptDetailDTO {
+        return statisticsService.getMonthlyStatisticsByType(subConcept)
+    }
+
+    suspend fun getWeeklyStatisticsByType(
+        subConcept: String
+    ): ConceptDetailDTO {
+        return statisticsService.getWeeklyStatisticsByType(subConcept)
     }
 
     suspend fun getChapterListBySubject(
@@ -51,9 +63,9 @@ class RemoteStatisticsDataSource @Inject constructor(
         return statisticsService.getChapterListBySubject(subject)
     }
 
-    suspend fun getWrongRateByChapter(
-        chapterId: Int
-    ): List<WrongCountWithConceptDTO> {
-        return statisticsService.getWrongRateByChapter(chapterId)
+    suspend fun getWrongCountByChapter(
+        chapter: String
+    ): List<ConceptDetailDTO> {
+        return statisticsService.getWrongCountByChapter(chapter)
     }
 }

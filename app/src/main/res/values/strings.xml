@@ -16,6 +16,8 @@
     <string name="statistics_wrong_week_comment">선택한 날짜가 포함된 주에\n사용자가 주로 틀린 세부 개념들을 비교합니다.</string>
     <string name="statistics_wrong_month_comment">선택한 달에\n사용자가 주로 틀린 세부 개념들을 비교합니다.</string>
 
+    <string name="statistics_chapter_comment">선택한 단원에\n사용자가 풀이하고 틀린 세부 개념들을 비교합니다.</string>
+
 
 
 </resources>

@@ -14,8 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class StatisticsTypeDetailActivity
     : BindingActivity<ActivityStatisticsTypeDetailBinding>(R.layout.activity_statistics_type_detail) {
 
-    private var mode = MODE_ALL
     private val type by stringExtra()
+    private val mode by stringExtra()
+    private var cur_mode = MODE_ALL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,7 @@ class StatisticsTypeDetailActivity
     }
 
     private fun initView() {
+        cur_mode = mode as String
         with(binding) {
             tvConcept.text = type
             tvSubject.text = "미적분"
@@ -42,13 +44,22 @@ class StatisticsTypeDetailActivity
             llCheckAll.setOnSingleClickListener {
                 ivCheckAll.setImageResource(R.drawable.ic_radio_checked)
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
-                mode = MODE_ALL
+                ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
+                cur_mode = MODE_ALL
             }
 
             llCheckMonth.setOnSingleClickListener {
                 ivCheckAll.setImageResource(R.drawable.ic_radio_unchecked)
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_checked)
-                mode = MODE_MONTH
+                ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
+                cur_mode = MODE_MONTH
+            }
+
+            llCheckWeek.setOnSingleClickListener {
+                ivCheckAll.setImageResource(R.drawable.ic_radio_unchecked)
+                ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
+                ivCheckWeek.setImageResource(R.drawable.ic_radio_checked)
+                cur_mode = MODE_WEEK
             }
         }
     }
@@ -56,8 +67,10 @@ class StatisticsTypeDetailActivity
     companion object {
         private const val MODE_ALL = "mode_all"
         private const val MODE_MONTH = "mode_month"
-        fun getIntent(context: Context, type: String) = Intent(context, StatisticsTypeDetailActivity::class.java).apply {
+        private const val MODE_WEEK = "mode_week"
+        fun getIntent(context: Context, type: String, mode: String) = Intent(context, StatisticsTypeDetailActivity::class.java).apply {
             putExtra("type", type)
+            putExtra("mode", mode)
         }
     }
 }
