@@ -24,14 +24,16 @@ class ResultViewModel @Inject constructor(
     val problemRange: StateFlow<HashMap<Int, List<String>>> = _problemRange.asStateFlow()
 
     // HashMap으로 페이지 별 문항들 저장하기
-    fun getProblemRanges(id: Int) {
+    fun getProblemRanges(id: Long) {
         viewModelScope.launch {
             hwRepository.getProblemRangeWithPage(id)
                 .onSuccess {
                     val list = it
                     _problemRange.value.clear()
+                    _totalProblemCount.value = 0
                     for (dto in list) {
                         _problemRange.value[dto.pageNum] = dto.problemNumbers
+                        _totalProblemCount.value += dto.problemNumbers.size
                     }
                     _assignmentState.value = AssignmentState.GetRangeSuccess
                 }
@@ -39,6 +41,17 @@ class ResultViewModel @Inject constructor(
                     _assignmentState.value = AssignmentState.Failure(it.message!!)
                 }
         }
+    }
+
+    private var _totalProblemCount = MutableStateFlow<Int>(0)
+    val totalProblemCount: StateFlow<Int> = _totalProblemCount.asStateFlow()
+
+    private var _selectedProblemCount = MutableStateFlow<Int>(0)
+    val selectedProblemCount: StateFlow<Int> = _selectedProblemCount.asStateFlow()
+
+    fun plusSelectedProblemCount(isPlus: Boolean) {
+        if (isPlus) _selectedProblemCount.value += 1
+        else _selectedProblemCount.value -= 1
     }
 
     private var _currentPage = MutableStateFlow<Int>(0)
@@ -54,8 +67,15 @@ class ResultViewModel @Inject constructor(
     fun updateRecords(page: Int, problem: String, answer: String?) {
         if (!_assignmentResult.value.containsKey(page))
             _assignmentResult.value[page] = HashMap<String, String>()
-        if (answer == null) _assignmentResult.value[page]?.remove(problem)
-        else _assignmentResult.value[page]?.set(problem, answer)
+        if (answer == null) {
+            _assignmentResult.value[page]?.remove(problem)
+            plusSelectedProblemCount(false)
+        }
+        else {
+            if (_assignmentResult.value[page]?.containsKey(problem) != true)
+                plusSelectedProblemCount(true)
+            _assignmentResult.value[page]?.set(problem, answer)
+        }
     }
 
     fun findWrong(page: Int, problem: String): String? {
@@ -66,7 +86,7 @@ class ResultViewModel @Inject constructor(
         return _problemRange.value[page]
     }
 
-    fun postAssignmentResult(id: Int) {
+    fun postAssignmentResult(id: Long) {
         val results = mutableListOf<AssignmentResultDTO>()
         for (one in _assignmentResult.value) {
             results.add(AssignmentResultDTO(one.key, one.value))

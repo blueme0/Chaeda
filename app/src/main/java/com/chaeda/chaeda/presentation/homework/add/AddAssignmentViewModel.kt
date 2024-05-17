@@ -95,6 +95,7 @@ class AddAssignmentViewModel @Inject constructor(
         viewModelScope.launch {
             homeworkRepository.postAssignment(
                 AssignmentDTO(
+                    null,
                     _title.value,
                     _startRange.value,
                     _endRange.value,

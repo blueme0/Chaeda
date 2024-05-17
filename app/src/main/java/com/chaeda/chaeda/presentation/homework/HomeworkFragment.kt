@@ -62,7 +62,7 @@ class HomeworkFragment
         homeworkAdapter = TodayHomeworkAdapter {
             // click listener
             Timber.tag("chaeda-hw").d("homework: $it")
-            startActivity(HomeworkDetailActivity.getIntent(requireContext(), 0, false))
+            startActivity(HomeworkDetailActivity.getIntent(requireContext(), it.id!!, it.isCompleted!!))
         }
         homeworkAdapter.setAddItemClick {
             startActivity(AddHomeworkActivity.getIntent(requireContext()))

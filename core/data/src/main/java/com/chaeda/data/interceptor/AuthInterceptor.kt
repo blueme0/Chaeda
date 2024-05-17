@@ -23,7 +23,7 @@ class AuthInterceptor @Inject constructor(
             originalRequest
         }
         val response = chain.proceed(authRequest)
-
+        Timber.tag("chaeda-intercept").d("response: ${response.code} ${response.body} ${response}")
         when (response.code) {
             CODE_TOKEN_EXPIRED -> {
                 try {
@@ -59,11 +59,11 @@ class AuthInterceptor @Inject constructor(
 
                         return chain.proceed(newRequest)
                     } else {
-                        with(dataStore) {
-                            isLogin = false
-                            userToken = ""
-                            refreshToken = ""
-                        }
+//                        with(dataStore) {
+//                            isLogin = false
+//                            userToken = ""
+//                            refreshToken = ""
+//                        }
                     }
                 } catch (t: Throwable) {
                     Timber.e(t)

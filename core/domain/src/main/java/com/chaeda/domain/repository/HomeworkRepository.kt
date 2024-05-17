@@ -7,12 +7,12 @@ import java.time.LocalDate
 
 interface HomeworkRepository {
 
-    suspend fun getAssignmentById(id: Int): Result<AssignmentDTO>
-    suspend fun putAssignmentById(id: Int, assignment: AssignmentDTO, textbookId: Int): Result<AssignmentDTO>
-    suspend fun deleteAssignmentById(id: Int): Result<Unit>
+    suspend fun getAssignmentById(id: Long): Result<AssignmentDTO>
+    suspend fun putAssignmentById(id: Long, assignment: AssignmentDTO, textbookId: Int): Result<AssignmentDTO>
+    suspend fun deleteAssignmentById(id: Long): Result<Unit>
     suspend fun getAssignmentsByDate(dateString: String, date: LocalDate): Result<List<AssignmentDTO>>
     suspend fun postAssignment(assignment: AssignmentDTO, textbookId: Int): Result<AssignmentDTO>
 
-    suspend fun getProblemRangeWithPage(assignmentId: Int): Result<List<ProblemsWithPageDTO>>
-    suspend fun postAssignmentResult(assignmentId: Int, results: List<AssignmentResultDTO>): Result<Unit>
+    suspend fun getProblemRangeWithPage(assignmentId: Long): Result<List<ProblemsWithPageDTO>>
+    suspend fun postAssignmentResult(assignmentId: Long, results: List<AssignmentResultDTO>): Result<Unit>
 }

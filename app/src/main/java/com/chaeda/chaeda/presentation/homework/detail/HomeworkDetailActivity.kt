@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.boolExtra
-import com.chaeda.base.util.extension.intExtra
+import com.chaeda.base.util.extension.longExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityHomeworkDetailBinding
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 class HomeworkDetailActivity
     : BindingActivity<ActivityHomeworkDetailBinding>(R.layout.activity_homework_detail) {
 
-    private val id by intExtra()
+    private val id by longExtra()
     private val isDone by boolExtra()
 
     private val assignmentDetailViewModel by viewModels<AssignmentDetailViewModel>()
@@ -96,11 +96,11 @@ class HomeworkDetailActivity
         private const val REQUEST_CODE = 204
 
         // 액티비티 시작
-        fun getIntent(context: Context, id: Int) = Intent(context, HomeworkDetailActivity::class.java).apply {
+        fun getIntent(context: Context, id: Long) = Intent(context, HomeworkDetailActivity::class.java).apply {
             putExtra("id", id)
         }
 
-        fun getIntent(context: Context, id: Int, isDone: Boolean) = Intent(context, HomeworkDetailActivity::class.java).apply {
+        fun getIntent(context: Context, id: Long, isDone: Boolean) = Intent(context, HomeworkDetailActivity::class.java).apply {
             putExtra("id", id)
             putExtra("isDone", isDone)
         }

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.intExtra
+import com.chaeda.base.util.extension.longExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.base.util.extension.stringExtra
 import com.chaeda.chaeda.R
@@ -19,16 +20,17 @@ import com.chaeda.chaeda.presentation.homework.result.answer.ResultAnswerAdapter
 import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 
 @AndroidEntryPoint
 class ResultSubmitActivity
     : BindingActivity<ActivityResultSubmitBinding> (R.layout.activity_result_submit), SimpleAlertDialogInterface {
 
-    private val id by intExtra()
+    private val id by longExtra()
     private val title by stringExtra()
-    private val sp by intExtra()
-    private val ep by intExtra()
+    private val startPage by intExtra()
+    private val endPage by intExtra()
     private val deadline by stringExtra()
 
     private val resultViewModel by viewModels<ResultViewModel>()
@@ -38,8 +40,9 @@ class ResultSubmitActivity
         super.onCreate(savedInstanceState)
 
         binding.lifecycleOwner = this
+        Timber.tag("chaeda-result").d("result submit activity: id: $id, sp: ${startPage}, ep: $endPage")
         initView()
-        initAnswerItems()
+//        initAnswerItems()
         initListeners()
         observe()
     }
@@ -51,6 +54,7 @@ class ResultSubmitActivity
                 it.index,
                 if (it.checked) it.level else null
             )
+            binding.tvCount2.text = "${resultViewModel.selectedProblemCount.value}문제"
         }
         // 해당 문제에 대한 startActivity 필요
 //            startActivity(AnswerDetailActivity.getIntent(requireContext(), it.))
@@ -58,12 +62,14 @@ class ResultSubmitActivity
         with(binding) {
             tvTitle.text = title
             ivLeft.setOnSingleClickListener {
-                if (resultViewModel.currentPage.value > sp)
+                if (resultViewModel.currentPage.value > startPage)
                     resultViewModel.updateCurrentPage(resultViewModel.currentPage.value - 1)
+                tvCount.text = "${resultViewModel.currentPage.value}p"
             }
             ivRight.setOnSingleClickListener {
-                if (resultViewModel.currentPage.value < ep)
+                if (resultViewModel.currentPage.value < endPage)
                     resultViewModel.updateCurrentPage(resultViewModel.currentPage.value + 1)
+                tvCount.text = "${resultViewModel.currentPage.value}p"
             }
         }
         binding.rvAnswer.adapter = answerAdapter
@@ -105,7 +111,11 @@ class ResultSubmitActivity
                         else finish()
                     }
                     is AssignmentState.GetRangeSuccess -> {
-                        resultViewModel.updateCurrentPage(sp)
+                        Timber.tag("chaeda-getrange").d("AssignmentState GetRangeSuccess called")
+
+                        resultViewModel.updateCurrentPage(startPage)
+                        binding.tvCount.text = "${startPage}p"
+                        binding.tvCount1.text = "${resultViewModel.totalProblemCount.value}개의 문제 중 "
                     }
                     is AssignmentState.Failure -> {
 
@@ -139,7 +149,7 @@ class ResultSubmitActivity
     }
 
     companion object {
-        fun getIntent(context: Context, id: Int, title: String, sp: Int, ep: Int, deadline: String) = Intent(context, ResultSubmitActivity::class.java).apply {
+        fun getIntent(context: Context, id: Long, title: String, sp: Int, ep: Int, deadline: String) = Intent(context, ResultSubmitActivity::class.java).apply {
             putExtra("id", id)
             putExtra("title", title)
             putExtra("startPage", sp)
