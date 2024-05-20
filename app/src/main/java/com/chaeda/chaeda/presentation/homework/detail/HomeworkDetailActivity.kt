@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.load
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.boolExtra
 import com.chaeda.base.util.extension.longExtra
@@ -82,6 +83,7 @@ class HomeworkDetailActivity
                             ep = assignment.endPage
                             tvDeadline.text = assignment.targetDate
                             tvTextbook.text = assignment.textbook?.name
+                            ivThumbnail.load(assignment.textbook?.imageUrl)
                         }
                     }
                     else -> { }

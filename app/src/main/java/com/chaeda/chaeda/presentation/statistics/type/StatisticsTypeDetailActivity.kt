@@ -3,16 +3,27 @@ package com.chaeda.chaeda.presentation.statistics.type
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.base.util.extension.stringExtra
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityStatisticsTypeDetailBinding
+import com.chaeda.chaeda.presentation.statistics.StatisticsState
+import com.chaeda.chaeda.presentation.statistics.StatisticsViewModel
+import com.chaeda.domain.entity.ConceptDetailDTO
+import com.chaeda.domain.enumSet.Chapter
+import com.chaeda.domain.enumSet.Concept
+import com.chaeda.domain.enumSet.Subject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StatisticsTypeDetailActivity
     : BindingActivity<ActivityStatisticsTypeDetailBinding>(R.layout.activity_statistics_type_detail) {
+
+    private val viewModel by viewModels<StatisticsViewModel>()
 
     private val type by stringExtra()
     private val mode by stringExtra()
@@ -23,21 +34,47 @@ class StatisticsTypeDetailActivity
 
         initView()
         initListener()
+        observe()
     }
 
     private fun initView() {
         cur_mode = mode as String
         with(binding) {
-            tvConcept.text = type
-            tvSubject.text = "미적분"
-            tvChapter.text = "미분법"
-            tvSolved.text = "30문제"
-            tvWrong.text = "20문제"
-            tvEasy.text = "2문제"
-            tvNormal.text = "7문제"
-            tvHard.text = "9문제"
+            val conceptEnum = Concept.valueOf(type!!)
+            val chapterEnum = Chapter.valueOf(conceptEnum.chapter)
+            val subjectEnum = Subject.valueOf(chapterEnum.subject)
+            tvConcept.text = conceptEnum.koreanName
+            tvChapter.text = chapterEnum.koreanName
+            tvChapter.text = subjectEnum.koreanName
+        }
+        requestStatistics()
+    }
+
+    private fun updateView(concept: ConceptDetailDTO) {
+        with(binding) {
+//            tv
+            tvSolved.text = "${concept.problemCount}문제"
+            tvWrong.text = "${concept.wrongCount}문제"
+            tvEasy.text = "${concept.easyNum}문제"
+            tvNormal.text = "${concept.middleNum}문제"
+            tvHard.text = "${concept.hardNum}문제"
         }
     }
+
+    private fun requestStatistics() {
+        when (mode) {
+            MODE_ALL -> {
+                viewModel.getAccumulatedStatisticsByType(type!!)
+            }
+            MODE_MONTH -> {
+                viewModel.getMonthlyStatisticsByType(type!!)
+            }
+            MODE_WEEK -> {
+                viewModel.getWeeklyStatisticsByType(type!!)
+            }
+        }
+    }
+
 
     private fun initListener() {
         with(binding) {
@@ -46,6 +83,7 @@ class StatisticsTypeDetailActivity
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
                 ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
                 cur_mode = MODE_ALL
+                requestStatistics()
             }
 
             llCheckMonth.setOnSingleClickListener {
@@ -53,6 +91,7 @@ class StatisticsTypeDetailActivity
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_checked)
                 ivCheckWeek.setImageResource(R.drawable.ic_radio_unchecked)
                 cur_mode = MODE_MONTH
+                requestStatistics()
             }
 
             llCheckWeek.setOnSingleClickListener {
@@ -60,6 +99,28 @@ class StatisticsTypeDetailActivity
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
                 ivCheckWeek.setImageResource(R.drawable.ic_radio_checked)
                 cur_mode = MODE_WEEK
+                requestStatistics()
+            }
+        }
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            viewModel.statisticsState.collect { state ->
+                when (state) {
+                    is StatisticsState.GetWeeklyStatisticsDetail -> {
+                        updateView(state.concept)
+                    }
+                    is StatisticsState.GetMontlyStatisticsDetail -> {
+                        updateView(state.concept)
+                    }
+                    is StatisticsState.GetAccumulatedStatisticsDetail -> {
+                        updateView(state.concept)
+                    }
+                    else -> {
+
+                    }
+                }
             }
         }
     }

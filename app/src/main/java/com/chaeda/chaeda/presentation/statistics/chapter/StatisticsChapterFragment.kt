@@ -9,8 +9,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.lifecycle.lifecycleScope
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -27,10 +29,15 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentStatisticsChapterBinding
 import com.chaeda.chaeda.presentation.statistics.StatisticsFragment
+import com.chaeda.chaeda.presentation.statistics.StatisticsState
+import com.chaeda.chaeda.presentation.statistics.StatisticsViewModel
 import com.chaeda.chaeda.presentation.statistics.type.StatisticsTypeDetailActivity
+import com.chaeda.domain.entity.ConceptDetailDTO
 import com.chaeda.domain.enumSet.Chapter
+import com.chaeda.domain.enumSet.Concept
 import com.chaeda.domain.enumSet.Subject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 
@@ -38,7 +45,13 @@ import kotlin.random.Random
 class StatisticsChapterFragment
     : BindingFragment<FragmentStatisticsChapterBinding>(R.layout.fragment_statistics_chapter) {
 
+    private val viewModel by activityViewModels<StatisticsViewModel>()
+
     private lateinit var set: Set
+    private val subjects = Subject.values()
+    private var subject = Subject.Math_high
+    private var chapters = Subject.Math_high.chapters
+    private var chapter = chapters[0]
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,21 +64,31 @@ class StatisticsChapterFragment
 //            decorView.systemUiVisibility =
 //                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
+        observe()
     }
 
-    private fun setGraph(chapter: Chapter) {
+    private fun setGraph(map: Map<String, ConceptDetailDTO>) {
         val data = ArrayList<DataEntry>()
 
-        Log.d("chaeda-polar", "concepts: ${chapter.concepts.toList()}")
-        if (chapter.concepts.isEmpty()) return
-        for (c in chapter.concepts) {
-            val solvedCount = Random.nextInt(0, 11)
-            if (solvedCount > 0) data.add(SolvedWrongCount(c.koreanName, solvedCount, Random.nextInt(solvedCount)))
+//        Log.d("chaeda-polar", "concepts: ${chapter.concepts.toList()}")
+        if (map.isEmpty()) return
+
+        for (item in chapter.concepts) {
+            if (map[item.name] != null) {
+                data.add(SolvedWrongCount(item.koreanName, map[item.name]!!.problemCount, map[item.name]!!.wrongCount))
+            }
         }
+//        if (chapter.concepts.isEmpty()) return
+//        for (c in chapter.concepts) {
+//            val solvedCount = Random.nextInt(0, 11)
+//            if (solvedCount > 0) data.add(SolvedWrongCount(c.koreanName, solvedCount, Random.nextInt(solvedCount)))
+//        }
         set.data(data)
     }
 
-    private fun initGraph(chapter: Chapter) {
+    private fun initGraph() {
+        viewModel.getWrongCountByChapter(chapter.name)
+
         binding.anychart.setProgressBar(binding.progressBar)
         val polar = AnyChart.polar()
         val data = ArrayList<DataEntry>()
@@ -78,7 +101,15 @@ class StatisticsChapterFragment
 //                    event.data["x"] + ":" + event.data["value"],
 //                    Toast.LENGTH_SHORT
 //                ).show()
-                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), event.data["x"].toString(), mode = "mode_all"))
+                // 한글 이름 전달...
+                var englishName = event.data["x"].toString()
+                for (item in Concept.values()) {
+                    if (item.koreanName == englishName) {
+                        englishName = item.name
+                        break
+                    }
+                }
+                startActivity(StatisticsTypeDetailActivity.getIntent(requireActivity(), englishName, mode = "mode_all"))
             }
         })
 
@@ -117,9 +148,7 @@ class StatisticsChapterFragment
                 navigateTo<StatisticsFragment>()
             }
 
-            val subjects = Subject.values()
-            var chapters = Subject.Math_high.chapters
-            initGraph(chapters[0])
+            initGraph()
             resetSpinnerChapter(chapters)
             spinnerChapter.setSelection(0)
 
@@ -147,8 +176,8 @@ class StatisticsChapterFragment
             spinnerSubject.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // 선택된 아이템의 텍스트 가져오기
-                    val selectedItem = parent.getItemAtPosition(position) as Subject
-                    chapters = selectedItem.chapters
+                    subject = parent.getItemAtPosition(position) as Subject
+                    chapters = subject.chapters
                     resetSpinnerChapter(chapters)
                     spinnerChapter.setSelection(0)
 
@@ -165,11 +194,12 @@ class StatisticsChapterFragment
             spinnerChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // 선택된 아이템의 텍스트 가져오기
-                    val selectedItem = parent.getItemAtPosition(position) as Chapter
-                    Toast.makeText(requireActivity(), "${selectedItem.koreanName}", Toast.LENGTH_SHORT).show()
+                    chapter = parent.getItemAtPosition(position) as Chapter
+                    Toast.makeText(requireActivity(), "${chapter.koreanName}", Toast.LENGTH_SHORT).show()
 //                    if (selectedItem != "학년 선택하기") signUpViewModel.updateGrade(selectedItem)
 //                    else signUpViewModel.updateGrade("")
-                    setGraph(selectedItem)
+//                    setGraph(selectedItem)
+                    viewModel.getWrongCountByChapter(chapter.name)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -221,12 +251,24 @@ class StatisticsChapterFragment
         }
     }
 
+    private fun observe() {
+        lifecycleScope.launch {
+            viewModel.statisticsState.collect {state ->
+                when (state) {
+                    is StatisticsState.GetWrongByChapterSuccess -> {
+                        setGraph(state.map)
+                    }
+                    else -> { }
+                }
+            }
+        }
+    }
+
     private inline fun <reified T : Fragment> navigateTo() {
         requireActivity().supportFragmentManager.commit {
             replace<T>(R.id.fcv_main, T::class.java.canonicalName)
         }
     }
-
 
     companion object {
 

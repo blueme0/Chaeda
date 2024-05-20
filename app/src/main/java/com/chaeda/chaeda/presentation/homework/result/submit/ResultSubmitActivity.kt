@@ -92,10 +92,10 @@ class ResultSubmitActivity
         }
     }
 
-    private fun isAfterToday(dateString: String): Boolean {
+    private fun isBeforeToday(dateString: String): Boolean {
         val date = LocalDate.parse(dateString.split(" ")[0])
         val today = LocalDate.now()
-        return date.isAfter(today)
+        return date.isBefore(today)
     }
 
     private fun observe() {
@@ -103,7 +103,7 @@ class ResultSubmitActivity
             resultViewModel.assignmentState.collect { state ->
                 when (state) {
                     is AssignmentState.SubmitSuccess -> {
-                        if (deadline != null && isAfterToday(deadline!!)) {
+                        if (deadline != null && isBeforeToday(deadline!!)) {
                             val dialog = SimpleAlertDialog(this@ResultSubmitActivity)
                             dialog.isCancelable = false
                             dialog.show(supportFragmentManager, "SimpleAlertDialog")
