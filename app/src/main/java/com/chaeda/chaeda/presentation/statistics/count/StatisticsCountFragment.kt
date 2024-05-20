@@ -183,7 +183,6 @@ class StatisticsCountFragment
                 requestSolvedCount()
                 tvStandardTitle.text = "기준 주차"
                 tvComment.text = getString(R.string.statistics_count_week_comment)
-
             }
 
             ivCheckMonth.setOnSingleClickListener {
