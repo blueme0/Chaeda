@@ -48,7 +48,7 @@ class MainActivity
                 R.id.menu_analysis -> {
                     navigateTo<StatisticsFragment>()
                 }
-                R.id.menu_upload -> {
+                R.id.menu_review -> {
 
                 }
             }
