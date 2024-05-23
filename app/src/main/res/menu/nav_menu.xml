@@ -16,9 +16,9 @@
         android:enabled="true"
         />
     <item
-        android:id="@+id/menu_upload"
+        android:id="@+id/menu_review"
         android:icon="@drawable/ic_bnv_upload_unselected"
-        android:title="교재 업로드"
+        android:title="오답노트"
         android:checked="false"
         android:enabled="true"
         />

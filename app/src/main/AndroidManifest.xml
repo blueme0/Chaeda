@@ -81,6 +81,12 @@
         <activity
             android:name=".presentation.statistics.type.StatisticsTypeDetailActivity"
             android:exported="true" />
+        <activity
+            android:name=".presentation.review.add.AddProblemPhotoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.review.box.ProblemBoxActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
