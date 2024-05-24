@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,10 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import coil.load
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
@@ -59,15 +62,36 @@ class AddProblemPhotoActivity
                 if (ContextCompat.checkSelfPermission(this@AddProblemPhotoActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this@AddProblemPhotoActivity, arrayOf(Manifest.permission.CAMERA), REQUEST_IMAGE_CODE)
                 } else {
-                    Log.d("chaeda-photo", "called")
-                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    Log.d("chaeda-photo", "${intent.resolveActivity(packageManager)}")
-                    if (intent.resolveActivity(packageManager) != null) {
-                        startActivityForResult(intent, REQUEST_IMAGE_CODE)
-                    }
+//                    Log.d("chaeda-photo", "called")
+//                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//                    Log.d("chaeda-photo", "${intent.resolveActivity(packageManager)}")
+//                    if (intent.resolveActivity(packageManager) != null) {
+//                        startActivityForResult(intent, REQUEST_IMAGE_CODE)
+//                    }
+                    startCameraWithoutUri()
                 }
             }
         }
+    }
+
+    private val customCropImage = registerForActivityResult(CropImageContract()) {
+        if (it !is CropImage.CancelledResult) {
+            it.uriContent?.let { it1 -> viewModel.setImageUri(it1) }
+            binding.ivPhoto.load(it.uriContent)
+            Log.e("chaeda-uri", "cropImage = ${it.uriContent}")
+        }
+    }
+
+    private fun startCameraWithoutUri() {
+        customCropImage.launch(
+            CropImageContractOptions(
+                uri = null,
+                cropImageOptions = CropImageOptions(
+                    imageSourceIncludeCamera = true,
+                    imageSourceIncludeGallery = false,
+                ),
+            ),
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

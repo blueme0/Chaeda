@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.flexbox)
     implementation(libs.anychart)
+    implementation(libs.imagecropper)
 }

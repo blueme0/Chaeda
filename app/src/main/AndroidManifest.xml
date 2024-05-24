@@ -99,6 +99,11 @@
         <activity
             android:name=".presentation.review.box.ProblemBoxActivity"
             android:exported="true" />
+
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"
+            />
     </application>
 
 </manifest>
