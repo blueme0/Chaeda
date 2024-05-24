@@ -8,6 +8,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentReviewBinding
 import com.chaeda.chaeda.presentation.review.box.ProblemBoxActivity
+import com.chaeda.chaeda.presentation.review.folder.ReviewFolderActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +28,9 @@ class ReviewFragment
         with(binding) {
             tvBox.setOnSingleClickListener {
                 startActivity(ProblemBoxActivity.getIntent(requireActivity()))
+            }
+            tvCreate.setOnSingleClickListener {
+                startActivity(ReviewFolderActivity.getIntent(requireActivity()))
             }
         }
     }

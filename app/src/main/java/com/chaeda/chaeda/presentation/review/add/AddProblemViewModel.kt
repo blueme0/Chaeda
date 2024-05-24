@@ -1,5 +1,6 @@
 package com.chaeda.chaeda.presentation.review.add
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.domain.enumSet.Chapter
@@ -22,8 +23,12 @@ class AddProblemViewModel @Inject constructor(
     private val _dateString = MutableStateFlow<String>("")
     val dateString : StateFlow<String> = _dateString.asStateFlow()
 
-    private val _imageUrl = MutableStateFlow<String>("")
-    val imageUrl : StateFlow<String> = _imageUrl.asStateFlow()
+    private val _imageUri = MutableStateFlow<Uri>(Uri.parse(""))
+    val imageUri : StateFlow<Uri> = _imageUri.asStateFlow()
+
+    fun setImageUri(uri: Uri) {
+        _imageUri.value = uri
+    }
 
     private val _answer = MutableStateFlow<String>("")
     val answer : StateFlow<String> = _answer.asStateFlow()
@@ -39,11 +44,11 @@ class AddProblemViewModel @Inject constructor(
 
     val isValid: StateFlow<Boolean> = combine(
         dateString,
-        imageUrl,
+        imageUri,
         answer,
         concept
     ) { ds, iu, ans, cpt ->
-        Pattern.matches(DATE_REGEX, ds) && iu.isNotBlank() && ans.isNotBlank() && cpt != null
+        Pattern.matches(DATE_REGEX, ds) && ans.isNotBlank() && cpt != null
     }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
 
     companion object {

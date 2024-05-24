@@ -2,12 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.homework.result.detail.AnswerDetailActivity">
+    tools:context=".presentation.review.add.AddProblemPhotoActivity">
 
     <data>
-        <variable
-            name="vm"
-            type="com.chaeda.chaeda.presentation.homework.add.AddAssignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,10 +121,11 @@
                 <ImageView
                     android:id="@+id/iv_photo"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="46dp"
                     android:layout_marginTop="7dp"
-                    android:background="@color/appbar_background"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/bg_no_image"
                     app:layout_constraintTop_toBottomOf="@id/tv_photo_title"
                     />
 

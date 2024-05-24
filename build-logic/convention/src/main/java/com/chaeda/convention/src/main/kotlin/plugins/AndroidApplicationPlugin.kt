@@ -145,6 +145,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 implementation(libs.getBundle("appModuleLibraryEtc"))
 
                 implementation(libs.getBundle("anychart"))
+                implementation(libs.getBundle("imageCropper"))
             }
         }
 }
