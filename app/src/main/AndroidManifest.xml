@@ -99,6 +99,9 @@
         <activity
             android:name=".presentation.review.box.ProblemBoxActivity"
             android:exported="true" />
+        <activity
+            android:name=".presentation.review.folder.ReviewFolderActivity"
+            android:exported="true" />
 
         <activity
             android:name="com.canhub.cropper.CropImageActivity"

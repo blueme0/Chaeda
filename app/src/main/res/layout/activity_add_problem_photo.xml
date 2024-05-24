@@ -2,12 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.homework.result.detail.AnswerDetailActivity">
+    tools:context=".presentation.review.add.AddProblemPhotoActivity">
 
     <data>
-        <variable
-            name="vm"
-            type="com.chaeda.chaeda.presentation.homework.add.AddAssignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
