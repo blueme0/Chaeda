@@ -3,6 +3,7 @@ package com.chaeda.chaeda.di
 import com.chaeda.data.service.HomeworkService
 import com.chaeda.data.service.ImageService
 import com.chaeda.data.service.MemberService
+import com.chaeda.data.service.ReviewService
 import com.chaeda.data.service.SampleService
 import com.chaeda.data.service.StatisticsService
 import com.chaeda.data.service.TextbookService
@@ -46,4 +47,9 @@ object ServiceModule {
     @Provides
     fun provideStatisticsService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
         chaedaRetrofit.create(StatisticsService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideReviewService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
+        chaedaRetrofit.create(ReviewService::class.java)
 }
