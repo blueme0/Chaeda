@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReviewFolderDTO (
-    val reviewNoteProblemIds: Set<Int>,
     val title: String,
-    val description: String
+    val description: String,
+    val createdDate: String?
 )
 
 /**

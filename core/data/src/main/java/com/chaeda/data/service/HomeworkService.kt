@@ -37,9 +37,9 @@ interface HomeworkService {
         @Part files: List<MultipartBody.Part>
     ): String
 
-    @POST("/api/images/presigned-url/complete")
+    @POST("/api/images/upload-complete")
     suspend fun noticePresignedUrl(
-        @Body imageInfo: ImageInfo
+        @Body imageInfo: List<ImageInfo>
     ): ResponseBody
 
     @POST("/api/images/display")

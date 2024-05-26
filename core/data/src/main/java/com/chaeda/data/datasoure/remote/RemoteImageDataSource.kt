@@ -28,7 +28,7 @@ class RemoteImageDataSource @Inject constructor(
         homeworkService.uploadImages(images)
 
     suspend fun noticePresignedUrl(imageInfo: ImageInfo): Any =
-        homeworkService.noticePresignedUrl(imageInfo).string()
+        homeworkService.noticePresignedUrl(listOf(imageInfo)).string()
 
     suspend fun getImagesUrl(images: List<ImageInfo>): List<String> =
         homeworkService.getImagesUrl(images)
