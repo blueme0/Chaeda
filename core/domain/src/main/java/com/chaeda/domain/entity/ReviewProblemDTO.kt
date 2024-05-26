@@ -8,7 +8,7 @@ data class ReviewProblemDTO (
     val incorrectDate: String,
     val imageKey: String,
     val presignedUrl: String
-)
+) : java.io.Serializable
 
 /**
  * [

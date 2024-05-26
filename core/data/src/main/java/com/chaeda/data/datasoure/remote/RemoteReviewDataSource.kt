@@ -18,7 +18,7 @@ class RemoteReviewDataSource @Inject constructor(
     }
 
     suspend fun postNewFolder(
-        problemsIds: Set<Long>,
+        problemsIds: List<Long>,
         folder: ReviewFolderDTO
     ): Long {
         return reviewService.postNewFolder(

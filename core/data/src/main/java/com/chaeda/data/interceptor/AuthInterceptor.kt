@@ -30,6 +30,13 @@ class AuthInterceptor @Inject constructor(
                     Log.d("chaeda-intercept", "CODE_TOKEN_EXPIRED")
                     val refreshTokenRequest = originalRequest.newRefreshBuilder().build()
                     val refreshTokenResponse = chain.proceed(refreshTokenRequest)
+                    Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.toString()}")
+                    Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.headers}")
+                    Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.body}")
+                    Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.header(
+                        HEADER_AUTHORIZATION)}")
+                    Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.header(
+                        HEADER_REFRESH_TOKEN)}")
                     Log.d("chaeda-intercept", "refreshTokenResponse : ${refreshTokenResponse.toString()}")
                     Log.d("chaeda-intercept", "refreshTokenResponse : ${refreshTokenResponse.body}")
                     Log.d("chaeda-intercept", "refreshTokenResponse : ${refreshTokenResponse.headers}")

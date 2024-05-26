@@ -15,7 +15,7 @@ interface ReviewRepository {
         chapter: Chapter
     ): Result<Unit>
     suspend fun postNewFolder(
-        problemsIds: Set<Long>,
+        problemsIds: List<Long>,
         reviewFolder: ReviewFolderDTO
     ): Result<Long>
     suspend fun getProblemsFromBox(): Result<List<ReviewProblemDTO>>
