@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 data class RequestReviewProblemDTO (
     val incorrectDate: String,
     val imageKey: String,
-    val imageFileExtension: String,
+    val fileExtension: String,
     val answer: String,
-    val textbookId: Int,
+    val textbookName: String,
     val problemNum: String,
     val chapter: String
 )

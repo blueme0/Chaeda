@@ -12,6 +12,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -37,9 +39,9 @@ import com.chaeda.chaeda.presentation.homework.FileState
 import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
 import com.chaeda.domain.entity.PresignedDetailInfo
 import com.chaeda.domain.enumSet.Chapter
-import com.chaeda.domain.enumSet.Concept
 import com.chaeda.domain.enumSet.Subject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -58,8 +60,6 @@ class AddProblemPhotoActivity
     private var subject: Subject? = null
     private var chapters: List<Chapter>? = null
     private var chapter: Chapter? = null
-    private var concepts: List<Concept>? = null
-    private var concept: Concept? = null
 
     private var reviewFile: File? = null
     private var tempFile: String = ""
@@ -71,13 +71,13 @@ class AddProblemPhotoActivity
         subject = subjects!![0]
         chapters = subject!!.chapters
         chapter = chapters!![0]
-        concepts = chapter!!.concepts
-        concept = concepts!![0]
 
         initListener()
         initAddBtn()
 
+        setTextChangedListener()
         sendFileObserver()
+        reviewObserver()
     }
 
     private fun initAddBtn() {
@@ -293,7 +293,7 @@ class AddProblemPhotoActivity
 
     private val customCropImage = registerForActivityResult(CropImageContract()) {
         if (it !is CropImage.CancelledResult) {
-            it.uriContent?.let { it1 -> viewModel.setImageUri(it1) }
+//            it.uriContent?.let { it1 -> viewModel.setImageUri(it1) }
             binding.ivPhoto.load(it.uriContent)
             it.getBitmap(this)?.let { it1 -> imgSaveOnClick(it1) }
             it.bitmap?.let { it1 -> imgSaveOnClick(it1) }
@@ -334,7 +334,6 @@ class AddProblemPhotoActivity
             }
 
             resetSpinnerChapter(null)
-            resetSpinnerConcept(null)
 
             spinnerSubject.adapter = object : ArrayAdapter<Subject>(this@AddProblemPhotoActivity, R.layout.item_spinner, Subject.values()) {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -379,20 +378,7 @@ class AddProblemPhotoActivity
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (p0 != null) {
                         chapter = p0.getItemAtPosition(p2) as Chapter
-                        concepts = chapter!!.concepts
-                        resetSpinnerConcept(chapter)
-                        spinnerConcept.setSelection(0)
-                    }
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
-            }
-
-            spinnerConcept.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    if (p0 != null) {
-                        concept = p0.getItemAtPosition(p2) as Concept
+                        viewModel.updateChapter(chapter!!)
                     }
                 }
 
@@ -405,6 +391,7 @@ class AddProblemPhotoActivity
     private fun resetSpinnerChapter(subject: Subject?) {
         binding.spinnerChapter.isEnabled = subject != null
         if (subject == null) return
+        viewModel.updateChapter(subject.chapters[0])
         binding.spinnerChapter.adapter = object : ArrayAdapter<Chapter>(this, R.layout.item_spinner, subject.chapters) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent)
@@ -427,32 +414,60 @@ class AddProblemPhotoActivity
 
     }
 
-    private fun resetSpinnerConcept(chapter: Chapter?) {
-        binding.spinnerConcept.isEnabled = chapter != null
-        if (chapter == null) return
-        binding.spinnerConcept.adapter = object : ArrayAdapter<Concept>(this, R.layout.item_spinner, chapter.concepts) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent)
-                val textView = view.findViewById<AppCompatTextView>(R.id.spinner_tv)
-                textView.text = chapter.concepts[position].koreanName
-                return view
-            }
-
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view = super.getDropDownView(position, convertView, parent)
-                val textView = view.findViewById<AppCompatTextView>(R.id.spinner_tv)
-                textView.text = chapter.concepts[position].koreanName
-                return view
-            }
-        }
-    }
-
     private fun postProblemImage(pdInfo: PresignedDetailInfo, file: File) {
         imageViewModel.putFileToUrl(pdInfo, "image/png", file)
+    }
+
+    private fun setTextChangedListener() {
+        with(binding) {
+            etDate.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    viewModel.updateDateString(p0.toString())
+                }
+            })
+
+            etAnswer.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    viewModel.updateAnswer(p0.toString())
+                }
+            })
+
+            etTextbook.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    viewModel.updateTextbookName(p0.toString())
+                }
+            })
+
+            etIndex.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    viewModel.updateProblemNum(p0.toString())
+                }
+            })
+        }
     }
 
     private fun sendFileObserver() {
@@ -463,6 +478,7 @@ class AddProblemPhotoActivity
                         Timber.tag("chaeda-photo").d("reviewFile : ${reviewFile.toString()}")
                         if (reviewFile != null) {
                             val urlList = state.url
+                            viewModel.updateImageKey(urlList[0].presignedInfo.imageKey)
                             postProblemImage(urlList[0], reviewFile!!)
                         }
                     }
@@ -472,6 +488,9 @@ class AddProblemPhotoActivity
                     is FileState.FileSuccess -> {
                         // s3에 업로드 시 여기로 들어와야 함
                         Timber.tag("chaeda-pre").d("FileState is FileSuccess\n${state.url}")
+                        if (viewModel.isValid.value) {
+                            viewModel.postProblemToBox()
+                        }
                     }
                     is FileState.UploadImagesSuccess -> {
                         Timber.tag("chaeda-pre").d("FileState is UploadImagesSuccess\n${state.url}")
@@ -479,6 +498,19 @@ class AddProblemPhotoActivity
                     else -> { }
                 }
             }
+        }
+    }
+
+    private fun reviewObserver() {
+        lifecycleScope.launch {
+            viewModel.reviewState.collect { state -> {
+                when (state) {
+                    is ReviewState.Failure -> {
+
+                    }
+                    else -> { }
+                }
+            }}
         }
     }
 

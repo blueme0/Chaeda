@@ -8,9 +8,9 @@ import com.chaeda.domain.enumSet.Chapter
 interface ReviewRepository {
     suspend fun postProblemToBox(
         reviewProblem: ReviewProblemDTO,
-        imageFileExtension: String,
+        fileExtension: String,
         answer: String,
-        textbookId: Int,
+        textbookName: String,
         problemNum: String,
         chapter: Chapter
     ): Result<Unit>

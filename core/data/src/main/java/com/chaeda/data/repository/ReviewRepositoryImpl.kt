@@ -15,9 +15,9 @@ class ReviewRepositoryImpl @Inject constructor(
 
     override suspend fun postProblemToBox(
         reviewProblem: ReviewProblemDTO,
-        imageFileExtension: String,
+        fileExtension: String,
         answer: String,
-        textbookId: Int,
+        textbookName: String,
         problemNum: String,
         chapter: Chapter
     ): Result<Unit> {
@@ -26,9 +26,9 @@ class ReviewRepositoryImpl @Inject constructor(
                 RequestReviewProblemDTO(
                     reviewProblem.incorrectDate,
                     reviewProblem.imageKey,
-                    imageFileExtension,
+                    fileExtension,
                     answer,
-                    textbookId,
+                    textbookName,
                     problemNum,
                     chapter.name
                 )
