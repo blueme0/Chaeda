@@ -118,5 +118,6 @@ sealed interface ReviewState {
     object Init: ReviewState
     object Success: ReviewState
     data class PostProblemSuccess(val url: String): ReviewState
+    data class GetProblemsFromBoxSuccess(val urls: List<ReviewProblemDTO>): ReviewState
     data class Failure(val msg: String): ReviewState
 }

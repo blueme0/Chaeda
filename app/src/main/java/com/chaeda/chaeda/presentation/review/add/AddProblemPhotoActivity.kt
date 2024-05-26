@@ -503,14 +503,17 @@ class AddProblemPhotoActivity
 
     private fun reviewObserver() {
         lifecycleScope.launch {
-            viewModel.reviewState.collect { state -> {
+            viewModel.reviewState.collect { state ->
                 when (state) {
                     is ReviewState.Failure -> {
 
                     }
+                    is ReviewState.PostProblemSuccess -> {
+                        finish()
+                    }
                     else -> { }
                 }
-            }}
+            }
         }
     }
 
