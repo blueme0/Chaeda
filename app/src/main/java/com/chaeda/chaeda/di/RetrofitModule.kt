@@ -47,12 +47,23 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
+    @Named("ChaedaOkHttpClient")
+    fun provideChaedaOkHttpClient(
         @Logger loggingInterceptor: Interceptor,
-        @Auth authInterceptor: Interceptor,
+        @Auth authInterceptor: Interceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor(authInterceptor)
+        .addFlipperNetworkPlugin()
+        .build()
+
+    @Provides
+    @Singleton
+    @Named("ImageOkHttpClient")
+    fun provideImageOkHttpClient(
+        @Logger loggingInterceptor: Interceptor
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
         .addFlipperNetworkPlugin()
         .build()
 
@@ -65,7 +76,7 @@ object RetrofitModule {
     @Singleton
     @Named("ChaedaRetrofit")
     fun provideChaedaRetrofit(
-        client: OkHttpClient,
+        @Named("ChaedaOkHttpClient") client: OkHttpClient,
         factory: Converter.Factory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -77,7 +88,7 @@ object RetrofitModule {
     @Singleton
     @Named("ImageRetrofit")
     fun provideImageRetrofit(
-        client: OkHttpClient,
+        @Named("ImageOkHttpClient") client: OkHttpClient,
         factory: Converter.Factory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(IMAGE_URL)

@@ -21,15 +21,15 @@ class RemoteImageDataSource @Inject constructor(
             file.asRequestBody(contentType.toMediaTypeOrNull())
         ).string()
 
-    suspend fun getPresignedUrl(memberId: Int, requestImageInfo: RequestImageInfo): PresignedInfo =
-        homeworkService.getPresignedUrl(memberId, requestImageInfo).toPresignedInfo()
+    suspend fun getPresignedUrl(requestImageInfo: RequestImageInfo): PresignedInfo =
+        homeworkService.getPresignedUrl(requestImageInfo).toPresignedInfo()
 
     suspend fun uploadImages(images: List<MultipartBody.Part>): String =
         homeworkService.uploadImages(images)
 
-    suspend fun noticePresignedUrl(memberId: Int, imageInfo: ImageInfo): Any =
-        homeworkService.noticePresignedUrl(memberId, imageInfo).string()
+    suspend fun noticePresignedUrl(imageInfo: ImageInfo): Any =
+        homeworkService.noticePresignedUrl(imageInfo).string()
 
-    suspend fun getImagesUrl(memberId: Int, images: List<ImageInfo>): List<String> =
-        homeworkService.getImagesUrl(memberId, images)
+    suspend fun getImagesUrl(images: List<ImageInfo>): List<String> =
+        homeworkService.getImagesUrl(images)
 }
