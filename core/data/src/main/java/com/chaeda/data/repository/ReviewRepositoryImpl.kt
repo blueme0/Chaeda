@@ -37,7 +37,7 @@ class ReviewRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postNewFolder(
-        problemsIds: Set<Long>,
+        problemsIds: List<Long>,
         reviewFolder: ReviewFolderDTO
     ): Result<Long> {
         return runCatching {

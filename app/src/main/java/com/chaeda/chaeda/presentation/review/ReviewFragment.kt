@@ -27,10 +27,10 @@ class ReviewFragment
     private fun initListener() {
         with(binding) {
             tvBox.setOnSingleClickListener {
-                startActivity(ProblemBoxActivity.getIntent(requireActivity()))
+                startActivity(ProblemBoxActivity.getIntent(requireActivity(), false))
             }
             tvCreate.setOnSingleClickListener {
-                startActivity(ReviewFolderActivity.getIntent(requireActivity()))
+                startActivity(ReviewFolderActivity.getIntent(requireActivity(), -1L, null, null))
             }
         }
     }
