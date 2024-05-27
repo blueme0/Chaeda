@@ -123,5 +123,6 @@ sealed interface ReviewState {
     object PostNewFolderSuccess: ReviewState
     data class GetProblemsInFolderSuccess(val urls: List<ReviewProblemDTO>): ReviewState
     data class GetReviewFolderListSuccess(val list: List<ReviewFolderDTO>): ReviewState
+    object PostMakeReviewPdfSuccess: ReviewState
     data class Failure(val msg: String): ReviewState
 }

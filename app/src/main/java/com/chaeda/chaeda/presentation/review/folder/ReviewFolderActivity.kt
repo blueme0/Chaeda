@@ -5,12 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.longExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.base.util.extension.stringExtra
+import com.chaeda.base.util.extension.toast
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityReviewFolderBinding
 import com.chaeda.chaeda.presentation.review.add.ReviewState
@@ -56,12 +58,19 @@ class ReviewFolderActivity
                 tvFab.text = "오답 폴더 수정하기"
                 etTitle.text.insert(0, title)
                 etContent.text.insert(0, description)
+                tvDownload.visibility = View.VISIBLE
+
+                tvDownload.setOnSingleClickListener {
+                    viewModel.postMakeReviewPdf(id)
+                }
 
                 fab.setOnSingleClickListener {
 
                 }
             } else {
                 tvFab.text = "오답 폴더 만들기"
+                tvDownload.visibility = View.INVISIBLE
+
                 fab.setOnSingleClickListener {
                     viewModel.postNewFolder()
                 }
@@ -118,6 +127,10 @@ class ReviewFolderActivity
                     }
                     is ReviewState.GetProblemsInFolderSuccess -> {
                         photoAdapter.setItems(state.urls)
+                    }
+                    is ReviewState.PostMakeReviewPdfSuccess -> {
+                        toast("PDF 생성이 완료되었습니다.\nPDF 저장소에서 확인해 주세요.")
+                        // 아니면 액티비티로 이동해서 확인해도 ㄱㅊ을듯?
                     }
                     else -> { }
                 }

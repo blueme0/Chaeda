@@ -37,6 +37,9 @@ class ReviewFragment
             tvCreate.setOnSingleClickListener {
                 startActivity(ReviewFolderActivity.getIntent(requireActivity(), -1L, null, null))
             }
+            tvPdf.setOnSingleClickListener {
+
+            }
 
         }
     }

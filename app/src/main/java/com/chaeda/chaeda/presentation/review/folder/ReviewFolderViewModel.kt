@@ -62,6 +62,7 @@ class ReviewFolderViewModel @Inject constructor(
                 ReviewFolderDTO(
                     title.value,
                     description.value,
+                    null,
                     null
                 )
             )
@@ -85,4 +86,18 @@ class ReviewFolderViewModel @Inject constructor(
                 }
         }
     }
+
+    fun postMakeReviewPdf(folderId: Long) {
+        viewModelScope.launch {
+            repository.postMakeReviewPdf(folderId)
+                .onSuccess {
+                    _reviewState.value = ReviewState.PostMakeReviewPdfSuccess
+                }
+                .onFailure {
+                    _reviewState.value = ReviewState.Failure(it.message!!)
+                }
+        }
+    }
+
+
 }
