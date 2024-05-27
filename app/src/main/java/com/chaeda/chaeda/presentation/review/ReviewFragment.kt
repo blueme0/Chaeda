@@ -11,6 +11,7 @@ import com.chaeda.chaeda.databinding.FragmentReviewBinding
 import com.chaeda.chaeda.presentation.review.add.ReviewState
 import com.chaeda.chaeda.presentation.review.box.ProblemBoxActivity
 import com.chaeda.chaeda.presentation.review.folder.ReviewFolderActivity
+import com.chaeda.chaeda.presentation.review.pdf.ReviewPdfListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,7 @@ class ReviewFragment
                 startActivity(ReviewFolderActivity.getIntent(requireActivity(), -1L, null, null))
             }
             tvPdf.setOnSingleClickListener {
-
+                startActivity(ReviewPdfListActivity.getIntent(requireActivity()))
             }
 
         }
