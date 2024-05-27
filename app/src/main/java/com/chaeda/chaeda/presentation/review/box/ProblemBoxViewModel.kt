@@ -1,8 +1,9 @@
-package com.chaeda.chaeda.presentation.review
+package com.chaeda.chaeda.presentation.review.box
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.review.add.ReviewState
+import com.chaeda.domain.repository.ImageRepository
 import com.chaeda.domain.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,23 +13,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ReviewViewModel @Inject constructor(
-    private val repository: ReviewRepository
+class ProblemBoxViewModel @Inject constructor(
+    private val repository: ReviewRepository,
+    private val imageRepository: ImageRepository
 ) : ViewModel() {
 
-    private var _reviewState = MutableStateFlow<ReviewState>(ReviewState.Init)
+    private val _reviewState = MutableStateFlow<ReviewState>(ReviewState.Init)
     val reviewState: StateFlow<ReviewState> = _reviewState.asStateFlow()
 
-    fun getReviewFolderList() {
+    fun getProblemsFromBox() {
         viewModelScope.launch {
-            repository.getReviewFolderList()
+            repository.getProblemsFromBox()
                 .onSuccess {
-                    _reviewState.value = ReviewState.GetReviewFolderListSuccess(it)
+                    _reviewState.value = ReviewState.GetProblemsFromBoxSuccess(it)
                 }
                 .onFailure {
                     _reviewState.value = ReviewState.Failure(it.message!!)
                 }
         }
     }
-
 }

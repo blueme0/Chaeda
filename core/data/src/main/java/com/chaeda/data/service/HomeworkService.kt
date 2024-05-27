@@ -26,9 +26,8 @@ interface HomeworkService {
      * api related to images
      */
 
-    @POST("/api/images/presigned-url/{memberId}")
+    @POST("/api/images/presigned-url")
     suspend fun getPresignedUrl(
-        @Path("memberId") memberId: Int,
         @Body requestImageInfo: RequestImageInfo
     ): PresignedResponse
 
@@ -38,15 +37,13 @@ interface HomeworkService {
         @Part files: List<MultipartBody.Part>
     ): String
 
-    @POST("/api/images/presigned-url/complete/{memberId}")
+    @POST("/api/images/upload-complete")
     suspend fun noticePresignedUrl(
-        @Path("memberId") memberId: Int,
-        @Body imageInfo: ImageInfo
+        @Body imageInfo: List<ImageInfo>
     ): ResponseBody
 
-    @POST("/api/images/display/{memberId}")
+    @POST("/api/images/display")
     suspend fun getImagesUrl(
-        @Path("memberId") memberId: Int,
         @Body images: List<ImageInfo>
     ): List<String>
 

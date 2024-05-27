@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RequestImageInfo (
     val imageType: String,
-    val imageFileExtension: String
+    val fileExtension: String
 )

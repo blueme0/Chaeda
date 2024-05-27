@@ -66,7 +66,7 @@ class ConfirmSubmitActivity
     private fun initListener() {
         with(binding) {
             tvSubmit.setOnSingleClickListener {
-                viewModel.getPresignedUrl(viewpagerList.size, 4)
+                viewModel.getPresignedUrl(viewpagerList.size)
             }
             tvAgain.setOnSingleClickListener {
                 // 갤러리에서 사진 가져와서 addFileToViewPager하면 돼
@@ -79,7 +79,7 @@ class ConfirmSubmitActivity
              */
             tvCount.setOnSingleClickListener {
                 if (viewModel.sentImageList.isNotEmpty()) {
-                    viewModel.getImagesUrl(4, viewModel.sentImageList)
+                    viewModel.getImagesUrl(viewModel.sentImageList)
                 }
                 // viewModel.sentImageList를 비우는 작업 한 번 필요하긴 함
             }

@@ -21,12 +21,11 @@ class ImageRepositoryImpl @Inject constructor(
     private val gsonBuilder: Gson = GsonBuilder().create()
 
     override suspend fun getPresignedUrl(
-        memberId: Int,
         imageType: String,
         imageFileExtension: String
     ): Result<PresignedInfo> {
         return runCatching {
-            remoteImageDataSource.getPresignedUrl(memberId, RequestImageInfo(imageType, imageFileExtension))
+            remoteImageDataSource.getPresignedUrl(RequestImageInfo(imageType, imageFileExtension))
 //            gsonBuilder.fromJson(presignedResponse, PresignedResponse::class.java).presignedUrl
         }
     }
@@ -48,19 +47,18 @@ class ImageRepositoryImpl @Inject constructor(
     }
 
     override suspend fun noticePresignedUrl(
-        memberId: Int,
         imageType: String,
         imageFileExtension: String,
         imageKey: String
     ) : Result<Any> {
         return runCatching {
-            remoteImageDataSource.noticePresignedUrl(memberId, ImageInfo(imageType, imageFileExtension, imageKey))
+            remoteImageDataSource.noticePresignedUrl(ImageInfo(imageType, imageFileExtension, imageKey))
         }
     }
 
-    override suspend fun getImagesUrl(memberId: Int, images: List<ImageInfo>): Result<List<String>> {
+    override suspend fun getImagesUrl(images: List<ImageInfo>): Result<List<String>> {
         return runCatching {
-            remoteImageDataSource.getImagesUrl(memberId, images)
+            remoteImageDataSource.getImagesUrl(images)
         }
     }
 

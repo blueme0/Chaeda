@@ -33,12 +33,11 @@ class HomeworkViewModel @Inject constructor(
 
     fun getPresignedUrl(
         count: Int,
-        memberId: Int,
         imageType: String = "ANNOUNCEMENT_THUMBNAIL",
         imageFileExtension: String = "PNG") {
         repeat(count) {
             viewModelScope.launch {
-                imageRepository.getPresignedUrl(memberId, imageType, imageFileExtension)
+                imageRepository.getPresignedUrl(imageType, imageFileExtension)
                     .onSuccess {
                         Timber.tag("chaeda-pre").d("onSuccess: $it")
 //                    _urlState.value = FileState.UrlSuccess(it)
@@ -65,7 +64,7 @@ class HomeworkViewModel @Inject constructor(
             imageRepository.putFileToUrl(pdInfo.presignedInfo.presignedUrl, contentType, file)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("putFileToUrl success: $it")
-                    noticePresignedUrl(4, pdInfo)
+                    noticePresignedUrl(pdInfo)
                 }
                 .onFailure {
                     Timber.tag("chaeda-put").d("putFileToUrl failure: $it")
@@ -79,11 +78,10 @@ class HomeworkViewModel @Inject constructor(
     val sentImageList = mutableListOf<ImageInfo>()
 
     private fun noticePresignedUrl(
-        memberId: Int,
         pdInfo: PresignedDetailInfo
     ) {
         viewModelScope.launch {
-            imageRepository.noticePresignedUrl(memberId, pdInfo.imageType, pdInfo.imageFileExtension, pdInfo.presignedInfo.imageKey)
+            imageRepository.noticePresignedUrl(pdInfo.imageType, pdInfo.imageFileExtension, pdInfo.presignedInfo.imageKey)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("noticePresignedUrl success: $it")
                     sentSuccessCount++
@@ -102,11 +100,10 @@ class HomeworkViewModel @Inject constructor(
     }
 
     fun getImagesUrl(
-        memberId: Int,
         images: List<ImageInfo>
     ) {
         viewModelScope.launch {
-            imageRepository.getImagesUrl(memberId, images)
+            imageRepository.getImagesUrl(images)
                 .onSuccess {
                     Timber.tag("chaeda-put").d("getImagesUrl success: $it")
                     _urlState.value = FileState.GetImagesUrlSuccess(it)
