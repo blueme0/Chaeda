@@ -67,7 +67,7 @@ class ReviewPdfListActivity
 
     private fun initListener() {
         with(binding) {
-            tvFiles.setOnSingleClickListener {
+            tvTitle.setOnSingleClickListener {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -91,7 +91,7 @@ class ReviewPdfListActivity
             viewModel.getReviewPdf(it.id)
         }
 
-        binding.rvFiles.adapter = pdfAdapter
+        binding.rvPdf.adapter = pdfAdapter
 
 //        viewModel.getReviewPdfList()
     }

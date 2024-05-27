@@ -3,8 +3,9 @@ package com.chaeda.chaeda.presentation.review.pdf
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
-import com.chaeda.chaeda.databinding.ItemPdfListBinding
+import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
 import com.chaeda.domain.entity.ReviewPdfDTO
 
 class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
@@ -16,7 +17,7 @@ class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
         parent: ViewGroup,
         viewType: Int
     ): PdfListAdapter.PdfListViewHolder {
-        val binding = ItemPdfListBinding.inflate(
+        val binding = ItemHomeHomeworkBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -37,13 +38,14 @@ class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
     }
 
     class PdfListViewHolder(
-        private val binding: ItemPdfListBinding,
+        private val binding: ItemHomeHomeworkBinding,
         private val itemClick: (ReviewPdfDTO) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(item: ReviewPdfDTO) {
-            binding.tvName.text = item.title
-            binding.tvCreated.text = item.createdDateTime
+            binding.tvTitle.text = item.title
+            binding.tvContent.text = item.createdDateTime
+            binding.ivThumbnail.load("")
 
             binding.root.setOnSingleClickListener {
                 itemClick(item)
