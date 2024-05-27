@@ -3,8 +3,8 @@ package com.chaeda.chaeda.presentation.review
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
 import com.chaeda.domain.entity.ReviewFolderDTO
 
@@ -48,7 +48,7 @@ class ReviewFolderAdapter(private val itemClick: (ReviewFolderDTO) -> (Unit))
         fun onBind(item: ReviewFolderDTO) {
             binding.tvTitle.text = item.title
             binding.tvContent.text = item.description
-            binding.ivThumbnail.load("")
+            binding.ivThumbnail.setImageResource(R.drawable.ic_empty_thumbnail)
 
             binding.root.setOnSingleClickListener {
                 itemClick(item)
