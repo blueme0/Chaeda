@@ -2,6 +2,7 @@ package com.chaeda.chaeda.presentation.review.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chaeda.domain.entity.ReviewFolderDTO
 import com.chaeda.domain.entity.ReviewProblemDTO
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.repository.ReviewRepository
@@ -121,5 +122,6 @@ sealed interface ReviewState {
     data class GetProblemsFromBoxSuccess(val urls: List<ReviewProblemDTO>): ReviewState
     object PostNewFolderSuccess: ReviewState
     data class GetProblemsInFolderSuccess(val urls: List<ReviewProblemDTO>): ReviewState
+    data class GetReviewFolderListSuccess(val list: List<ReviewFolderDTO>): ReviewState
     data class Failure(val msg: String): ReviewState
 }

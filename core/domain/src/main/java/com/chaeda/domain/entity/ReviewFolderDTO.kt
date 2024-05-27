@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 data class ReviewFolderDTO (
     val title: String,
     val description: String,
-    val createdDate: String?
+    val createdDate: String?,
+    val id: Long?
 )
 
 /**
