@@ -58,6 +58,7 @@
             android:paddingHorizontal="10dp"
             android:textColor="#683F21"
             android:textSize="13sp"
+            android:visibility="invisible"
             android:fontFamily="@font/nanumsquare_regular"
             android:background="@drawable/shape_rect30_fab"
             />
