@@ -1,9 +1,9 @@
 package com.chaeda.data.service
 
-import com.chaeda.domain.entity.TextbookDTO
+import com.chaeda.domain.entity.Textbook
 import retrofit2.http.GET
 
 interface TextbookService {
     @GET("/textbook/list")
-    suspend fun getTextbooks(): List<TextbookDTO>
+    suspend fun getTextbooks(): List<Textbook>
 }

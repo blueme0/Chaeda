@@ -54,7 +54,7 @@ class DateSelectDialog (
     private fun initView() {
         with(binding) {
             tvAccept.setOnSingleClickListener {
-                dateSelectDialogInterface?.onYesButtonClick(date!!)
+                dateSelectDialogInterface?.onYesButtonClick(date)
                 dismiss()
             }
 

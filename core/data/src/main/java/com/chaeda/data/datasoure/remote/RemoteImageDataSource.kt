@@ -1,7 +1,7 @@
 package com.chaeda.data.datasoure.remote
 
-import com.chaeda.data.model.request.RequestImageInfo
-import com.chaeda.data.service.HomeworkService
+import com.chaeda.data.model.request.image.RequestImageInfoDto
+import com.chaeda.data.service.AssignmentService
 import com.chaeda.data.service.ImageService
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class RemoteImageDataSource @Inject constructor(
     private val imageService: ImageService,
-    private val homeworkService: HomeworkService
+    private val assignmentService: AssignmentService
 ) {
     suspend fun putFileToUrl(url: String, contentType: String, file: File): String =
         imageService.putFileToUrl(
@@ -21,15 +21,15 @@ class RemoteImageDataSource @Inject constructor(
             file.asRequestBody(contentType.toMediaTypeOrNull())
         ).string()
 
-    suspend fun getPresignedUrl(requestImageInfo: RequestImageInfo): PresignedInfo =
-        homeworkService.getPresignedUrl(requestImageInfo).toPresignedInfo()
+    suspend fun getPresignedUrl(requestImageInfo: RequestImageInfoDto): PresignedInfo =
+        assignmentService.getPresignedUrl(requestImageInfo).toPresignedInfo()
 
     suspend fun uploadImages(images: List<MultipartBody.Part>): String =
-        homeworkService.uploadImages(images)
+        assignmentService.uploadImages(images)
 
     suspend fun noticePresignedUrl(imageInfo: ImageInfo): Any =
-        homeworkService.noticePresignedUrl(listOf(imageInfo)).string()
+        assignmentService.noticePresignedUrl(listOf(imageInfo)).string()
 
     suspend fun getImagesUrl(images: List<ImageInfo>): List<String> =
-        homeworkService.getImagesUrl(images)
+        assignmentService.getImagesUrl(images)
 }

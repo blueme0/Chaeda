@@ -3,7 +3,7 @@ package com.chaeda.chaeda.presentation.review.folder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.review.add.ReviewState
-import com.chaeda.domain.entity.ReviewFolderDTO
+import com.chaeda.domain.entity.ReviewFolder
 import com.chaeda.domain.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,7 +59,7 @@ class ReviewFolderViewModel @Inject constructor(
         viewModelScope.launch {
             repository.postNewFolder(
                 problemIds.value,
-                ReviewFolderDTO(
+                ReviewFolder(
                     title.value,
                     description.value,
                     null,

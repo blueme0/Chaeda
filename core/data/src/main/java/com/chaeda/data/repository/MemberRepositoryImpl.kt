@@ -1,11 +1,11 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteMemberDataSource
-import com.chaeda.data.model.request.RequestLogin
-import com.chaeda.data.model.request.RequestSignUp
+import com.chaeda.data.model.request.auth.RequestLoginDto
+import com.chaeda.data.model.request.auth.RequestSignUpDto
 import com.chaeda.domain.ChaedaDataStore
-import com.chaeda.domain.entity.MemberEntity
-import com.chaeda.domain.entity.TokenDTO
+import com.chaeda.domain.entity.Member
+import com.chaeda.domain.entity.TokenEntity
 import com.chaeda.domain.repository.MemberRepository
 import javax.inject.Inject
 
@@ -25,9 +25,11 @@ class MemberRepositoryImpl @Inject constructor(
         role: String
     ): Result<Unit> {
         return runCatching {
-            remoteMemberDataSource.signUp(RequestSignUp(
+            remoteMemberDataSource.signUp(
+                RequestSignUpDto(
                 loginId, password, name, email, gender, phoneNumber, schoolNumber, grade, "STUDENT"
-            ))
+            )
+            )
         }
     }
 
@@ -37,13 +39,13 @@ class MemberRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun login(loginId: String, password: String): Result<TokenDTO> {
+    override suspend fun login(loginId: String, password: String): Result<TokenEntity> {
         return runCatching {
-            remoteMemberDataSource.login(RequestLogin(loginId, password))
+            remoteMemberDataSource.login(RequestLoginDto(loginId, password))
         }
     }
 
-    override suspend fun getMember(): Result<MemberEntity> {
+    override suspend fun getMember(): Result<Member> {
         return runCatching {
             remoteMemberDataSource.getMember()
         }

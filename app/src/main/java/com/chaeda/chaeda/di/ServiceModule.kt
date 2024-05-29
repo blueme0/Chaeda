@@ -1,10 +1,9 @@
 package com.chaeda.chaeda.di
 
-import com.chaeda.data.service.HomeworkService
+import com.chaeda.data.service.AssignmentService
 import com.chaeda.data.service.ImageService
 import com.chaeda.data.service.MemberService
 import com.chaeda.data.service.ReviewService
-import com.chaeda.data.service.SampleService
 import com.chaeda.data.service.StatisticsService
 import com.chaeda.data.service.TextbookService
 import dagger.Module
@@ -18,10 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
-    @Singleton
-    @Provides
-    fun provideSampleService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
-        chaedaRetrofit.create(SampleService::class.java)
 
     @Singleton
     @Provides
@@ -31,7 +26,7 @@ object ServiceModule {
     @Singleton
     @Provides
     fun provideHomeworkService(@Named("ChaedaRetrofit") chaedaRetrofit: Retrofit) =
-        chaedaRetrofit.create(HomeworkService::class.java)
+        chaedaRetrofit.create(AssignmentService::class.java)
 
     @Singleton
     @Provides

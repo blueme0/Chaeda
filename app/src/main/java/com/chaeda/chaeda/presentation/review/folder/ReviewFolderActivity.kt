@@ -18,7 +18,7 @@ import com.chaeda.chaeda.databinding.ActivityReviewFolderBinding
 import com.chaeda.chaeda.presentation.review.add.ReviewState
 import com.chaeda.chaeda.presentation.review.box.ProblemBoxActivity
 import com.chaeda.chaeda.presentation.review.box.ProblemBoxAdapter
-import com.chaeda.domain.entity.ReviewProblemDTO
+import com.chaeda.domain.entity.ReviewProblem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -144,7 +144,7 @@ class ReviewFolderActivity
 
         if (requestCode == REQUEST_CODE_PROBLEM_BOX_ACTIVITY && resultCode == RESULT_OK) {
             data?.let {
-                val arr = it.getSerializableExtra("selectedItems") as? Array<ReviewProblemDTO>
+                val arr = it.getSerializableExtra("selectedItems") as? Array<ReviewProblem>
                 if (arr != null) {
                     val list = mutableListOf<Long>()
                     for (i in arr) {

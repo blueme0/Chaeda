@@ -1,9 +1,9 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteStatisticsDataSource
-import com.chaeda.domain.entity.ChapterDTO
-import com.chaeda.domain.entity.ConceptDetailDTO
-import com.chaeda.domain.entity.WrongCountWithConceptDTO
+import com.chaeda.domain.entity.ChapterDetail
+import com.chaeda.domain.entity.ConceptDetail
+import com.chaeda.domain.entity.WrongCountWithConcept
 import com.chaeda.domain.repository.StatisticsRepository
 import javax.inject.Inject
 
@@ -28,43 +28,43 @@ class StatisticsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getWrongRateByWeek(date: String): Result<List<WrongCountWithConceptDTO>> {
+    override suspend fun getWrongRateByWeek(date: String): Result<List<WrongCountWithConcept>> {
         return runCatching {
             remoteStatisticsDataSource.getWrongRateByWeek(date)
         }
     }
 
-    override suspend fun getWrongRateByMonth(month: String): Result<List<WrongCountWithConceptDTO>> {
+    override suspend fun getWrongRateByMonth(month: String): Result<List<WrongCountWithConcept>> {
         return runCatching {
             remoteStatisticsDataSource.getWrongRateByMonth(month)
         }
     }
 
-    override suspend fun getAccumulatedStatisticsByType(subConcept: String): Result<ConceptDetailDTO> {
+    override suspend fun getAccumulatedStatisticsByType(subConcept: String): Result<ConceptDetail> {
         return runCatching {
             remoteStatisticsDataSource.getAccumulatedStatisticsByType(subConcept)
         }
     }
 
-    override suspend fun getMonthlyStatisticsByType(subConcept: String): Result<ConceptDetailDTO> {
+    override suspend fun getMonthlyStatisticsByType(subConcept: String): Result<ConceptDetail> {
         return runCatching {
             remoteStatisticsDataSource.getMonthlyStatisticsByType(subConcept)
         }
     }
 
-    override suspend fun getWeeklyStatisticsByType(subConcept: String): Result<ConceptDetailDTO> {
+    override suspend fun getWeeklyStatisticsByType(subConcept: String): Result<ConceptDetail> {
         return runCatching {
             remoteStatisticsDataSource.getWeeklyStatisticsByType(subConcept)
         }
     }
 
-    override suspend fun getChapterListBySubject(subject: String): Result<List<ChapterDTO>> {
+    override suspend fun getChapterListBySubject(subject: String): Result<List<ChapterDetail>> {
         return runCatching {
             remoteStatisticsDataSource.getChapterListBySubject(subject)
         }
     }
 
-    override suspend fun getWrongCountByChapter(chapter: String): Result<List<ConceptDetailDTO>> {
+    override suspend fun getWrongCountByChapter(chapter: String): Result<List<ConceptDetail>> {
         return runCatching {
             remoteStatisticsDataSource.getWrongCountByChapter(chapter)
         }

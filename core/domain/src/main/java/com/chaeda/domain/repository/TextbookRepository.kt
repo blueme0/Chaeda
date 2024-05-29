@@ -1,7 +1,7 @@
 package com.chaeda.domain.repository
 
-import com.chaeda.domain.entity.TextbookDTO
+import com.chaeda.domain.entity.Textbook
 
 interface TextbookRepository {
-    suspend fun getTextbooks(): Result<List<TextbookDTO>>
+    suspend fun getTextbooks(): Result<List<Textbook>>
 }

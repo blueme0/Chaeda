@@ -10,7 +10,7 @@ import androidx.fragment.app.replace
 import com.chaeda.base.BindingActivity
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityMainBinding
-import com.chaeda.chaeda.presentation.homework.HomeworkFragment
+import com.chaeda.chaeda.presentation.assignment.AssignmentFragment
 import com.chaeda.chaeda.presentation.review.ReviewFragment
 import com.chaeda.chaeda.presentation.setting.SettingFragment
 import com.chaeda.chaeda.presentation.statistics.StatisticsFragment
@@ -45,7 +45,7 @@ class MainActivity
                     navigateTo<SettingFragment>()
                 }
                 R.id.menu_homework -> {
-                    navigateTo<HomeworkFragment>()
+                    navigateTo<AssignmentFragment>()
                 }
                 R.id.menu_analysis -> {
                     navigateTo<StatisticsFragment>()

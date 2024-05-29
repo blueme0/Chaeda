@@ -1,13 +1,13 @@
 package com.chaeda.domain.repository
 
-import com.chaeda.domain.entity.ReviewFolderDTO
-import com.chaeda.domain.entity.ReviewPdfDTO
-import com.chaeda.domain.entity.ReviewProblemDTO
+import com.chaeda.domain.entity.ReviewFolder
+import com.chaeda.domain.entity.ReviewPdf
+import com.chaeda.domain.entity.ReviewProblem
 import com.chaeda.domain.enumSet.Chapter
 
 interface ReviewRepository {
     suspend fun postProblemToBox(
-        reviewProblem: ReviewProblemDTO,
+        reviewProblem: ReviewProblem,
         fileExtension: String,
         answer: String,
         textbookName: String,
@@ -16,12 +16,12 @@ interface ReviewRepository {
     ): Result<Unit>
     suspend fun postNewFolder(
         problemsIds: List<Long>,
-        reviewFolder: ReviewFolderDTO
+        reviewFolder: ReviewFolder
     ): Result<Long>
-    suspend fun getProblemsFromBox(): Result<List<ReviewProblemDTO>>
+    suspend fun getProblemsFromBox(): Result<List<ReviewProblem>>
     suspend fun postMakeReviewPdf(folderId: Long): Result<Long>
     suspend fun getReviewPdf(pdfId: Long): Result<String>
-    suspend fun getReviewPdfList(): Result<List<ReviewPdfDTO>>
-    suspend fun getReviewFolderList(): Result<List<ReviewFolderDTO>>
-    suspend fun getProblemsInFolder(folderId: Long): Result<List<ReviewProblemDTO>>
+    suspend fun getReviewPdfList(): Result<List<ReviewPdf>>
+    suspend fun getReviewFolderList(): Result<List<ReviewFolder>>
+    suspend fun getProblemsInFolder(folderId: Long): Result<List<ReviewProblem>>
 }

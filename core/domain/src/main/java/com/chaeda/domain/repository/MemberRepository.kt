@@ -1,7 +1,7 @@
 package com.chaeda.domain.repository
 
-import com.chaeda.domain.entity.MemberEntity
-import com.chaeda.domain.entity.TokenDTO
+import com.chaeda.domain.entity.Member
+import com.chaeda.domain.entity.TokenEntity
 
 interface MemberRepository {
 //    suspend fun getSample(): MutableList<Any>
@@ -17,8 +17,8 @@ interface MemberRepository {
         role: String = "STUDENT"
     ): Result<Unit>
     suspend fun logout(): Any
-    suspend fun login(loginId: String, password: String): Result<TokenDTO>
-    suspend fun getMember(): Result<MemberEntity>
+    suspend fun login(loginId: String, password: String): Result<TokenEntity>
+    suspend fun getMember(): Result<Member>
 
     fun setAutoLogin(userToken: String, refreshToken: String)
     fun disableAutoLogin()

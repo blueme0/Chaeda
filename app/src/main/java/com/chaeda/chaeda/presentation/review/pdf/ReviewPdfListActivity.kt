@@ -132,7 +132,6 @@ class ReviewPdfListActivity
                 val columnIndex: Int = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
                 val columnReason: Int = cursor.getColumnIndex(DownloadManager.COLUMN_REASON)
                 val status: Int = cursor.getInt(columnIndex)
-                val reason: Int = cursor.getInt(columnReason)
                 cursor.close()
                 when (status) {
                     DownloadManager.STATUS_SUCCESSFUL -> Toast.makeText(

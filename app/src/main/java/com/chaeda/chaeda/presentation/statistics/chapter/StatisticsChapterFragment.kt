@@ -32,7 +32,7 @@ import com.chaeda.chaeda.presentation.statistics.StatisticsFragment
 import com.chaeda.chaeda.presentation.statistics.StatisticsState
 import com.chaeda.chaeda.presentation.statistics.StatisticsViewModel
 import com.chaeda.chaeda.presentation.statistics.type.StatisticsTypeDetailActivity
-import com.chaeda.domain.entity.ConceptDetailDTO
+import com.chaeda.domain.entity.ConceptDetail
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.enumSet.Concept
 import com.chaeda.domain.enumSet.Subject
@@ -67,7 +67,7 @@ class StatisticsChapterFragment
         observe()
     }
 
-    private fun setGraph(map: Map<String, ConceptDetailDTO>) {
+    private fun setGraph(map: Map<String, ConceptDetail>) {
         val data = ArrayList<DataEntry>()
 
 //        Log.d("chaeda-polar", "concepts: ${chapter.concepts.toList()}")

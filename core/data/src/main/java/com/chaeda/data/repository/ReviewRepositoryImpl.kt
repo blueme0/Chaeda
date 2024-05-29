@@ -1,10 +1,10 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteReviewDataSource
-import com.chaeda.data.model.request.RequestReviewProblemDTO
-import com.chaeda.domain.entity.ReviewFolderDTO
-import com.chaeda.domain.entity.ReviewPdfDTO
-import com.chaeda.domain.entity.ReviewProblemDTO
+import com.chaeda.data.model.request.review.RequestReviewProblemDto
+import com.chaeda.domain.entity.ReviewFolder
+import com.chaeda.domain.entity.ReviewPdf
+import com.chaeda.domain.entity.ReviewProblem
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.repository.ReviewRepository
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class ReviewRepositoryImpl @Inject constructor(
 ) : ReviewRepository {
 
     override suspend fun postProblemToBox(
-        reviewProblem: ReviewProblemDTO,
+        reviewProblem: ReviewProblem,
         fileExtension: String,
         answer: String,
         textbookName: String,
@@ -23,7 +23,7 @@ class ReviewRepositoryImpl @Inject constructor(
     ): Result<Unit> {
         return runCatching {
             remoteReviewDataSource.postProblemToBox(
-                RequestReviewProblemDTO(
+                RequestReviewProblemDto(
                     reviewProblem.incorrectDate,
                     reviewProblem.imageKey,
                     fileExtension,
@@ -38,14 +38,14 @@ class ReviewRepositoryImpl @Inject constructor(
 
     override suspend fun postNewFolder(
         problemsIds: List<Long>,
-        reviewFolder: ReviewFolderDTO
+        reviewFolder: ReviewFolder
     ): Result<Long> {
         return runCatching {
             remoteReviewDataSource.postNewFolder(problemsIds, reviewFolder)
         }
     }
 
-    override suspend fun getProblemsFromBox(): Result<List<ReviewProblemDTO>> {
+    override suspend fun getProblemsFromBox(): Result<List<ReviewProblem>> {
         return runCatching {
             remoteReviewDataSource.getProblemsFromBox()
         }
@@ -63,19 +63,19 @@ class ReviewRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getReviewPdfList(): Result<List<ReviewPdfDTO>> {
+    override suspend fun getReviewPdfList(): Result<List<ReviewPdf>> {
         return runCatching {
             remoteReviewDataSource.getReviewPdfList()
         }
     }
 
-    override suspend fun getReviewFolderList(): Result<List<ReviewFolderDTO>> {
+    override suspend fun getReviewFolderList(): Result<List<ReviewFolder>> {
         return runCatching {
             remoteReviewDataSource.getReviewFolderList()
         }
     }
 
-    override suspend fun getProblemsInFolder(folderId: Long): Result<List<ReviewProblemDTO>> {
+    override suspend fun getProblemsInFolder(folderId: Long): Result<List<ReviewProblem>> {
         return runCatching {
             remoteReviewDataSource.getProblemsInFolder(folderId)
         }

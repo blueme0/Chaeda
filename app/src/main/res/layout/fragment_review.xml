@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".presentation.homework.HomeworkFragment">
+    tools:context=".presentation.assignment.AssignmentFragment">
 
     <data>
     </data>

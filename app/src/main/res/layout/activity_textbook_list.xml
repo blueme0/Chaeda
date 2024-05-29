@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.homework.textbook.TextbookListActivity">
+    tools:context=".presentation.assignment.textbook.TextbookListActivity">
 
     <data>
     </data>
@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="숙제 화면으로"
+                android:text="과제 화면으로"
                 android:fontFamily="@font/nanumsquare_regular"
                 android:textColor="#000000"
                 android:textSize="16sp"

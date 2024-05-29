@@ -10,7 +10,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentSettingBinding
 import com.chaeda.chaeda.presentation.splash.SplashActivity
-import com.chaeda.domain.entity.MemberEntity
+import com.chaeda.domain.entity.Member
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -41,11 +41,11 @@ class SettingFragment
         }
     }
 
-    private fun setProfileUi(memberEntity: MemberEntity) {
+    private fun setProfileUi(member: Member) {
         with(binding) {
-            tvHomeName.text = memberEntity.name
-            tvHomeTeacher.text = memberEntity.email
-            tvHomeAcademy.text = memberEntity.schoolName
+            tvHomeName.text = member.name
+            tvHomeTeacher.text = member.email
+            tvHomeAcademy.text = member.schoolName
         }
     }
 

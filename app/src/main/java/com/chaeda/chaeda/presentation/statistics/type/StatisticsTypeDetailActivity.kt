@@ -12,7 +12,7 @@ import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityStatisticsTypeDetailBinding
 import com.chaeda.chaeda.presentation.statistics.StatisticsState
 import com.chaeda.chaeda.presentation.statistics.StatisticsViewModel
-import com.chaeda.domain.entity.ConceptDetailDTO
+import com.chaeda.domain.entity.ConceptDetail
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.enumSet.Concept
 import com.chaeda.domain.enumSet.Subject
@@ -50,7 +50,7 @@ class StatisticsTypeDetailActivity
         requestStatistics()
     }
 
-    private fun updateView(concept: ConceptDetailDTO) {
+    private fun updateView(concept: ConceptDetail) {
         with(binding) {
 //            tv
             tvSolved.text = "${concept.problemCount}문제"

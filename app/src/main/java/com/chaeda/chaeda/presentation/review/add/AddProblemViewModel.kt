@@ -2,9 +2,9 @@ package com.chaeda.chaeda.presentation.review.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaeda.domain.entity.ReviewFolderDTO
-import com.chaeda.domain.entity.ReviewPdfDTO
-import com.chaeda.domain.entity.ReviewProblemDTO
+import com.chaeda.domain.entity.ReviewFolder
+import com.chaeda.domain.entity.ReviewPdf
+import com.chaeda.domain.entity.ReviewProblem
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.repository.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -87,7 +87,7 @@ class AddProblemViewModel @Inject constructor(
     fun postProblemToBox() {
         viewModelScope.launch {
             reviewRepository.postProblemToBox(
-                ReviewProblemDTO(
+                ReviewProblem(
                     reviewNoteProblemId = null,
                     incorrectDate = dateString.value,
                     imageKey = imageKey.value,
@@ -120,12 +120,12 @@ sealed interface ReviewState {
     object Init: ReviewState
     object Success: ReviewState
     data class PostProblemSuccess(val url: String): ReviewState
-    data class GetProblemsFromBoxSuccess(val urls: List<ReviewProblemDTO>): ReviewState
+    data class GetProblemsFromBoxSuccess(val urls: List<ReviewProblem>): ReviewState
     object PostNewFolderSuccess: ReviewState
-    data class GetProblemsInFolderSuccess(val urls: List<ReviewProblemDTO>): ReviewState
-    data class GetReviewFolderListSuccess(val list: List<ReviewFolderDTO>): ReviewState
+    data class GetProblemsInFolderSuccess(val urls: List<ReviewProblem>): ReviewState
+    data class GetReviewFolderListSuccess(val list: List<ReviewFolder>): ReviewState
     object PostMakeReviewPdfSuccess: ReviewState
-    data class GetReviewPdfListSuccess(val list: List<ReviewPdfDTO>): ReviewState
+    data class GetReviewPdfListSuccess(val list: List<ReviewPdf>): ReviewState
     data class GetReviewPdfSuccess(val url: String): ReviewState
     data class Failure(val msg: String): ReviewState
 }
