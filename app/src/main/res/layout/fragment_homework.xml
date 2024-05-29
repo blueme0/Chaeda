@@ -48,7 +48,7 @@
             android:id="@+id/tv_false"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="오답 모아보기"
+            android:text="교재 업로드"
             app:layout_constraintBottom_toBottomOf="@id/background"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="25dp"
@@ -58,7 +58,7 @@
             android:paddingHorizontal="10dp"
             android:textColor="#683F21"
             android:textSize="13sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:fontFamily="@font/nanumsquare_regular"
             android:background="@drawable/shape_rect30_fab"
             />

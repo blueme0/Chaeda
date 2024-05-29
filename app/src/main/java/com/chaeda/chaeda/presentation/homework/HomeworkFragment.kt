@@ -13,8 +13,8 @@ import com.chaeda.chaeda.databinding.FragmentHomeworkBinding
 import com.chaeda.chaeda.presentation.home.TodayHomeworkAdapter
 import com.chaeda.chaeda.presentation.homework.add.AddHomeworkActivity
 import com.chaeda.chaeda.presentation.homework.calendar.WeekFragmentStateAdapter
-import com.chaeda.chaeda.presentation.homework.collection.IncorrectCollectionActivity
 import com.chaeda.chaeda.presentation.homework.detail.HomeworkDetailActivity
+import com.chaeda.chaeda.presentation.homework.test.TestActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -54,7 +54,8 @@ class HomeworkFragment
 //            startActivity(Intent(requireContext(), ConfirmSubmitActivity::class.java))
 //        }
         binding.tvFalse.setOnSingleClickListener {
-            startActivity(IncorrectCollectionActivity.getIntent(requireContext()))
+//            startActivity(IncorrectCollectionActivity.getIntent(requireContext()))
+            startActivity(TestActivity.getIntent(requireContext()))
         }
     }
 

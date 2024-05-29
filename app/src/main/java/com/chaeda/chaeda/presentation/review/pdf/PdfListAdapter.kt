@@ -3,8 +3,8 @@ package com.chaeda.chaeda.presentation.review.pdf
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
 import com.chaeda.domain.entity.ReviewPdfDTO
 
@@ -45,7 +45,7 @@ class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
         fun onBind(item: ReviewPdfDTO) {
             binding.tvTitle.text = item.title
             binding.tvContent.text = item.createdDateTime
-            binding.ivThumbnail.load("")
+            binding.ivThumbnail.setImageResource(R.drawable.ic_empty_thumbnail)
 
             binding.root.setOnSingleClickListener {
                 itemClick(item)

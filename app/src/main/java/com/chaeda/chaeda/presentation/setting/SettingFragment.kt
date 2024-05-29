@@ -3,34 +3,33 @@ package com.chaeda.chaeda.presentation.setting
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingFragment
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentSettingBinding
 import com.chaeda.chaeda.presentation.splash.SplashActivity
-import com.chaeda.domain.entity.Academy
+import com.chaeda.domain.entity.MemberEntity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingFragment
     : BindingFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
 
-    private lateinit var academyAdapter : AcademyListAdapter
+    private val viewModel by activityViewModels<SettingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
         initListener()
-        initAcademyList()
+        observe()
     }
 
     private fun initView() {
-        academyAdapter = AcademyListAdapter {
-            // click listener
-        }
-
-        binding.rvAcademy.adapter = academyAdapter
+        viewModel.getMember()
     }
 
     private fun initListener() {
@@ -42,10 +41,24 @@ class SettingFragment
         }
     }
 
-    private fun initAcademyList() {
-        academyAdapter.setItems(listOf(
-            Academy("일등 수학학원", "모의고사 대비반", "홍길동"),
-            Academy("최고 국어학원", "내신 준비반", "김길동")
-        ))
+    private fun setProfileUi(memberEntity: MemberEntity) {
+        with(binding) {
+            tvHomeName.text = memberEntity.name
+            tvHomeTeacher.text = memberEntity.email
+            tvHomeAcademy.text = memberEntity.schoolName
+        }
+    }
+
+    private fun observe() {
+        lifecycleScope.launch {
+            viewModel.settingState.collect { state ->
+                when (state) {
+                    is SettingState.GetMemberSuccess -> {
+                        setProfileUi(state.member)
+                    }
+                    else -> { }
+                }
+            }
+        }
     }
 }

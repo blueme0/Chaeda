@@ -96,20 +96,6 @@
                 android:layout_marginLeft="8dp"
                 />
 
-            <TextView
-                android:id="@+id/tv_home_class"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:fontFamily="@font/font_nanumsquare_bold"
-                android:text="모의고사 대비반"
-                android:textColor="#717171"
-
-                app:layout_constraintStart_toEndOf="@id/tv_home_academy"
-                app:layout_constraintBottom_toBottomOf="@id/iv_home_academy"
-                android:layout_marginLeft="25dp"
-                />
-
             <ImageView
                 android:id="@+id/iv_home_teacher"
                 android:layout_width="wrap_content"
@@ -172,72 +158,16 @@
                 />
 
             <TextView
-                android:id="@+id/tv_edit_academy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="소속 학원 변경"
-                app:layout_constraintStart_toStartOf="@id/tv_setting_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_user"
-                android:textSize="18sp"
-                android:fontFamily="@font/nanumsquare_bold"
-                android:textColor="@color/black"
-                android:layout_marginTop="16dp"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_academy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-
-                app:layout_constraintStart_toStartOf="@id/tv_setting_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_academy"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:overScrollMode="never"
-
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
-
-            <TextView
-                android:id="@+id/tv_add_academy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="학원 추가하기"
-                android:layout_marginStart="16dp"
-
-                app:layout_constraintTop_toTopOf="@id/tv_edit_academy"
-                app:layout_constraintStart_toEndOf="@id/tv_edit_academy"
-                app:layout_constraintBottom_toBottomOf="@id/tv_edit_academy"
-                android:textSize="14sp"
-                android:fontFamily="@font/nanumsquare_regular"
-                android:textColor="#B2B2B2"
-                />
-
-            <TextView
                 android:id="@+id/tv_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로그아웃"
                 app:layout_constraintStart_toStartOf="@id/tv_setting_name"
-                app:layout_constraintTop_toBottomOf="@id/rv_academy"
+                app:layout_constraintTop_toBottomOf="@id/tv_edit_user"
                 android:textSize="18sp"
                 android:fontFamily="@font/nanumsquare_bold"
                 android:textColor="@color/black"
                 android:layout_marginTop="20dp"
-                />
-
-            <TextView
-                android:id="@+id/tv_academy_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="학원 연락처"
-                app:layout_constraintStart_toStartOf="@id/tv_setting_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_logout"
-                android:textSize="18sp"
-                android:fontFamily="@font/nanumsquare_bold"
-                android:textColor="@color/black"
-                android:layout_marginTop="16dp"
                 />
 
             <TextView
@@ -246,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:text="고객센터"
                 app:layout_constraintStart_toStartOf="@id/tv_setting_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_academy_contact"
+                app:layout_constraintTop_toBottomOf="@id/tv_logout"
                 android:textSize="18sp"
                 android:fontFamily="@font/nanumsquare_bold"
                 android:textColor="@color/black"
