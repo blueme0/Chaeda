@@ -62,6 +62,7 @@ class ReviewFolderActivity
 
                 tvDownload.setOnSingleClickListener {
                     viewModel.postMakeReviewPdf(id)
+                    toast("생성 중")
                 }
 
                 fab.setOnSingleClickListener {

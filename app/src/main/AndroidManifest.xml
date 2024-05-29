@@ -105,6 +105,8 @@
         <activity
             android:name=".presentation.review.pdf.ReviewPdfListActivity"
             android:exported="true" />
+        <activity android:name=".presentation.homework.test.TestActivity"
+            android:exported="true" />
 
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
