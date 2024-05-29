@@ -43,13 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.homework.add.AddHomeworkActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.homework.add.HomeworkClassActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.setting.SettingActivity"
+            android:name=".presentation.assignment.add.AddAssignmentActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.login.LoginActivity"
@@ -58,37 +52,16 @@
             android:name=".presentation.signup.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.notice.photo.NoticePhotoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.notice.detail.NoticeDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.notice.NoticeListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.homework.collection.IncorrectCollectionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.homework.result.detail.AnswerDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.homework.result.HomeworkResultActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.homework.detail.HomeworkDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.homework.submit.ConfirmSubmitActivity"
+            android:name=".presentation.assignment.detail.AssignmentDetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.homework.result.submit.ResultSubmitActivity"
+            android:name=".presentation.assignment.result.submit.ResultSubmitActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.homework.textbook.TextbookListActivity"
+            android:name=".presentation.assignment.textbook.TextbookListActivity"
             android:exported="true" />
         <activity
             android:name=".presentation.statistics.type.StatisticsTypeDetailActivity"
@@ -105,7 +78,7 @@
         <activity
             android:name=".presentation.review.pdf.ReviewPdfListActivity"
             android:exported="true" />
-        <activity android:name=".presentation.homework.test.TestActivity"
+        <activity android:name=".presentation.assignment.test.TestActivity"
             android:exported="true" />
 
         <activity

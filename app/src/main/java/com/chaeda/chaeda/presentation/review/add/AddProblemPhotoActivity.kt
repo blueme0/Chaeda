@@ -35,8 +35,8 @@ import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAddProblemPhotoBinding
-import com.chaeda.chaeda.presentation.homework.FileState
-import com.chaeda.chaeda.presentation.homework.HomeworkViewModel
+import com.chaeda.chaeda.presentation.assignment.FileState
+import com.chaeda.chaeda.presentation.assignment.HomeworkViewModel
 import com.chaeda.domain.entity.PresignedDetailInfo
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.enumSet.Subject

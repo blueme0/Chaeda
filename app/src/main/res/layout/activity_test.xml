@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.chaeda.chaeda.presentation.homework.add.AddAssignmentViewModel" />
+            type="com.chaeda.chaeda.presentation.assignment.add.AddAssignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
