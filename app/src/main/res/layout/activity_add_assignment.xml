@@ -45,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="숙제 목록으로"
+                android:text="과제 목록으로"
                 android:fontFamily="@font/nanumsquare_regular"
                 android:textColor="#000000"
                 android:textSize="16sp"
@@ -204,7 +204,7 @@
                     android:layout_marginTop="7dp"
                     android:background="@drawable/shape_rect4_fill_input"
                     android:fontFamily="@font/pretendard_regular"
-                    android:hint="숙제 제목 입력하기"
+                    android:hint="과제 제목 입력하기"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
                     android:textSize="16sp"

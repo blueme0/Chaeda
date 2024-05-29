@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:fontFamily="@font/font_nanumsquare_extrabold"
-            android:text="이날의 숙제"
+            android:text="이날의 과제"
             android:textColor="#262626"
 
             app:layout_constraintStart_toStartOf="parent"
