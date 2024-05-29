@@ -113,10 +113,10 @@ class AddProblemPhotoActivity
         )
         val idColumn = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
         val displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-        cursor.use {cursor ->
-            if (cursor.moveToFirst()) {
-                val id = cursor.getLong(idColumn)
-                val displayName = cursor.getString(displayNameColumn)
+        cursor.use {cur ->
+            if (cur.moveToFirst()) {
+                val id = cur.getLong(idColumn)
+                val displayName = cur.getString(displayNameColumn)
                 val contentUri =
                     Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString())
                 //            galleryList.add(GalleryModel(contentUri.toString(), displayName))
@@ -219,7 +219,6 @@ class AddProblemPhotoActivity
         val externalStorage = Environment.getExternalStorageDirectory().absolutePath
         val path = "$externalStorage/DCIM/imageSave"
         val dir = File(path)
-        var filePath = ""
 
         if(dir.exists().not()) {
             dir.mkdirs() // 폴더 없을경우 폴더 생성
@@ -231,7 +230,6 @@ class AddProblemPhotoActivity
             //0KB 파일 생성.
 
             val fos = FileOutputStream(fileItem) // 파일 아웃풋 스트림
-            filePath = fileItem.absolutePath
 
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             //파일 아웃풋 스트림 객체를 통해서 Bitmap 압축.

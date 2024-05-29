@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
-import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
+import com.chaeda.chaeda.databinding.ItemAssignmentBinding
 import com.chaeda.domain.entity.ReviewFolder
 
 class ReviewFolderAdapter(private val itemClick: (ReviewFolder) -> (Unit))
@@ -17,7 +17,7 @@ class ReviewFolderAdapter(private val itemClick: (ReviewFolder) -> (Unit))
         parent: ViewGroup,
         viewType: Int
     ): ReviewFolderAdapter.ReviewFolderViewHolder {
-        val binding = ItemHomeHomeworkBinding.inflate(
+        val binding = ItemAssignmentBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -41,7 +41,7 @@ class ReviewFolderAdapter(private val itemClick: (ReviewFolder) -> (Unit))
     }
 
     class ReviewFolderViewHolder(
-        private val binding: ItemHomeHomeworkBinding,
+        private val binding: ItemAssignmentBinding,
         private val itemClick: (ReviewFolder) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
-import com.chaeda.chaeda.databinding.ItemIncorrectPhotoBinding
+import com.chaeda.chaeda.databinding.ItemSimpleImageBinding
 import com.chaeda.domain.entity.ReviewProblem
 import timber.log.Timber
 
@@ -20,7 +20,7 @@ class ProblemBoxAdapter(private val forChoice: Boolean, private val itemClick: (
         parent: ViewGroup,
         viewType: Int
     ): ProblemBoxAdapter.ProblemBoxViewHolder {
-        val binding = ItemIncorrectPhotoBinding.inflate(
+        val binding = ItemSimpleImageBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -51,7 +51,7 @@ class ProblemBoxAdapter(private val forChoice: Boolean, private val itemClick: (
     fun getItems(): MutableMap<Long, ReviewProblem> = selectedMap
 
     class ProblemBoxViewHolder(
-        private val binding: ItemIncorrectPhotoBinding,
+        private val binding: ItemSimpleImageBinding,
         private val itemClick: (ReviewProblem) -> Unit,
         private val adapter: ProblemBoxAdapter
     ) : RecyclerView.ViewHolder(binding.root) {

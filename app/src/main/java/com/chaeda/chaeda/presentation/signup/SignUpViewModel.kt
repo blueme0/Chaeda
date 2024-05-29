@@ -30,7 +30,7 @@ class SignUpViewModel @Inject constructor(
     val idValid: StateFlow<Boolean> = combine(
         loginId
     ) { values ->
-        val id = values[0] as String
+        val id = values[0]
         Pattern.matches(EMAIL_REGEX, id)
     }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
 
@@ -65,7 +65,7 @@ class SignUpViewModel @Inject constructor(
     val nameValid: StateFlow<Boolean> = combine(
         userName
     ) { values ->
-        val name = values[0] as String
+        val name = values[0]
         Pattern.matches(NAME_REGEX, name)
     }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
 
@@ -90,7 +90,7 @@ class SignUpViewModel @Inject constructor(
     val phoneValid: StateFlow<Boolean> = combine(
         phoneNumber
     ) { values ->
-        val num = values[0] as String
+        val num = values[0]
         Pattern.matches(PHONE_REGEX, num)
     }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
 
@@ -104,7 +104,7 @@ class SignUpViewModel @Inject constructor(
     val schoolValid: StateFlow<Boolean> = combine(
         schoolName
     ) { values ->
-        val school = values[0] as String
+        val school = values[0]
         Pattern.matches(SCHOOL_REGEX, school)
     }.stateIn(scope = viewModelScope, SharingStarted.Eagerly, false)
 
