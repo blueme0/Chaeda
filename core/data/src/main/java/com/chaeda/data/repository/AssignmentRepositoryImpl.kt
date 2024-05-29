@@ -1,11 +1,11 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteAssignmentDataSource
-import com.chaeda.data.model.request.RequestAssignmentDTO
-import com.chaeda.data.model.request.RequestAssignmentResultDTO
-import com.chaeda.domain.entity.AssignmentDTO
-import com.chaeda.domain.entity.AssignmentResultDTO
-import com.chaeda.domain.entity.ProblemsWithPageDTO
+import com.chaeda.data.model.request.assignment.RequestAssignmentDto
+import com.chaeda.data.model.request.assignment.RequestAssignmentResultDto
+import com.chaeda.domain.entity.Assignment
+import com.chaeda.domain.entity.AssignmentResult
+import com.chaeda.domain.entity.ProblemsWithPage
 import com.chaeda.domain.repository.AssignmentRepository
 import java.time.LocalDate
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class AssignmentRepositoryImpl @Inject constructor(
     private val remoteAssignmentDataSource: RemoteAssignmentDataSource
 ) : AssignmentRepository {
-    override suspend fun getAssignmentById(id: Long): Result<AssignmentDTO> {
+    override suspend fun getAssignmentById(id: Long): Result<Assignment> {
         return runCatching {
             remoteAssignmentDataSource.getAssignmentById(id)
         }
@@ -21,13 +21,13 @@ class AssignmentRepositoryImpl @Inject constructor(
 
     override suspend fun putAssignmentById(
         id: Long,
-        assignment: AssignmentDTO,
+        assignment: Assignment,
         textbookId: Int
-    ): Result<AssignmentDTO> {
+    ): Result<Assignment> {
         return runCatching {
             remoteAssignmentDataSource.putAssignmentById(
                 id,
-                RequestAssignmentDTO(
+                RequestAssignmentDto(
                     assignment.title,
                     assignment.startPage,
                     assignment.endPage,
@@ -47,19 +47,19 @@ class AssignmentRepositoryImpl @Inject constructor(
     override suspend fun getAssignmentsByDate(
         dateString: String,
         date: LocalDate
-    ): Result<List<AssignmentDTO>> {
+    ): Result<List<Assignment>> {
         return runCatching {
             remoteAssignmentDataSource.getAssignmentsByDate(dateString, date)
         }
     }
 
     override suspend fun postAssignment(
-        assignment: AssignmentDTO,
+        assignment: Assignment,
         textbookId: Int
-    ): Result<AssignmentDTO> {
+    ): Result<Assignment> {
         return runCatching {
             remoteAssignmentDataSource.postAssignment(
-                RequestAssignmentDTO(
+                RequestAssignmentDto(
                     assignment.title,
                     assignment.startPage,
                     assignment.endPage,
@@ -70,7 +70,7 @@ class AssignmentRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProblemRangeWithPage(assignmentId: Long): Result<List<ProblemsWithPageDTO>> {
+    override suspend fun getProblemRangeWithPage(assignmentId: Long): Result<List<ProblemsWithPage>> {
         return runCatching {
             remoteAssignmentDataSource.getProblemRangeWithPage(assignmentId)
         }
@@ -78,12 +78,12 @@ class AssignmentRepositoryImpl @Inject constructor(
 
     override suspend fun postAssignmentResult(
         assignmentId: Long,
-        results: List<AssignmentResultDTO>
+        results: List<AssignmentResult>
     ): Result<Unit> {
         return runCatching {
             remoteAssignmentDataSource.postAssignmentResult(
                 assignmentId,
-                RequestAssignmentResultDTO(results)
+                RequestAssignmentResultDto(results)
             )
         }
     }

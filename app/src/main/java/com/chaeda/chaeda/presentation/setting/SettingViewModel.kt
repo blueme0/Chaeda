@@ -2,7 +2,7 @@ package com.chaeda.chaeda.presentation.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaeda.domain.entity.MemberEntity
+import com.chaeda.domain.entity.Member
 import com.chaeda.domain.repository.MemberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +34,6 @@ class SettingViewModel @Inject constructor(
 
 sealed interface SettingState {
     object Init: SettingState
-    data class GetMemberSuccess(val member: MemberEntity): SettingState
+    data class GetMemberSuccess(val member: Member): SettingState
     data class Failure(val msg: String): SettingState
 }

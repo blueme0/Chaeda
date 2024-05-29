@@ -3,7 +3,7 @@ package com.chaeda.chaeda.presentation.assignment.add
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
-import com.chaeda.domain.entity.AssignmentDTO
+import com.chaeda.domain.entity.Assignment
 import com.chaeda.domain.repository.AssignmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -94,7 +94,7 @@ class AddAssignmentViewModel @Inject constructor(
     fun postAssignment() {
         viewModelScope.launch {
             assignmentRepository.postAssignment(
-                AssignmentDTO(
+                Assignment(
                     null,
                     _title.value,
                     _startRange.value,

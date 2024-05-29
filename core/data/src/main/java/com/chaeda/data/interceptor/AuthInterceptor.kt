@@ -1,7 +1,7 @@
 package com.chaeda.data.interceptor
 
 import android.util.Log
-import com.chaeda.data.model.response.ResponseAuthToken
+import com.chaeda.data.model.response.auth.ResponseAuthTokenDto
 import com.chaeda.domain.ChaedaDataStore
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -52,7 +52,7 @@ class AuthInterceptor @Inject constructor(
 //                            refreshTokenResponse.body?.string().toString()
 //                        ) as ResponseAuthToken
 
-                        val responseToken = ResponseAuthToken(
+                        val responseToken = ResponseAuthTokenDto(
                             refreshTokenResponse.header(
                                 HEADER_AUTHORIZATION, ""
                             )!!, refreshTokenResponse.header(

@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.databinding.ItemIncorrectPhotoBinding
-import com.chaeda.domain.entity.ReviewProblemDTO
+import com.chaeda.domain.entity.ReviewProblem
 import timber.log.Timber
 
-class ProblemBoxAdapter(private val forChoice: Boolean, private val itemClick: (ReviewProblemDTO) -> (Unit))
+class ProblemBoxAdapter(private val forChoice: Boolean, private val itemClick: (ReviewProblem) -> (Unit))
     : RecyclerView.Adapter<ProblemBoxAdapter.ProblemBoxViewHolder>() {
 
-    private val problemList = mutableListOf<ReviewProblemDTO>()
-    private val selectedMap = mutableMapOf<Long, ReviewProblemDTO>()
+    private val problemList = mutableListOf<ReviewProblem>()
+    private val selectedMap = mutableMapOf<Long, ReviewProblem>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -37,26 +37,26 @@ class ProblemBoxAdapter(private val forChoice: Boolean, private val itemClick: (
 
     override fun getItemCount(): Int = problemList.size
 
-    fun setItems(newItems: List<ReviewProblemDTO>) {
+    fun setItems(newItems: List<ReviewProblem>) {
         problemList.clear()
         problemList.addAll(newItems)
         notifyDataSetChanged()
     }
 
-    fun fixSelectedList(item: ReviewProblemDTO) {
+    fun fixSelectedList(item: ReviewProblem) {
         if (selectedMap.containsKey(item.reviewNoteProblemId)) selectedMap.remove(item.reviewNoteProblemId)
         else selectedMap.put(item.reviewNoteProblemId!!, item)
     }
 
-    fun getItems(): MutableMap<Long, ReviewProblemDTO> = selectedMap
+    fun getItems(): MutableMap<Long, ReviewProblem> = selectedMap
 
     class ProblemBoxViewHolder(
         private val binding: ItemIncorrectPhotoBinding,
-        private val itemClick: (ReviewProblemDTO) -> Unit,
+        private val itemClick: (ReviewProblem) -> Unit,
         private val adapter: ProblemBoxAdapter
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(item: ReviewProblemDTO) {
+        fun onBind(item: ReviewProblem) {
             binding.ivPhoto.load(item.presignedUrl) {
                 // transformations(RoundedCornersTransformation(4f))
             }

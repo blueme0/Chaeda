@@ -2,9 +2,9 @@ package com.chaeda.chaeda.presentation.statistics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaeda.domain.entity.ChapterDTO
-import com.chaeda.domain.entity.ConceptDetailDTO
-import com.chaeda.domain.entity.WrongCountWithConceptDTO
+import com.chaeda.domain.entity.ChapterDetail
+import com.chaeda.domain.entity.ConceptDetail
+import com.chaeda.domain.entity.WrongCountWithConcept
 import com.chaeda.domain.repository.StatisticsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -136,7 +136,7 @@ class StatisticsViewModel @Inject constructor(
         viewModelScope.launch {
             statisticsRepository.getWrongCountByChapter(chapter)
                 .onSuccess {
-                    val map = mutableMapOf<String, ConceptDetailDTO>()
+                    val map = mutableMapOf<String, ConceptDetail>()
                     val list = it
                     for (i in list) {
                         map[i.subConcept] = i
@@ -160,12 +160,12 @@ sealed interface StatisticsState {
     data class GetCountByDateSuccess(val map: Map<String, Int>): StatisticsState
     data class GetCountByWeekSuccess(val map: Map<String, Int>): StatisticsState
     data class GetCountByMonthSuccess(val map: Map<String, Int>): StatisticsState
-    data class GetWrongByWeekSuccess(val list: List<WrongCountWithConceptDTO>): StatisticsState
-    data class GetWrongByMonthSuccess(val list: List<WrongCountWithConceptDTO>): StatisticsState
-    data class GetAccumulatedStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
-    data class GetMontlyStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
-    data class GetWeeklyStatisticsDetail(val concept: ConceptDetailDTO): StatisticsState
-    data class GetChapterListSuccess(val list: List<ChapterDTO>): StatisticsState
-    data class GetWrongByChapterSuccess(val map: Map<String, ConceptDetailDTO>): StatisticsState
+    data class GetWrongByWeekSuccess(val list: List<WrongCountWithConcept>): StatisticsState
+    data class GetWrongByMonthSuccess(val list: List<WrongCountWithConcept>): StatisticsState
+    data class GetAccumulatedStatisticsDetail(val concept: ConceptDetail): StatisticsState
+    data class GetMontlyStatisticsDetail(val concept: ConceptDetail): StatisticsState
+    data class GetWeeklyStatisticsDetail(val concept: ConceptDetail): StatisticsState
+    data class GetChapterListSuccess(val list: List<ChapterDetail>): StatisticsState
+    data class GetWrongByChapterSuccess(val map: Map<String, ConceptDetail>): StatisticsState
     data class Failure(val msg: String): StatisticsState
 }

@@ -1,6 +1,6 @@
 package com.chaeda.data.datasoure.remote
 
-import com.chaeda.data.model.request.RequestImageInfo
+import com.chaeda.data.model.request.image.RequestImageInfoDto
 import com.chaeda.data.service.AssignmentService
 import com.chaeda.data.service.ImageService
 import com.chaeda.domain.entity.ImageInfo
@@ -21,7 +21,7 @@ class RemoteImageDataSource @Inject constructor(
             file.asRequestBody(contentType.toMediaTypeOrNull())
         ).string()
 
-    suspend fun getPresignedUrl(requestImageInfo: RequestImageInfo): PresignedInfo =
+    suspend fun getPresignedUrl(requestImageInfo: RequestImageInfoDto): PresignedInfo =
         assignmentService.getPresignedUrl(requestImageInfo).toPresignedInfo()
 
     suspend fun uploadImages(images: List<MultipartBody.Part>): String =

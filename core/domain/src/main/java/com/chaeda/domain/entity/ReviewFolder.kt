@@ -3,7 +3,7 @@ package com.chaeda.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ReviewFolderDTO (
+data class ReviewFolder (
     val title: String,
     val description: String,
     val createdDate: String?,

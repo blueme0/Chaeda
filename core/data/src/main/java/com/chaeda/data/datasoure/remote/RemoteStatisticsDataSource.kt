@@ -1,9 +1,9 @@
 package com.chaeda.data.datasoure.remote
 
 import com.chaeda.data.service.StatisticsService
-import com.chaeda.domain.entity.ChapterDTO
-import com.chaeda.domain.entity.ConceptDetailDTO
-import com.chaeda.domain.entity.WrongCountWithConceptDTO
+import com.chaeda.domain.entity.ChapterDetail
+import com.chaeda.domain.entity.ConceptDetail
+import com.chaeda.domain.entity.WrongCountWithConcept
 import javax.inject.Inject
 
 class RemoteStatisticsDataSource @Inject constructor(
@@ -29,43 +29,43 @@ class RemoteStatisticsDataSource @Inject constructor(
 
     suspend fun getWrongRateByWeek(
         date: String
-    ): List<WrongCountWithConceptDTO> {
+    ): List<WrongCountWithConcept> {
         return statisticsService.getWrongRateByWeek(date)
     }
 
     suspend fun getWrongRateByMonth(
         date: String
-    ): List<WrongCountWithConceptDTO> {
+    ): List<WrongCountWithConcept> {
         return statisticsService.getWrongRateByMonth(date)
     }
 
     suspend fun getAccumulatedStatisticsByType(
         subConcept: String
-    ): ConceptDetailDTO {
+    ): ConceptDetail {
         return statisticsService.getAccumulatedStatisticsByType(subConcept)
     }
 
     suspend fun getMonthlyStatisticsByType(
         subConcept: String
-    ): ConceptDetailDTO {
+    ): ConceptDetail {
         return statisticsService.getMonthlyStatisticsByType(subConcept)
     }
 
     suspend fun getWeeklyStatisticsByType(
         subConcept: String
-    ): ConceptDetailDTO {
+    ): ConceptDetail {
         return statisticsService.getWeeklyStatisticsByType(subConcept)
     }
 
     suspend fun getChapterListBySubject(
         subject: String
-    ): List<ChapterDTO> {
+    ): List<ChapterDetail> {
         return statisticsService.getChapterListBySubject(subject)
     }
 
     suspend fun getWrongCountByChapter(
         chapter: String
-    ): List<ConceptDetailDTO> {
+    ): List<ConceptDetail> {
         return statisticsService.getWrongCountByChapter(chapter)
     }
 }

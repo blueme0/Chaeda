@@ -1,9 +1,9 @@
 package com.chaeda.data.service
 
-import com.chaeda.data.model.request.RequestLogin
-import com.chaeda.data.model.request.RequestSignUp
-import com.chaeda.domain.entity.MemberEntity
-import com.chaeda.domain.entity.TokenDTO
+import com.chaeda.data.model.request.auth.RequestLoginDto
+import com.chaeda.data.model.request.auth.RequestSignUpDto
+import com.chaeda.domain.entity.Member
+import com.chaeda.domain.entity.TokenEntity
 import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -12,12 +12,12 @@ import retrofit2.http.POST
 interface MemberService {
     @POST("/member/teacher/signUp")
     suspend fun signUpTeacher(
-        @Body member: RequestSignUp
+        @Body member: RequestSignUpDto
     )
 
     @POST("/member/student/signUp")
     suspend fun signUpStudent(
-        @Body member: RequestSignUp
+        @Body member: RequestSignUpDto
     )
 
     @POST("/member/logout")
@@ -25,9 +25,9 @@ interface MemberService {
 
     @POST("/member/login")
     suspend fun login(
-        @Body info: RequestLogin
-    ): TokenDTO
+        @Body info: RequestLoginDto
+    ): TokenEntity
 
     @GET("/member/student")
-    suspend fun getMember() : MemberEntity
+    suspend fun getMember() : Member
 }

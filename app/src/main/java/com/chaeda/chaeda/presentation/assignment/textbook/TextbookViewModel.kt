@@ -2,7 +2,7 @@ package com.chaeda.chaeda.presentation.assignment.textbook
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaeda.domain.entity.TextbookDTO
+import com.chaeda.domain.entity.Textbook
 import com.chaeda.domain.repository.TextbookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,6 +45,6 @@ class TextbookViewModel @Inject constructor(
 
 sealed interface TextbookState {
     object Init: TextbookState
-    data class GetListSuccess(val list: List<TextbookDTO>): TextbookState
+    data class GetListSuccess(val list: List<Textbook>): TextbookState
     data class Failure(val msg: String): TextbookState
 }

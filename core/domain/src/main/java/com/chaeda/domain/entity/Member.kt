@@ -3,7 +3,7 @@ package com.chaeda.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MemberEntity (
+data class Member (
     val id: Long,
     val name: String,
     val email: String,

@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
-import com.chaeda.domain.entity.ReviewPdfDTO
+import com.chaeda.domain.entity.ReviewPdf
 
-class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
+class PdfListAdapter (private val itemClick: (ReviewPdf) -> (Unit))
     : RecyclerView.Adapter<PdfListAdapter.PdfListViewHolder>() {
 
-    private val pdfList = mutableListOf<ReviewPdfDTO>()
+    private val pdfList = mutableListOf<ReviewPdf>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,7 +31,7 @@ class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
 
     override fun getItemCount(): Int = pdfList.size
 
-    fun setItems(newItems: List<ReviewPdfDTO>) {
+    fun setItems(newItems: List<ReviewPdf>) {
         pdfList.clear()
         pdfList.addAll(newItems)
         notifyDataSetChanged()
@@ -39,10 +39,10 @@ class PdfListAdapter (private val itemClick: (ReviewPdfDTO) -> (Unit))
 
     class PdfListViewHolder(
         private val binding: ItemHomeHomeworkBinding,
-        private val itemClick: (ReviewPdfDTO) -> (Unit)
+        private val itemClick: (ReviewPdf) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(item: ReviewPdfDTO) {
+        fun onBind(item: ReviewPdf) {
             binding.tvTitle.text = item.title
             binding.tvContent.text = item.createdDateTime
             binding.ivThumbnail.setImageResource(R.drawable.ic_empty_thumbnail)

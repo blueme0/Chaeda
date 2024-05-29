@@ -26,7 +26,7 @@ import com.chaeda.chaeda.presentation.statistics.StatisticsViewModel
 import com.chaeda.chaeda.presentation.statistics.dialog.DateSelectDialog
 import com.chaeda.chaeda.presentation.statistics.dialog.DateSelectDialogInterface
 import com.chaeda.chaeda.presentation.statistics.type.StatisticsTypeDetailActivity
-import com.chaeda.domain.entity.WrongCountWithConceptDTO
+import com.chaeda.domain.entity.WrongCountWithConcept
 import com.chaeda.domain.enumSet.Concept
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -168,7 +168,7 @@ class StatisticsWrongFragment
         }
     }
 
-    private fun setGraph(list: List<WrongCountWithConceptDTO>) {
+    private fun setGraph(list: List<WrongCountWithConcept>) {
         val data = ArrayList<DataEntry>()
 
         for (item in list) {

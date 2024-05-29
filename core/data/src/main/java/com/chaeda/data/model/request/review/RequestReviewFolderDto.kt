@@ -1,9 +1,9 @@
-package com.chaeda.data.model.request
+package com.chaeda.data.model.request.review
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RequestReviewFolder(
+data class RequestReviewFolderDto(
     val reviewNoteProblemIds: List<Long>,
     val title: String,
     val description: String

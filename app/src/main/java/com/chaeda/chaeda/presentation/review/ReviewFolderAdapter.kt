@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemHomeHomeworkBinding
-import com.chaeda.domain.entity.ReviewFolderDTO
+import com.chaeda.domain.entity.ReviewFolder
 
-class ReviewFolderAdapter(private val itemClick: (ReviewFolderDTO) -> (Unit))
+class ReviewFolderAdapter(private val itemClick: (ReviewFolder) -> (Unit))
     : RecyclerView.Adapter<ReviewFolderAdapter.ReviewFolderViewHolder>() {
 
-    private val folderList = mutableListOf<ReviewFolderDTO>()
+    private val folderList = mutableListOf<ReviewFolder>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,7 +34,7 @@ class ReviewFolderAdapter(private val itemClick: (ReviewFolderDTO) -> (Unit))
 
     override fun getItemCount(): Int = folderList.size
 
-    fun setItems(newItems: List<ReviewFolderDTO>) {
+    fun setItems(newItems: List<ReviewFolder>) {
         folderList.clear()
         folderList.addAll(newItems)
         notifyDataSetChanged()
@@ -42,10 +42,10 @@ class ReviewFolderAdapter(private val itemClick: (ReviewFolderDTO) -> (Unit))
 
     class ReviewFolderViewHolder(
         private val binding: ItemHomeHomeworkBinding,
-        private val itemClick: (ReviewFolderDTO) -> Unit
+        private val itemClick: (ReviewFolder) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(item: ReviewFolderDTO) {
+        fun onBind(item: ReviewFolder) {
             binding.tvTitle.text = item.title
             binding.tvContent.text = item.description
             binding.ivThumbnail.setImageResource(R.drawable.ic_empty_thumbnail)

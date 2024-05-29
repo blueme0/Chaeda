@@ -1,10 +1,10 @@
-package com.chaeda.data.model.response
+package com.chaeda.data.model.response.presigned
 
 import com.chaeda.domain.entity.PresignedInfo
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PresignedResponse (
+data class ResponsePresignedDto (
     val imageKey: String,
     val presignedUrl: String
 ) {

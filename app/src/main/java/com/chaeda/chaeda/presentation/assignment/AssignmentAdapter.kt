@@ -7,13 +7,13 @@ import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ItemAssignmentBinding
-import com.chaeda.domain.entity.AssignmentDTO
+import com.chaeda.domain.entity.Assignment
 
-class AssignmentAdapter(private val itemClick: (AssignmentDTO) -> (Unit))
+class AssignmentAdapter(private val itemClick: (Assignment) -> (Unit))
     : RecyclerView.Adapter<AssignmentAdapter.TodayHomeworkViewHolder>() {
 
-    private val assignmentList = mutableListOf<AssignmentDTO>()
-    private var newItemClick: (AssignmentDTO) -> (Unit) = itemClick
+    private val assignmentList = mutableListOf<Assignment>()
+    private var newItemClick: (Assignment) -> (Unit) = itemClick
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,7 +27,7 @@ class AssignmentAdapter(private val itemClick: (AssignmentDTO) -> (Unit))
         return TodayHomeworkViewHolder(binding,itemClick, newItemClick)
     }
 
-    fun setAddItemClick(itemClick: (AssignmentDTO) -> (Unit)) {
+    fun setAddItemClick(itemClick: (Assignment) -> (Unit)) {
         newItemClick = itemClick
     }
 
@@ -37,20 +37,20 @@ class AssignmentAdapter(private val itemClick: (AssignmentDTO) -> (Unit))
 
     override fun getItemCount(): Int = assignmentList.size
 
-    fun setItems(newItems: List<AssignmentDTO>?) {
+    fun setItems(newItems: List<Assignment>?) {
         assignmentList.clear()
-        assignmentList.add(AssignmentDTO(null, "", 0, 0, "", null, null))
+        assignmentList.add(Assignment(null, "", 0, 0, "", null, null))
         if (newItems != null) assignmentList.addAll(newItems)
         notifyDataSetChanged()
     }
 
     class TodayHomeworkViewHolder(
         private val binding: ItemAssignmentBinding,
-        private val itemClick: (AssignmentDTO) -> Unit,
-        private val newItemClick: (AssignmentDTO) -> Unit
+        private val itemClick: (Assignment) -> Unit,
+        private val newItemClick: (Assignment) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(item: AssignmentDTO) {
+        fun onBind(item: Assignment) {
             binding.tvTitle.text = item.title
             if (item.title.isEmpty()) {
                 binding.tvContent.text = ""

@@ -3,7 +3,7 @@ package com.chaeda.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ReviewProblemDTO (
+data class ReviewProblem (
     val reviewNoteProblemId: Long?,
     val incorrectDate: String,
     val imageKey: String,

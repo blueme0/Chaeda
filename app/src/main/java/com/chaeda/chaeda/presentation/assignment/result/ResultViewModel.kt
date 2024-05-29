@@ -3,7 +3,7 @@ package com.chaeda.chaeda.presentation.assignment.result
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
-import com.chaeda.domain.entity.AssignmentResultDTO
+import com.chaeda.domain.entity.AssignmentResult
 import com.chaeda.domain.repository.AssignmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -87,9 +87,9 @@ class ResultViewModel @Inject constructor(
     }
 
     fun postAssignmentResult(id: Long) {
-        val results = mutableListOf<AssignmentResultDTO>()
+        val results = mutableListOf<AssignmentResult>()
         for (one in _assignmentResult.value) {
-            results.add(AssignmentResultDTO(one.key, one.value))
+            results.add(AssignmentResult(one.key, one.value))
         }
         viewModelScope.launch {
             hwRepository.postAssignmentResult(id, results)

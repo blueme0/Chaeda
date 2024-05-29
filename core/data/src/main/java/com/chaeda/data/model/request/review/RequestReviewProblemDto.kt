@@ -1,9 +1,9 @@
-package com.chaeda.data.model.request
+package com.chaeda.data.model.request.review
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RequestReviewProblemDTO (
+data class RequestReviewProblemDto (
     val incorrectDate: String,
     val imageKey: String,
     val fileExtension: String,

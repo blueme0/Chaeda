@@ -1,12 +1,12 @@
 package com.chaeda.data.service
 
-import com.chaeda.data.model.request.RequestAssignmentDTO
-import com.chaeda.data.model.request.RequestAssignmentResultDTO
-import com.chaeda.data.model.request.RequestImageInfo
-import com.chaeda.data.model.response.PresignedResponse
-import com.chaeda.domain.entity.AssignmentDTO
+import com.chaeda.data.model.request.assignment.RequestAssignmentDto
+import com.chaeda.data.model.request.assignment.RequestAssignmentResultDto
+import com.chaeda.data.model.request.image.RequestImageInfoDto
+import com.chaeda.data.model.response.presigned.ResponsePresignedDto
+import com.chaeda.domain.entity.Assignment
 import com.chaeda.domain.entity.ImageInfo
-import com.chaeda.domain.entity.ProblemsWithPageDTO
+import com.chaeda.domain.entity.ProblemsWithPage
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -28,8 +28,8 @@ interface AssignmentService {
 
     @POST("/api/images/presigned-url")
     suspend fun getPresignedUrl(
-        @Body requestImageInfo: RequestImageInfo
-    ): PresignedResponse
+        @Body requestImageInfo: RequestImageInfoDto
+    ): ResponsePresignedDto
 
     @Multipart
     @POST("/api/images/upload") // 실제 API 엔드포인트를 여기에 입력
@@ -54,13 +54,13 @@ interface AssignmentService {
     @GET("/assignment/{assignmentId}")
     suspend fun getAssignmentById(
         @Path("assignmentId") assignmentId: Long
-    ): AssignmentDTO
+    ): Assignment
 
     @PUT("/assignment/{assignmentId}")
     suspend fun putAssignmentById(
         @Path("assignmentId") assignmentId: Long,
-        @Body assignment: RequestAssignmentDTO
-    ): AssignmentDTO
+        @Body assignment: RequestAssignmentDto
+    ): Assignment
 
     @DELETE("/assignment/{assignmentId}")
     suspend fun deleteAssignmentById(
@@ -71,21 +71,21 @@ interface AssignmentService {
     suspend fun getAssignmentsByDate(
         @Query("date") date: String
 //        @Named("date") @Body d: LocalDate
-    ): List<AssignmentDTO>
+    ): List<Assignment>
 
     @POST("/assignment")
     suspend fun postAssignment(
-        @Body request: RequestAssignmentDTO
-    ): AssignmentDTO
+        @Body request: RequestAssignmentDto
+    ): Assignment
 
     @GET("/submission/self-assignments/{assignmentId}")
     suspend fun getProblemRangeWithPage(
         @Path("assignmentId") assignmentId: Long
-    ): List<ProblemsWithPageDTO>
+    ): List<ProblemsWithPage>
 
     @POST("/submission/self-assignments/{assignmentId}")
     suspend fun postAssignmentResult(
         @Path("assignmentId") assignmentId: Long,
-        @Body wrongProblemWithinPageRequests: RequestAssignmentResultDTO
+        @Body wrongProblemWithinPageRequests: RequestAssignmentResultDto
     ): Response<Unit>
 }

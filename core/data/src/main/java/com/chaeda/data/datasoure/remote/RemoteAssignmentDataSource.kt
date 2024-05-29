@@ -1,10 +1,10 @@
 package com.chaeda.data.datasoure.remote
 
-import com.chaeda.data.model.request.RequestAssignmentDTO
-import com.chaeda.data.model.request.RequestAssignmentResultDTO
+import com.chaeda.data.model.request.assignment.RequestAssignmentDto
+import com.chaeda.data.model.request.assignment.RequestAssignmentResultDto
 import com.chaeda.data.service.AssignmentService
-import com.chaeda.domain.entity.AssignmentDTO
-import com.chaeda.domain.entity.ProblemsWithPageDTO
+import com.chaeda.domain.entity.Assignment
+import com.chaeda.domain.entity.ProblemsWithPage
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -13,14 +13,14 @@ class RemoteAssignmentDataSource @Inject constructor(
 ) {
     suspend fun getAssignmentById(
         id: Long
-    ): AssignmentDTO {
+    ): Assignment {
         return assignmentService.getAssignmentById(id)
     }
 
     suspend fun putAssignmentById(
         id: Long,
-        request: RequestAssignmentDTO
-    ): AssignmentDTO {
+        request: RequestAssignmentDto
+    ): Assignment {
         return assignmentService.putAssignmentById(id, request)
     }
 
@@ -33,25 +33,25 @@ class RemoteAssignmentDataSource @Inject constructor(
     suspend fun getAssignmentsByDate(
         dateString: String,
         date: LocalDate
-    ): List<AssignmentDTO> {
+    ): List<Assignment> {
         return assignmentService.getAssignmentsByDate(dateString)
     }
 
     suspend fun postAssignment(
-        request: RequestAssignmentDTO
-    ): AssignmentDTO {
+        request: RequestAssignmentDto
+    ): Assignment {
         return assignmentService.postAssignment(request)
     }
 
     suspend fun getProblemRangeWithPage(
         id: Long
-    ): List<ProblemsWithPageDTO> {
+    ): List<ProblemsWithPage> {
         return assignmentService.getProblemRangeWithPage(id)
     }
 
     suspend fun postAssignmentResult(
         id: Long,
-        results: RequestAssignmentResultDTO
+        results: RequestAssignmentResultDto
     ): Boolean {
         return assignmentService.postAssignmentResult(id, results).isSuccessful
     }

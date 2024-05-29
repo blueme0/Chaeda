@@ -3,7 +3,7 @@ package com.chaeda.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TextbookDTO (
+data class Textbook (
     val id: Int,
     val name: String,
     val imageUrl: String,

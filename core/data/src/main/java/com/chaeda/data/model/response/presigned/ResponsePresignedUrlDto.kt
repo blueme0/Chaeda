@@ -1,8 +1,8 @@
-package com.chaeda.data.model.response
+package com.chaeda.data.model.response.presigned
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PresignedUrlResponse (
+data class ResponsePresignedUrlDto (
     val presignedUrl: String
 )

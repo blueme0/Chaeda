@@ -3,7 +3,7 @@ package com.chaeda.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ConceptDetailDTO (
+data class ConceptDetail (
     val subject: String?, //
     val chapter: String?,
     val subConcept: String,

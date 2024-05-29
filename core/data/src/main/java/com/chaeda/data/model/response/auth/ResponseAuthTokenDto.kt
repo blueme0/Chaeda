@@ -1,9 +1,9 @@
-package com.chaeda.data.model.response
+package com.chaeda.data.model.response.auth
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseAuthToken(
+data class ResponseAuthTokenDto(
     val accessToken: String,
     val refreshToken: String,
 )

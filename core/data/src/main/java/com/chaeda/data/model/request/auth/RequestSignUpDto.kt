@@ -1,9 +1,9 @@
-package com.chaeda.data.model.request
+package com.chaeda.data.model.request.auth
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RequestSignUp (
+data class RequestSignUpDto (
     val loginId: String,
     val password: String,
     val name: String,

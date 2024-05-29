@@ -2,7 +2,7 @@ package com.chaeda.chaeda.presentation.assignment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chaeda.domain.entity.AssignmentDTO
+import com.chaeda.domain.entity.Assignment
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedDetailInfo
@@ -155,11 +155,11 @@ class HomeworkViewModel @Inject constructor(
 
 sealed interface AssignmentState {
     object Init: AssignmentState
-    data class GetListSuccess(val list: List<AssignmentDTO>): AssignmentState
-    data class GetByIdSuccess(val assignment: AssignmentDTO): AssignmentState
-    data class PutByIdSuccess(val assignment: AssignmentDTO): AssignmentState
+    data class GetListSuccess(val list: List<Assignment>): AssignmentState
+    data class GetByIdSuccess(val assignment: Assignment): AssignmentState
+    data class PutByIdSuccess(val assignment: Assignment): AssignmentState
     object DeleteByIdSuccess: AssignmentState
-    data class UploadSuccess(val assignment: AssignmentDTO): AssignmentState
+    data class UploadSuccess(val assignment: Assignment): AssignmentState
     object GetRangeSuccess: AssignmentState
     object SubmitSuccess: AssignmentState
     data class Failure(val msg: String): AssignmentState

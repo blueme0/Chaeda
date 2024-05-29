@@ -1,7 +1,7 @@
 package com.chaeda.data.repository
 
 import com.chaeda.data.datasoure.remote.RemoteImageDataSource
-import com.chaeda.data.model.request.RequestImageInfo
+import com.chaeda.data.model.request.image.RequestImageInfoDto
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
@@ -25,7 +25,7 @@ class ImageRepositoryImpl @Inject constructor(
         imageFileExtension: String
     ): Result<PresignedInfo> {
         return runCatching {
-            remoteImageDataSource.getPresignedUrl(RequestImageInfo(imageType, imageFileExtension))
+            remoteImageDataSource.getPresignedUrl(RequestImageInfoDto(imageType, imageFileExtension))
 //            gsonBuilder.fromJson(presignedResponse, PresignedResponse::class.java).presignedUrl
         }
     }

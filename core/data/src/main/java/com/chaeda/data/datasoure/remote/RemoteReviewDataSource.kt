@@ -1,28 +1,28 @@
 package com.chaeda.data.datasoure.remote
 
-import com.chaeda.data.model.request.RequestReviewFolder
-import com.chaeda.data.model.request.RequestReviewProblemDTO
+import com.chaeda.data.model.request.review.RequestReviewFolderDto
+import com.chaeda.data.model.request.review.RequestReviewProblemDto
 import com.chaeda.data.service.ReviewService
-import com.chaeda.domain.entity.ReviewFolderDTO
-import com.chaeda.domain.entity.ReviewPdfDTO
-import com.chaeda.domain.entity.ReviewProblemDTO
+import com.chaeda.domain.entity.ReviewFolder
+import com.chaeda.domain.entity.ReviewPdf
+import com.chaeda.domain.entity.ReviewProblem
 import javax.inject.Inject
 
 class RemoteReviewDataSource @Inject constructor(
     private val reviewService: ReviewService,
 ){
     suspend fun postProblemToBox(
-        problem: RequestReviewProblemDTO
+        problem: RequestReviewProblemDto
     ): Boolean {
         return reviewService.postProblemToBox(problem).isSuccessful
     }
 
     suspend fun postNewFolder(
         problemsIds: List<Long>,
-        folder: ReviewFolderDTO
+        folder: ReviewFolder
     ): Long {
         return reviewService.postNewFolder(
-            RequestReviewFolder(
+            RequestReviewFolderDto(
                 problemsIds,
                 folder.title,
                 folder.description
@@ -30,7 +30,7 @@ class RemoteReviewDataSource @Inject constructor(
         )
     }
 
-    suspend fun getProblemsFromBox(): List<ReviewProblemDTO> {
+    suspend fun getProblemsFromBox(): List<ReviewProblem> {
         return reviewService.getProblemsFromBox()
     }
 
@@ -46,17 +46,17 @@ class RemoteReviewDataSource @Inject constructor(
         return reviewService.getReviewPdf(pdfId).presignedUrl
     }
 
-    suspend fun getReviewPdfList(): List<ReviewPdfDTO> {
+    suspend fun getReviewPdfList(): List<ReviewPdf> {
         return reviewService.getReviewPdfList()
     }
 
-    suspend fun getReviewFolderList(): List<ReviewFolderDTO> {
+    suspend fun getReviewFolderList(): List<ReviewFolder> {
         return reviewService.getReviewFolderList()
     }
 
     suspend fun getProblemsInFolder(
         folderId: Long
-    ): List<ReviewProblemDTO> {
+    ): List<ReviewProblem> {
         return reviewService.getProblemsInFolder(folderId)
     }
 }

@@ -3,7 +3,7 @@ package com.chaeda.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProblemsWithPageDTO (
-    val pageNum: Int,
-    val problemNumbers: List<String>
+data class TokenEntity (
+    val accessTokenDto: String,
+    val refreshTokenDto: String
 )

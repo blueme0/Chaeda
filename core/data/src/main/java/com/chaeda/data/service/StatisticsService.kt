@@ -1,8 +1,8 @@
 package com.chaeda.data.service
 
-import com.chaeda.domain.entity.ChapterDTO
-import com.chaeda.domain.entity.ConceptDetailDTO
-import com.chaeda.domain.entity.WrongCountWithConceptDTO
+import com.chaeda.domain.entity.ChapterDetail
+import com.chaeda.domain.entity.ConceptDetail
+import com.chaeda.domain.entity.WrongCountWithConcept
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -26,36 +26,36 @@ interface StatisticsService {
     @GET("/statistics/wrongCount/weeklyTopSubconcepts")
     suspend fun getWrongRateByWeek(
         @Query("date") date: String
-    ): List<WrongCountWithConceptDTO>
+    ): List<WrongCountWithConcept>
 
     @GET("/statistics/wrongCount/monthlyTopSubconcepts")
     suspend fun getWrongRateByMonth(
         @Query("date") date: String
-    ): List<WrongCountWithConceptDTO>
+    ): List<WrongCountWithConcept>
 
     @GET("/statistics/statistics/accumulated/{subConcept}")
     suspend fun getAccumulatedStatisticsByType(
         @Path("subConcept") subConcept: String
-    ): ConceptDetailDTO
+    ): ConceptDetail
 
     @GET("/statistics/statistics/monthly/{subConcept}")
     suspend fun getMonthlyStatisticsByType(
         @Path("subConcept") subConcept: String
-    ): ConceptDetailDTO
+    ): ConceptDetail
 
     @GET("/statistics/statistics/weekly/{subConcept}")
     suspend fun getWeeklyStatisticsByType(
         @Path("subConcept") subConcept: String
-    ): ConceptDetailDTO
+    ): ConceptDetail
 
     // not in use
     @GET("/statistics/chapter/list")
     suspend fun getChapterListBySubject(
         @Query("subject") subject: String
-    ): List<ChapterDTO>
+    ): List<ChapterDetail>
 
     @GET("/statistics/statistics/accumulated/{chapter}/list")
     suspend fun getWrongCountByChapter(
         @Path("chapter") chapter: String
-    ): List<ConceptDetailDTO>
+    ): List<ConceptDetail>
 }
