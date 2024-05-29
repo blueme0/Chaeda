@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
 import com.chaeda.domain.entity.AssignmentDTO
-import com.chaeda.domain.repository.HomeworkRepository
+import com.chaeda.domain.repository.AssignmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddAssignmentViewModel @Inject constructor(
-    private val homeworkRepository: HomeworkRepository
+    private val assignmentRepository: AssignmentRepository
 ) : ViewModel() {
 
     private val _textbook = MutableStateFlow<String>("")
@@ -93,7 +93,7 @@ class AddAssignmentViewModel @Inject constructor(
 
     fun postAssignment() {
         viewModelScope.launch {
-            homeworkRepository.postAssignment(
+            assignmentRepository.postAssignment(
                 AssignmentDTO(
                     null,
                     _title.value,

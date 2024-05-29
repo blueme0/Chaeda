@@ -1,21 +1,21 @@
 package com.chaeda.data.repository
 
-import com.chaeda.data.datasoure.remote.RemoteHomeworkDataSource
+import com.chaeda.data.datasoure.remote.RemoteAssignmentDataSource
 import com.chaeda.data.model.request.RequestAssignmentDTO
 import com.chaeda.data.model.request.RequestAssignmentResultDTO
 import com.chaeda.domain.entity.AssignmentDTO
 import com.chaeda.domain.entity.AssignmentResultDTO
 import com.chaeda.domain.entity.ProblemsWithPageDTO
-import com.chaeda.domain.repository.HomeworkRepository
+import com.chaeda.domain.repository.AssignmentRepository
 import java.time.LocalDate
 import javax.inject.Inject
 
-class HomeworkRepositoryImpl @Inject constructor(
-    private val remoteHomeworkDataSource: RemoteHomeworkDataSource
-) : HomeworkRepository {
+class AssignmentRepositoryImpl @Inject constructor(
+    private val remoteAssignmentDataSource: RemoteAssignmentDataSource
+) : AssignmentRepository {
     override suspend fun getAssignmentById(id: Long): Result<AssignmentDTO> {
         return runCatching {
-            remoteHomeworkDataSource.getAssignmentById(id)
+            remoteAssignmentDataSource.getAssignmentById(id)
         }
     }
 
@@ -25,7 +25,7 @@ class HomeworkRepositoryImpl @Inject constructor(
         textbookId: Int
     ): Result<AssignmentDTO> {
         return runCatching {
-            remoteHomeworkDataSource.putAssignmentById(
+            remoteAssignmentDataSource.putAssignmentById(
                 id,
                 RequestAssignmentDTO(
                     assignment.title,
@@ -40,7 +40,7 @@ class HomeworkRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAssignmentById(id: Long): Result<Unit> {
         return runCatching {
-            remoteHomeworkDataSource.deleteAssignmentById(id)
+            remoteAssignmentDataSource.deleteAssignmentById(id)
         }
     }
 
@@ -49,7 +49,7 @@ class HomeworkRepositoryImpl @Inject constructor(
         date: LocalDate
     ): Result<List<AssignmentDTO>> {
         return runCatching {
-            remoteHomeworkDataSource.getAssignmentsByDate(dateString, date)
+            remoteAssignmentDataSource.getAssignmentsByDate(dateString, date)
         }
     }
 
@@ -58,7 +58,7 @@ class HomeworkRepositoryImpl @Inject constructor(
         textbookId: Int
     ): Result<AssignmentDTO> {
         return runCatching {
-            remoteHomeworkDataSource.postAssignment(
+            remoteAssignmentDataSource.postAssignment(
                 RequestAssignmentDTO(
                     assignment.title,
                     assignment.startPage,
@@ -72,7 +72,7 @@ class HomeworkRepositoryImpl @Inject constructor(
 
     override suspend fun getProblemRangeWithPage(assignmentId: Long): Result<List<ProblemsWithPageDTO>> {
         return runCatching {
-            remoteHomeworkDataSource.getProblemRangeWithPage(assignmentId)
+            remoteAssignmentDataSource.getProblemRangeWithPage(assignmentId)
         }
     }
 
@@ -81,7 +81,7 @@ class HomeworkRepositoryImpl @Inject constructor(
         results: List<AssignmentResultDTO>
     ): Result<Unit> {
         return runCatching {
-            remoteHomeworkDataSource.postAssignmentResult(
+            remoteAssignmentDataSource.postAssignmentResult(
                 assignmentId,
                 RequestAssignmentResultDTO(results)
             )

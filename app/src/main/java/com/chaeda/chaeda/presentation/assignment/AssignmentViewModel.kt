@@ -6,7 +6,7 @@ import com.chaeda.domain.entity.AssignmentDTO
 import com.chaeda.domain.entity.FileWithName
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedDetailInfo
-import com.chaeda.domain.repository.HomeworkRepository
+import com.chaeda.domain.repository.AssignmentRepository
 import com.chaeda.domain.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeworkViewModel @Inject constructor(
     private val imageRepository: ImageRepository,
-    private val homeworkRepository: HomeworkRepository
+    private val assignmentRepository: AssignmentRepository
 ) : ViewModel() {
 
     private var _urlState = MutableStateFlow<FileState>(FileState.Init)
@@ -142,7 +142,7 @@ class HomeworkViewModel @Inject constructor(
 
     fun getAssignmentsByDate(dateString: String, date: LocalDate) {
         viewModelScope.launch {
-            homeworkRepository.getAssignmentsByDate(dateString, date)
+            assignmentRepository.getAssignmentsByDate(dateString, date)
                 .onSuccess {
                     _assignmentState.value = AssignmentState.GetListSuccess(it)
                 }

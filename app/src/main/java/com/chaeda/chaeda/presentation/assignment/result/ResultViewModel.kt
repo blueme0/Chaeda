@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
 import com.chaeda.domain.entity.AssignmentResultDTO
-import com.chaeda.domain.repository.HomeworkRepository
+import com.chaeda.domain.repository.AssignmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ResultViewModel @Inject constructor(
-    private val hwRepository: HomeworkRepository
+    private val hwRepository: AssignmentRepository
 ) : ViewModel() {
 
     private var _assignmentState = MutableStateFlow<AssignmentState>(AssignmentState.Init)

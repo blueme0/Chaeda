@@ -5,7 +5,7 @@ import com.chaeda.domain.entity.AssignmentResultDTO
 import com.chaeda.domain.entity.ProblemsWithPageDTO
 import java.time.LocalDate
 
-interface HomeworkRepository {
+interface AssignmentRepository {
 
     suspend fun getAssignmentById(id: Long): Result<AssignmentDTO>
     suspend fun putAssignmentById(id: Long, assignment: AssignmentDTO, textbookId: Int): Result<AssignmentDTO>
