@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Textbook (
-    val id: Int,
+    val id: Int?,
     val name: String,
     val imageUrl: String?,
     val targetGrade: String,

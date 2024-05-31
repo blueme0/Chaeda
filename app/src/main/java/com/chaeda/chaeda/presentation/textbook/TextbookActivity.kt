@@ -13,6 +13,7 @@ import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityTextbookBinding
+import com.chaeda.chaeda.presentation.textbook.add.AddTextbookActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -50,7 +51,7 @@ class TextbookActivity
         viewModel.getTextbookList()
         with(binding) {
             tvAdd.setOnSingleClickListener {
-
+                startActivity(AddTextbookActivity.getIntent(this@TextbookActivity))
             }
         }
     }
