@@ -64,7 +64,7 @@
         android:gravity="center"
         android:fontFamily="@font/nanumsquare_bold"
         android:textColor="#683F21"
-        android:background="@drawable/shape_rect4_fill_lightyellow"
+        android:background="@drawable/shape_rect8_fill_lightyellow"
         app:layout_constraintTop_toBottomOf="@id/tv_comment"
         android:layout_margin="5dp"
         android:paddingHorizontal="40dp"
