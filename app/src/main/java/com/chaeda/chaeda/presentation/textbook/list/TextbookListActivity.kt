@@ -1,4 +1,4 @@
-package com.chaeda.chaeda.presentation.assignment.textbook
+package com.chaeda.chaeda.presentation.textbook.list
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeda.base.BindingActivity
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityTextbookListBinding
+import com.chaeda.chaeda.presentation.textbook.TextbookState
+import com.chaeda.chaeda.presentation.textbook.TextbookViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -18,7 +20,6 @@ class TextbookListActivity
 
     private lateinit var listAdapter: TextbookListAdapter
     private val textbookViewModel by viewModels<TextbookViewModel>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -14,7 +14,7 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAddAssignmentBinding
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
-import com.chaeda.chaeda.presentation.assignment.textbook.TextbookListActivity
+import com.chaeda.chaeda.presentation.textbook.list.TextbookListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

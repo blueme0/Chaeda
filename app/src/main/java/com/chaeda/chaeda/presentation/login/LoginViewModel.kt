@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(
                 }
                 .onFailure {
                     Log.d("chaeda-login", "${it.message}")
-                    _loginState.value = LoginUiState.Failure("로그인 실패")
+                    _loginState.value = LoginUiState.Failure(it.message!!)
                 }
         }
     }

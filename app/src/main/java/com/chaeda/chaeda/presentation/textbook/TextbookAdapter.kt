@@ -1,32 +1,32 @@
-package com.chaeda.chaeda.presentation.assignment.textbook
+package com.chaeda.chaeda.presentation.textbook
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.chaeda.base.util.extension.setOnSingleClickListener
-import com.chaeda.chaeda.databinding.ItemTextbookListBinding
+import com.chaeda.chaeda.databinding.ItemAssignmentBinding
 import com.chaeda.domain.entity.Textbook
 
-class TextbookListAdapter (private val itemClick: (Textbook) -> (Unit))
-    : RecyclerView.Adapter<TextbookListAdapter.TextbookListViewHolder>() {
+class TextbookAdapter(private val itemClick: (Textbook) -> (Unit))
+    : RecyclerView.Adapter<TextbookAdapter.TextbookViewHolder>() {
 
     private val textbookList = mutableListOf<Textbook>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TextbookListViewHolder {
-        val binding = ItemTextbookListBinding.inflate(
+    ): TextbookAdapter.TextbookViewHolder {
+        val binding = ItemAssignmentBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return TextbookListViewHolder(binding, itemClick)
+        return TextbookViewHolder(binding, itemClick)
     }
 
-    override fun onBindViewHolder(holder: TextbookListViewHolder, position: Int) {
-        val currentItem = textbookList[position]
-        holder.onBind(currentItem)
+    override fun onBindViewHolder(holder: TextbookAdapter.TextbookViewHolder, position: Int) {
+        holder.onBind(textbookList[position])
     }
 
     override fun getItemCount(): Int = textbookList.size
@@ -37,19 +37,19 @@ class TextbookListAdapter (private val itemClick: (Textbook) -> (Unit))
         notifyDataSetChanged()
     }
 
-    class TextbookListViewHolder(
-        private val binding: ItemTextbookListBinding,
+    class TextbookViewHolder(
+        private val binding: ItemAssignmentBinding,
         private val itemClick: (Textbook) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(item: Textbook) {
-            binding.tvName.text = item.name
-            binding.tvDetail.text = "${item.targetGrade} - ${item.publisher} ${item.publishYear}년 출판"
+            binding.tvTitle.text = item.name
+            binding.tvContent.text = "${item.targetGrade}, ${item.subject}, ${item.publisher}"
+            binding.ivThumbnail.load(item.imageUrl)
 
             binding.root.setOnSingleClickListener {
                 itemClick(item)
             }
         }
     }
-
 }
