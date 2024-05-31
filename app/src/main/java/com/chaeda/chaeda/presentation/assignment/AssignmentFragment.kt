@@ -13,7 +13,7 @@ import com.chaeda.chaeda.databinding.FragmentAssignmentBinding
 import com.chaeda.chaeda.presentation.assignment.add.AddAssignmentActivity
 import com.chaeda.chaeda.presentation.assignment.calendar.WeekFragmentStateAdapter
 import com.chaeda.chaeda.presentation.assignment.detail.AssignmentDetailActivity
-import com.chaeda.chaeda.presentation.assignment.test.TestActivity
+import com.chaeda.chaeda.presentation.textbook.TextbookActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -54,7 +54,7 @@ class AssignmentFragment
 //        }
         binding.tvFalse.setOnSingleClickListener {
 //            startActivity(IncorrectCollectionActivity.getIntent(requireContext()))
-            startActivity(TestActivity.getIntent(requireContext()))
+            startActivity(TextbookActivity.getIntent(requireContext()))
         }
     }
 

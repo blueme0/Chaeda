@@ -59,8 +59,8 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    @Named("ImageOkHttpClient")
-    fun provideImageOkHttpClient(
+    @Named("FileOkHttpClient")
+    fun provideFileOkHttpClient(
         @Logger loggingInterceptor: Interceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
@@ -86,9 +86,9 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    @Named("ImageRetrofit")
-    fun provideImageRetrofit(
-        @Named("ImageOkHttpClient") client: OkHttpClient,
+    @Named("FileRetrofit")
+    fun provideFileRetrofit(
+        @Named("FileOkHttpClient") client: OkHttpClient,
         factory: Converter.Factory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(IMAGE_URL)

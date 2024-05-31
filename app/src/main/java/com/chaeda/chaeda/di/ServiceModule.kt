@@ -1,7 +1,7 @@
 package com.chaeda.chaeda.di
 
 import com.chaeda.data.service.AssignmentService
-import com.chaeda.data.service.ImageService
+import com.chaeda.data.service.FileService
 import com.chaeda.data.service.MemberService
 import com.chaeda.data.service.ReviewService
 import com.chaeda.data.service.StatisticsService
@@ -20,8 +20,8 @@ object ServiceModule {
 
     @Singleton
     @Provides
-    fun provideImageService(@Named("ImageRetrofit") imageRetrofit: Retrofit) =
-        imageRetrofit.create(ImageService::class.java)
+    fun provideImageService(@Named("FileRetrofit") fileRetrofit: Retrofit) =
+        fileRetrofit.create(FileService::class.java)
 
     @Singleton
     @Provides

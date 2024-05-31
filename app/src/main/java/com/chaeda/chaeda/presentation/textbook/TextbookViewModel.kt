@@ -1,5 +1,6 @@
-package com.chaeda.chaeda.presentation.assignment.textbook
+package com.chaeda.chaeda.presentation.textbook
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.domain.entity.Textbook
@@ -30,21 +31,40 @@ class TextbookViewModel @Inject constructor(
     private var _textbookState = MutableStateFlow<TextbookState>(TextbookState.Init)
     val textbookState: StateFlow<TextbookState> = _textbookState.asStateFlow()
 
+    private var _textbookList = MutableStateFlow<List<Textbook>>(listOf())
+    val textbookList: StateFlow<List<Textbook>> = _textbookList.asStateFlow()
+
     fun getTextbookList() {
         viewModelScope.launch {
             textbookRepository.getTextbooks()
                 .onSuccess {
+                    _textbookList.value = it
+                    Log.d("chaeda-tb", "getTextbookList Success")
                     _textbookState.value = TextbookState.GetListSuccess(it)
                 }
                 .onFailure {
+                    Log.d("chaeda-tb", "getTextbookList Failure ${it.message}")
                     _textbookState.value = TextbookState.Failure(it.message!!)
                 }
         }
+    }
+
+    fun updateSearch(str: String) {
+        Log.d("chaeda-tb", "updateSearch called with str: $str")
+
+        val list = mutableListOf<Textbook>()
+        for (tb in _textbookList.value) {
+            if (tb.name.lowercase().contains(str.lowercase())) list.add(tb)
+        }
+        Log.d("chaeda-tb", "list: ${list}")
+
+        _textbookState.value = TextbookState.TextbookFilterSuccess(list)
     }
 }
 
 sealed interface TextbookState {
     object Init: TextbookState
     data class GetListSuccess(val list: List<Textbook>): TextbookState
+    data class TextbookFilterSuccess(val list: List<Textbook>): TextbookState
     data class Failure(val msg: String): TextbookState
 }

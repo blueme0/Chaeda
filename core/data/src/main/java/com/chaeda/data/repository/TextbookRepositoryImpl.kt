@@ -14,4 +14,16 @@ class TextbookRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getPresignedUrlForTextbook(textbook: Textbook): Result<String> {
+        return runCatching {
+            remoteTextbookDataSource.getPresignedUrlForTextbook(textbook)
+        }
+    }
+
+    override suspend fun postTextbookUploaded(textbook: Textbook): Result<Any> {
+        return runCatching {
+            remoteTextbookDataSource.postTextbookUploaded(textbook)
+        }
+    }
+
 }

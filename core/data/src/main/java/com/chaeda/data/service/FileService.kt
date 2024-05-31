@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.PUT
 import retrofit2.http.Url
 
-interface ImageService {
+interface FileService {
     @PUT
     suspend fun putFileToUrl(
         @Url url: String,

@@ -2,7 +2,7 @@ package com.chaeda.data.datasoure.remote
 
 import com.chaeda.data.model.request.image.RequestImageInfoDto
 import com.chaeda.data.service.AssignmentService
-import com.chaeda.data.service.ImageService
+import com.chaeda.data.service.FileService
 import com.chaeda.domain.entity.ImageInfo
 import com.chaeda.domain.entity.PresignedInfo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -12,11 +12,11 @@ import java.io.File
 import javax.inject.Inject
 
 class RemoteImageDataSource @Inject constructor(
-    private val imageService: ImageService,
+    private val fileService: FileService,
     private val assignmentService: AssignmentService
 ) {
     suspend fun putFileToUrl(url: String, contentType: String, file: File): String =
-        imageService.putFileToUrl(
+        fileService.putFileToUrl(
             url,
             file.asRequestBody(contentType.toMediaTypeOrNull())
         ).string()

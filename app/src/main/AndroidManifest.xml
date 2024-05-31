@@ -61,7 +61,7 @@
             android:name=".presentation.assignment.result.submit.ResultSubmitActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.assignment.textbook.TextbookListActivity"
+            android:name=".presentation.textbook.list.TextbookListActivity"
             android:exported="true" />
         <activity
             android:name=".presentation.statistics.type.StatisticsTypeDetailActivity"
@@ -79,6 +79,10 @@
             android:name=".presentation.review.pdf.ReviewPdfListActivity"
             android:exported="true" />
         <activity android:name=".presentation.assignment.test.TestActivity"
+            android:exported="true" />
+        <activity android:name=".presentation.textbook.TextbookActivity"
+            android:exported="true" />
+        <activity android:name=".presentation.textbook.add.AddTextbookActivity"
             android:exported="true" />
 
         <activity
