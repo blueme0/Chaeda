@@ -45,6 +45,8 @@ class SettingViewModel @Inject constructor(
                 }
         }
     }
+
+    fun getAutoLogin(): Boolean = repository.getAutoLogin()
 }
 
 sealed interface SettingState {
