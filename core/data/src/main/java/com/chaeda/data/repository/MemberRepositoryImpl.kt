@@ -33,7 +33,7 @@ class MemberRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout(): Any {
+    override suspend fun logout(): Result<Any> {
         return runCatching {
             remoteMemberDataSource.logout()
         }

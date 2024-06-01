@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,10 +31,25 @@ class SettingViewModel @Inject constructor(
                 }
         }
     }
+
+    fun logout() {
+        viewModelScope.launch {
+            repository.logout()
+                .onSuccess {
+                    _settingState.value = SettingState.LogoutSuccess
+                    repository.disableAutoLogin()
+                }
+                .onFailure {
+                    Timber.tag("chaeda-logout").d(it.message!!)
+                    _settingState.value = SettingState.Failure(it.message!!)
+                }
+        }
+    }
 }
 
 sealed interface SettingState {
     object Init: SettingState
     data class GetMemberSuccess(val member: Member): SettingState
+    object LogoutSuccess: SettingState
     data class Failure(val msg: String): SettingState
 }
