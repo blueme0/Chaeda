@@ -35,8 +35,8 @@ import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAddProblemPhotoBinding
+import com.chaeda.chaeda.presentation.assignment.AssignmentViewModel
 import com.chaeda.chaeda.presentation.assignment.FileState
-import com.chaeda.chaeda.presentation.assignment.HomeworkViewModel
 import com.chaeda.domain.entity.PresignedDetailInfo
 import com.chaeda.domain.enumSet.Chapter
 import com.chaeda.domain.enumSet.Subject
@@ -54,7 +54,7 @@ class AddProblemPhotoActivity
     : BindingActivity<ActivityAddProblemPhotoBinding>(R.layout.activity_add_problem_photo) {
 
     private val viewModel by viewModels<AddProblemViewModel>()
-    private val imageViewModel by viewModels<HomeworkViewModel>()
+    private val imageViewModel by viewModels<AssignmentViewModel>()
 
     private var subjects: Array<Subject>? = null
     private var subject: Subject? = null

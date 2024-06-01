@@ -66,5 +66,8 @@ sealed interface TextbookState {
     object Init: TextbookState
     data class GetListSuccess(val list: List<Textbook>): TextbookState
     data class TextbookFilterSuccess(val list: List<Textbook>): TextbookState
+    data class TextbookGetPresignedUrlSuccess(val url: String): TextbookState
+    data class PostTextbookFileSuccess(val result: String): TextbookState // success for uploading pdf file to s3
+    data class UploadTextbookSuccess(val result: String): TextbookState // success for posting textbook to spring
     data class Failure(val msg: String): TextbookState
 }

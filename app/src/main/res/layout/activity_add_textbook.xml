@@ -369,7 +369,7 @@
             android:id="@+id/tv_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="문제 추가하기"
+            android:text="교재 등록하기"
             app:layout_constraintStart_toStartOf="@id/fab"
             app:layout_constraintEnd_toEndOf="@id/fab"
             app:layout_constraintTop_toTopOf="@id/fab"
@@ -379,5 +379,31 @@
             android:fontFamily="@font/nanumsquare_regular"
             android:textColor="#683F21"
             />
+
+        <View
+            android:id="@+id/bg_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AA000000"
+            android:elevation="8dp"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/tv_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="20sp"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textColor="@color/white"
+            android:text="업로드 중입니다..."
+            android:elevation="8dp"
+            android:visibility="gone"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

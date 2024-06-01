@@ -21,7 +21,8 @@ class RemoteTextbookDataSource @Inject constructor(
                 textbook.publisher,
                 textbook.targetGrade,
                 textbook.subject,
-                textbook.publishYear
+                textbook.publishYear,
+                "pdf"
             )
         )
     }
@@ -35,7 +36,8 @@ class RemoteTextbookDataSource @Inject constructor(
                 textbook.publisher,
                 textbook.targetGrade,
                 textbook.subject,
-                textbook.publishYear
+                textbook.publishYear,
+                "pdf"
             )
         ).presignedUrl
     }
