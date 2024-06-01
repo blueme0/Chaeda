@@ -114,6 +114,30 @@ class AddAssignmentViewModel @Inject constructor(
         }
     }
 
+    fun editAssignment(id: Long) {
+        viewModelScope.launch {
+            assignmentRepository.putAssignmentById(
+                id,
+                Assignment(
+                    null,
+                    _title.value,
+                    _startRange.value,
+                    _endRange.value,
+                    _due.value,
+                    null,
+                    null
+                ),
+                _textbookId.value
+            )
+                .onSuccess {
+                    _assignmentState.value = AssignmentState.PutByIdSuccess(it)
+                }
+                .onFailure {
+                    _assignmentState.value = AssignmentState.Failure(it.message!!)
+                }
+        }
+    }
+
     companion object {
         private const val DATE_REGEX = "^(\\d{4})-(\\d{2})-(\\d{2})\$"
     }

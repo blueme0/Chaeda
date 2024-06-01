@@ -65,7 +65,7 @@ class AssignmentFragment
             startActivity(AssignmentDetailActivity.getIntent(requireContext(), it.id!!, it.isCompleted!!))
         }
         homeworkAdapter.setAddItemClick {
-            startActivity(AddAssignmentActivity.getIntent(requireContext()))
+            startActivity(AddAssignmentActivity.getIntent(requireContext(), false, -1))
         }
 
         binding.rvHomework.adapter = homeworkAdapter
@@ -132,7 +132,6 @@ class AssignmentFragment
 //                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
 
-        // TODO : 과제 등록 시 해당 날짜에 있을 때 화면 refresh 필요 (혹은 notifyDatasetChanged) -> 서버 연결하면 확인 필요
         val date = viewModel.selectedDate.value
         viewModel.getAssignmentsByDate(convertDateString(date), convertDateToLocalDate(date))
     }

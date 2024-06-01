@@ -30,4 +30,16 @@ class AssignmentDetailViewModel @Inject constructor(
                 }
         }
     }
+
+    fun deleteAssignmentById(id: Long) {
+        viewModelScope.launch {
+            assignmentRepository.deleteAssignmentById(id)
+                .onSuccess {
+                    _assignmentState.value = AssignmentState.DeleteByIdSuccess
+                }
+                .onFailure {
+                    _assignmentState.value = AssignmentState.Failure(it.message!!)
+                }
+        }
+    }
 }

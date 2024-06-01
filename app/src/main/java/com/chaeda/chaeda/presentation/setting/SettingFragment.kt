@@ -1,6 +1,5 @@
 package com.chaeda.chaeda.presentation.setting
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -9,7 +8,6 @@ import com.chaeda.base.BindingFragment
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentSettingBinding
-import com.chaeda.chaeda.presentation.splash.SplashActivity
 import com.chaeda.domain.entity.Member
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,8 +33,7 @@ class SettingFragment
     private fun initListener() {
         with(binding) {
             tvLogout.setOnSingleClickListener {
-                startActivity(Intent(requireActivity(), SplashActivity::class.java))
-                requireActivity().finish()
+                viewModel.logout()
             }
         }
     }
@@ -55,6 +52,9 @@ class SettingFragment
                 when (state) {
                     is SettingState.GetMemberSuccess -> {
                         setProfileUi(state.member)
+                    }
+                    is SettingState.LogoutSuccess -> {
+                        requireActivity().finish()
                     }
                     else -> { }
                 }

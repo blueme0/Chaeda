@@ -267,7 +267,7 @@
             android:id="@+id/tv_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="숙제 공지하기"
+            android:text="과제 등록하기"
             app:layout_constraintStart_toStartOf="@id/fab"
             app:layout_constraintEnd_toEndOf="@id/fab"
             app:layout_constraintTop_toTopOf="@id/fab"

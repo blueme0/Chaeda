@@ -16,7 +16,7 @@ interface MemberRepository {
         grade: String?,
         role: String = "STUDENT"
     ): Result<Unit>
-    suspend fun logout(): Any
+    suspend fun logout(): Result<Any>
     suspend fun login(loginId: String, password: String): Result<TokenEntity>
     suspend fun getMember(): Result<Member>
 
