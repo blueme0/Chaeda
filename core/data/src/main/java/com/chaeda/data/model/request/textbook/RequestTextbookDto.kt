@@ -11,7 +11,7 @@ data class RequestTextbookDto (
     val targetGrade: String,
     val subject: String,
     val publishYear: Int,
-    val fileExtension: String = "pdf"
+    val fileExtension: String
 )
 
 /**

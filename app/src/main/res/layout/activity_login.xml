@@ -38,7 +38,7 @@
             android:layout_marginTop="45dp"
             android:hint="아이디"
             android:text="@{vm.loginId}"
-            android:fontFamily="@font/nanumsquare_regular"
+            android:fontFamily="@font/pretendard_regular"
             android:textSize="16sp"
             android:textColorHint="#444444"
             />
@@ -54,9 +54,10 @@
             app:layout_constraintTop_toBottomOf="@id/et_id"
             android:layout_marginTop="16dp"
             android:hint="비밀번호"
+            android:textColor="@color/black"
             android:text="@{vm.password}"
             android:inputType="textPassword"
-            android:fontFamily="@font/nanumsquare_regular"
+            android:fontFamily="@font/pretendard_regular"
             android:textSize="16sp"
             android:textColorHint="#444444"
             />

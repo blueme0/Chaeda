@@ -21,7 +21,7 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeworkViewModel @Inject constructor(
+class AssignmentViewModel @Inject constructor(
     private val imageRepository: ImageRepository,
     private val assignmentRepository: AssignmentRepository
 ) : ViewModel() {

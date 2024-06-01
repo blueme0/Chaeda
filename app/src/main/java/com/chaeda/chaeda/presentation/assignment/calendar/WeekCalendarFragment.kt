@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingFragment
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentWeekCalendarBinding
-import com.chaeda.chaeda.presentation.assignment.HomeworkViewModel
+import com.chaeda.chaeda.presentation.assignment.AssignmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -22,7 +22,7 @@ class WeekCalendarFragment
     : BindingFragment<FragmentWeekCalendarBinding>(R.layout.fragment_week_calendar) {
 
     private val TAG = javaClass.simpleName
-    private val viewModel by activityViewModels<HomeworkViewModel>()
+    private val viewModel by activityViewModels<AssignmentViewModel>()
 
     var pageIndex = 0
     private val dateList = mutableListOf<Date>()

@@ -47,6 +47,11 @@ class TextbookActivity
         binding.rvTextbook.adapter = listAdapter
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getTextbookList()
+    }
+
     private fun initListener() {
         viewModel.getTextbookList()
         with(binding) {

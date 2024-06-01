@@ -27,7 +27,7 @@ import java.util.Locale
 class AssignmentFragment
     : BindingFragment<FragmentAssignmentBinding>(R.layout.fragment_assignment) {
 
-    private val viewModel by activityViewModels<HomeworkViewModel>()
+    private val viewModel by activityViewModels<AssignmentViewModel>()
     private lateinit var homeworkAdapter: AssignmentAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

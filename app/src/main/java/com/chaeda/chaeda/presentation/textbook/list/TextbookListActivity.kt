@@ -33,7 +33,7 @@ class TextbookListActivity
     private fun initView() {
         listAdapter = TextbookListAdapter {
             // 리스너 달 거 있음 달기
-            textbookViewModel.updateTextbook(it.id, it.name)
+            it.id?.let { it1 -> textbookViewModel.updateTextbook(it1, it.name) }
             val resultIntent = Intent().apply {
                 putExtra("textbookId", textbookViewModel.textbookId.value)
                 putExtra("textbookName", textbookViewModel.textbookName.value)

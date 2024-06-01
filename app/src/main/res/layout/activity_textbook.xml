@@ -12,6 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@color/appbar_background"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_arrow_left"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이전 화면으로"
+                android:fontFamily="@font/nanumsquare_regular"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tv_add"
             android:layout_width="match_parent"
@@ -21,7 +60,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:text="교재 pdf 파일 등록하기"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/background"
             android:layout_marginTop="33dp"
             android:fontFamily="@font/nanumsquare_bold"
             android:textSize="16sp"
