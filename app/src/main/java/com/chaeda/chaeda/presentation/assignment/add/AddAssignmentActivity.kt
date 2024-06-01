@@ -5,24 +5,33 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chaeda.base.BindingActivity
+import com.chaeda.base.util.extension.boolExtra
+import com.chaeda.base.util.extension.longExtra
 import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.base.util.extension.toast
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAddAssignmentBinding
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
+import com.chaeda.chaeda.presentation.assignment.detail.AssignmentDetailViewModel
 import com.chaeda.chaeda.presentation.textbook.list.TextbookListActivity
+import com.chaeda.domain.entity.Assignment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class AddAssignmentActivity
     : BindingActivity<ActivityAddAssignmentBinding>(R.layout.activity_add_assignment) {
 
     private val addAssignmentViewModel by viewModels<AddAssignmentViewModel>()
+    private val assignmentDetailViewModel by viewModels<AssignmentDetailViewModel>()
+
+    private val isEditable by boolExtra()
+    private val id by longExtra(-1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,16 +43,15 @@ class AddAssignmentActivity
     }
 
     private fun initListener() {
+        if (isEditable) {
+            assignmentDetailViewModel.getAssignmentById(id)
+            binding.tvFab.text = "과제 수정하기"
+        }
         with(binding) {
             fab.setOnSingleClickListener {
-                Log.d("chaeda-post", "title: ${addAssignmentViewModel.title.value}")
-                Log.d("chaeda-post", "startRange: ${addAssignmentViewModel.startRange.value}")
-                Log.d("chaeda-post", "endRange: ${addAssignmentViewModel.endRange.value}")
-                Log.d("chaeda-post", "due: ${addAssignmentViewModel.due.value}")
-                Log.d("chaeda-post", "textbookId: ${addAssignmentViewModel.textbookId.value}")
-
                 if (addAssignmentViewModel.assignmentValid.value) {
-                    addAssignmentViewModel.postAssignment()
+                    if (isEditable) addAssignmentViewModel.editAssignment(id)
+                    else addAssignmentViewModel.postAssignment()
                 }
                 else {
                     Toast.makeText(this@AddAssignmentActivity, "입력을 완료해주세요.", Toast.LENGTH_SHORT).show()
@@ -54,6 +62,23 @@ class AddAssignmentActivity
                 startActivityForResult(TextbookListActivity.getIntent(this@AddAssignmentActivity), REQUEST_CODE_TEXTBOOK_LIST_ACTIVITY)
             }
         }
+    }
+
+    private fun initView(assignment: Assignment) {
+        with(binding) {
+            etBook.text = assignment.textbook?.name
+            etTitle.setText(assignment.title)
+            etRangeStart.setText(assignment.startPage.toString())
+            etRangeEnd.setText(assignment.endPage.toString())
+            etDeadline.setText(assignment.targetDate)
+            tvRangeInformNum.text = "${assignment.textbook?.startPage}p ~ ${assignment.textbook?.lastPage}p"
+        }
+        addAssignmentViewModel.updatePageLimit(assignment.textbook?.startPage!!, assignment.textbook?.lastPage!!)
+        addAssignmentViewModel.updateDueDate(assignment.targetDate)
+        addAssignmentViewModel.updateRange(assignment.startPage, assignment.endPage)
+        addAssignmentViewModel.updateTextbook(assignment.textbook?.name!!)
+        addAssignmentViewModel.updateTextbookId(assignment.textbook?.id!!)
+        addAssignmentViewModel.updateTitle(assignment.title)
     }
 
     private fun setTextChangedListener() {
@@ -135,7 +160,33 @@ class AddAssignmentActivity
                     is AssignmentState.UploadSuccess -> {
                         finish()
                     }
+                    is AssignmentState.GetByIdSuccess -> {
+                        Timber.tag("chaeda-edit").d(state.assignment.toString())
+                        initView(state.assignment)
+                    }
+                    is AssignmentState.PutByIdSuccess -> {
+                        finish()
+                    }
+                    is AssignmentState.Failure -> {
+                        toast(state.msg)
+                    }
                     else -> { }
+                }
+            }
+        }
+        if (isEditable) {
+            lifecycleScope.launch {
+                assignmentDetailViewModel.assignmentState.collect { state ->
+                    when (state) {
+                        is AssignmentState.GetByIdSuccess -> {
+                            Timber.tag("chaeda-edit").d(state.assignment.toString())
+                            initView(state.assignment)
+                        }
+                        is AssignmentState.Failure -> {
+                            toast(state.msg)
+                        }
+                        else -> { }
+                    }
                 }
             }
         }
@@ -169,6 +220,9 @@ class AddAssignmentActivity
 
     companion object {
         const val REQUEST_CODE_TEXTBOOK_LIST_ACTIVITY = 1001
-        fun getIntent(context: Context) = Intent(context, AddAssignmentActivity::class.java)
+        fun getIntent(context: Context, isEditable: Boolean, id: Long) = Intent(context, AddAssignmentActivity::class.java).apply {
+            putExtra("isEditable", isEditable)
+            putExtra("id", id)
+        }
     }
 }
