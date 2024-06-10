@@ -8,6 +8,7 @@ import com.chaeda.base.BindingFragment
 import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.FragmentSettingBinding
+import com.chaeda.chaeda.presentation.login.LoginActivity
 import com.chaeda.domain.entity.Member
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -54,6 +55,7 @@ class SettingFragment
                         setProfileUi(state.member)
                     }
                     is SettingState.LogoutSuccess -> {
+                        startActivity(LoginActivity.getIntent(requireContext()))
                         requireActivity().finish()
                     }
                     else -> { }

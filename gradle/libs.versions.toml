@@ -81,6 +81,7 @@ leakCanaryVersion = "2.11"
 
 jvmVersion = "17"
 org-jetbrains-kotlin-jvm = "1.9.0"
+activityVersion = "1.8.0"
 
 [libraries]
 # gradle
@@ -196,6 +197,7 @@ androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-andr
 ui-tooling-compose = {group = "androidx.compose.ui", name="ui-tooling", version.ref="uiPreviewCompose"}
 anychart = { group = "com.github.AnyChart", name = "AnyChart-Android", version = "1.1.5" }
 imagecropper = { group = "com.vanniktech", name = "android-image-cropper", version = "4.5.0" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activityVersion" }
 
 # 사용될 플러그인
 [plugins]
