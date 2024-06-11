@@ -71,7 +71,7 @@
                     android:layout_marginStart="46dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/nanumsquare_regular"
-                    android:text="틀린 날짜 입력"
+                    android:text="틀린 날짜 입력 (ex. 2024-01-01)"
                     android:textColor="#828282"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"

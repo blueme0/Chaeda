@@ -54,6 +54,10 @@ class ReviewFolderActivity
 
     private fun initListener() {
         with(binding) {
+            llBack.setOnSingleClickListener {
+                finish()
+            }
+            
             if (id != -1L) {
                 tvFab.text = "오답 폴더 수정하기"
                 etTitle.text.insert(0, title)

@@ -36,8 +36,7 @@ class ProblemBoxActivity
             initView()
             initListener()
         }
-
-
+        binding.llBack.setOnSingleClickListener { finish() }
         observe()
     }
 

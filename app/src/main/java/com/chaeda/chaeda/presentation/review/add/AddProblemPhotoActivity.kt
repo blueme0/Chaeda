@@ -311,7 +311,7 @@ class AddProblemPhotoActivity
 
     private fun initListener() {
         with(binding) {
-            ivBack.setOnSingleClickListener {
+            llBack.setOnSingleClickListener {
                 finish()
             }
 

@@ -21,7 +21,7 @@
             android:layout_height="65dp"
             android:background="@color/appbar_background"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            tools:layout_editor_absoluteX="0dp" />
 
         <LinearLayout
             android:id="@+id/ll_back"
@@ -41,12 +41,6 @@
                 android:src="@drawable/ic_arrow_left"
                 />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,9 +48,23 @@
                 android:fontFamily="@font/nanumsquare_regular"
                 android:textColor="#000000"
                 android:textSize="16sp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제하기"
+            android:fontFamily="@font/nanumsquare_regular"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@id/ll_back"
+            app:layout_constraintBottom_toBottomOf="@id/ll_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="25dp"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
