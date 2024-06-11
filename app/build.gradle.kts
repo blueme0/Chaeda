@@ -18,4 +18,5 @@ dependencies {
     implementation(libs.flexbox)
     implementation(libs.anychart)
     implementation(libs.imagecropper)
+    implementation(libs.activity)
 }

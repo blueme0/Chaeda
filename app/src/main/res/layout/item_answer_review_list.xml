@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1A000000"
+        />
+    <LinearLayout
+        android:id="@+id/ll_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/ic_radio_small_checked"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="12dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="문제 번호"
+            android:textColor="#683F21"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:paddingVertical="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="추가하기"
+            android:textColor="#683F21"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
+</LinearLayout>

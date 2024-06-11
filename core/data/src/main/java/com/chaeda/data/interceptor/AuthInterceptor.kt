@@ -1,6 +1,7 @@
 package com.chaeda.data.interceptor
 
 import android.util.Log
+import com.chaeda.data.BuildConfig.BASE_URL
 import com.chaeda.data.model.response.auth.ResponseAuthTokenDto
 import com.chaeda.domain.ChaedaDataStore
 import kotlinx.serialization.json.Json
@@ -28,8 +29,15 @@ class AuthInterceptor @Inject constructor(
             CODE_TOKEN_EXPIRED -> {
                 try {
                     Log.d("chaeda-intercept", "CODE_TOKEN_EXPIRED")
-                    val refreshTokenRequest = originalRequest.newRefreshBuilder().build()
+//                    val refreshTokenRequest = originalRequest.newRefreshBuilder().build()
+//                    val refreshTokenResponse = chain.proceed(refreshTokenRequest)
+                    val refreshTokenRequest = originalRequest.newBuilder().get()
+                        .url("${BASE_URL}Auth/token/reissue")
+                        .addHeader(HEADER_AUTHORIZATION, dataStore.userToken)
+                        .addHeader(HEADER_REFRESH_TOKEN, dataStore.refreshToken)
+                        .build()
                     val refreshTokenResponse = chain.proceed(refreshTokenRequest)
+
                     Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.toString()}")
                     Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.headers}")
                     Log.d("chaeda-intercept", "refreshTokenRequest : ${refreshTokenRequest.body}")
@@ -40,17 +48,11 @@ class AuthInterceptor @Inject constructor(
                     Log.d("chaeda-intercept", "refreshTokenResponse : ${refreshTokenResponse.toString()}")
                     Log.d("chaeda-intercept", "refreshTokenResponse : ${refreshTokenResponse.body}")
                     Log.d("chaeda-intercept", "refreshTokenResponse : ${refreshTokenResponse.headers}")
-//                    val refreshTokenRequest = originalRequest.newBuilder().post("".toRequestBody())
-//                        .url("${BASE_URL}/auth/reissues")
-//                        .addHeader(HEADER_AUTHORIZATION, dataStore.userToken)
-//                        .addHeader(HEADER_REFRESH_TOKEN, dataStore.refreshToken)
-//                        .build()
-//                    val refreshTokenResponse = chain.proceed(refreshTokenRequest)
 
                     if (refreshTokenResponse.isSuccessful) {
 //                        val responseToken = json.decodeFromString(
 //                            refreshTokenResponse.body?.string().toString()
-//                        ) as ResponseAuthToken
+//                        ) as ResponseAuthTokenDto
 
                         val responseToken = ResponseAuthTokenDto(
                             refreshTokenResponse.header(
@@ -61,8 +63,8 @@ class AuthInterceptor @Inject constructor(
                         )
                         Timber.tag("teum-token").d("responseToken: $responseToken")
                         with(dataStore) {
-                            userToken = "Bearer ${responseToken.accessToken}" ?: ""
-                            refreshToken = "Bearer ${responseToken.refreshToken}" ?: ""
+                            userToken = "Bearer ${responseToken.accessToken}"
+                            refreshToken = "Bearer ${responseToken.refreshToken}"
                         }
                         refreshTokenResponse.close()
                         val newRequest = originalRequest.newAuthBuilder().build()

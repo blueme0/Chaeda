@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -33,6 +32,7 @@ import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.chaeda.base.BindingActivity
 import com.chaeda.base.util.extension.setOnSingleClickListener
+import com.chaeda.base.util.extension.stringExtra
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityAddProblemPhotoBinding
 import com.chaeda.chaeda.presentation.assignment.AssignmentViewModel
@@ -48,6 +48,8 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class AddProblemPhotoActivity
@@ -55,6 +57,10 @@ class AddProblemPhotoActivity
 
     private val viewModel by viewModels<AddProblemViewModel>()
     private val imageViewModel by viewModels<AssignmentViewModel>()
+
+    private val index by stringExtra("")
+    private val name by stringExtra("")
+    private val tsubject by stringExtra("")
 
     private var subjects: Array<Subject>? = null
     private var subject: Subject? = null
@@ -69,6 +75,7 @@ class AddProblemPhotoActivity
 
         subjects = Subject.values()
         subject = subjects!![0]
+        if (tsubject != "") initForResultReview()
         chapters = subject!!.chapters
         chapter = chapters!![0]
 
@@ -78,6 +85,22 @@ class AddProblemPhotoActivity
         setTextChangedListener()
         sendFileObserver()
         reviewObserver()
+    }
+
+    private fun initForResultReview() {
+        for (sub in subjects!!) {
+            if (sub.koreanName == tsubject) {
+                subject = sub
+                break
+            }
+        }
+
+        with(binding) {
+            val now = LocalDateTime.now()
+            etDate.setText(now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+            etTextbook.setText(name)
+            etIndex.setText(index)
+        }
     }
 
     private fun initAddBtn() {
@@ -98,37 +121,8 @@ class AddProblemPhotoActivity
         }
     }
 
-    private fun getImageFromUri(uri: Uri) {
-        clearTempFile()
-
-        val cursor: Cursor?
-        val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME)
-        val sortOrder = MediaStore.Images.Media._ID + " DESC" // 최신순으로 가져오기
-        cursor = contentResolver.query(
-            uri,
-            projection,
-            null,
-            null,
-            sortOrder
-        )
-        val idColumn = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-        val displayNameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-        cursor.use {cur ->
-            if (cur.moveToFirst()) {
-                val id = cur.getLong(idColumn)
-                val displayName = cur.getString(displayNameColumn)
-                val contentUri =
-                    Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString())
-                //            galleryList.add(GalleryModel(contentUri.toString(), displayName))
-                Timber.tag("chaeda-gallery").d("contentUri: $contentUri")
-                createCopyAndReturnRealPath(contentUri, displayName)?.let { File(it) }
-                    ?.let { reviewFile = it }
-            }
-        }
-    }
-
     //이미지 저장 버튼 클릭 메서드
-    fun imgSaveOnClick(bitmap: Bitmap) {
+    private fun imgSaveOnClick(bitmap: Bitmap) {
 
         Timber.tag("chaeda-photo").d("imgSaveOnClick called")
 
@@ -246,12 +240,6 @@ class AddProblemPhotoActivity
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-    private fun clearTempFile() {
-        reviewFile = null
-        val file = File(tempFile)
-        if (file.exists()) file.delete()
     }
 
     /**
@@ -517,6 +505,11 @@ class AddProblemPhotoActivity
 
     companion object {
         fun getIntent(context: Context) = Intent(context, AddProblemPhotoActivity::class.java)
+        fun getIntent(context: Context, index: String, name: String, tsubject: String) = Intent(context, AddProblemPhotoActivity::class.java).apply {
+            putExtra("index", index)
+            putExtra("name", name)
+            putExtra("tsubject", tsubject)
+        }
         private const val REQUEST_IMAGE_CODE = 101
     }
 }

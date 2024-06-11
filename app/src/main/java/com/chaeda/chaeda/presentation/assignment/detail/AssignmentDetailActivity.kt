@@ -80,7 +80,16 @@ class AssignmentDetailActivity
                 if (isDone) startActivity(AssignmentResultActivity.getIntent(this@AssignmentDetailActivity, id))
                 else {
 //                    resultLauncher.launch(ConfirmSubmitActivity.getIntent(this@HomeworkDetailActivity))
-                    startActivity(ResultSubmitActivity.getIntent(this@AssignmentDetailActivity, id, tvTitle.text.toString(), sp, ep, tvDeadline.text.toString()))
+                    startActivity(ResultSubmitActivity.getIntent(
+                        this@AssignmentDetailActivity,
+                        id,
+                        tvTitle.text.toString(),
+                        sp,
+                        ep,
+                        tvDeadline.text.toString(),
+                        assignmentDetailViewModel.textbook.value!!.name,
+                        assignmentDetailViewModel.textbook.value!!.subject
+                    ))
                 }
             }
             tvEdit.setOnSingleClickListener {
@@ -106,13 +115,14 @@ class AssignmentDetailActivity
                         val assignment = state.assignment
                         with(binding) {
                             tvTitle.text = assignment.title
-                            tvRange.text = "${assignment.startPage}p - ${assignment.endPage}"
+                            tvRange.text = "${assignment.startPage}p - ${assignment.endPage}p"
                             sp = assignment.startPage
                             ep = assignment.endPage
                             tvDeadline.text = assignment.targetDate
                             tvTextbook.text = assignment.textbook?.name
                             ivThumbnail.load(assignment.textbook?.imageUrl)
                         }
+                        assignment.textbook?.let { assignmentDetailViewModel.updateTextbook(it) }
                         if (assignment.isCompleted == true) invisibleFab()
                     }
                     is AssignmentState.DeleteByIdSuccess -> {

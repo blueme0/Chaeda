@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.assignment.result.submit.ResultSubmitActivity">
+    tools:context=".presentation.assignment.result.review.ResultReviewActivity">
 
     <data>
     </data>
@@ -20,132 +20,25 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <LinearLayout
-            android:id="@+id/ll_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:gravity="center"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="25dp"
-            >
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_arrow_left"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="과제 화면으로"
-                android:fontFamily="@font/nanumsquare_regular"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:layout_marginStart="10dp"
-                />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="선생님의 과제 공지 제목"
-            android:textSize="18sp"
-            android:fontFamily="@font/nanumsquare_bold"
-            android:textColor="#683F21"
-            app:layout_constraintTop_toBottomOf="@id/background"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="30dp"
-            />
-
-        <TextView
-            android:id="@+id/tv_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="13sp"
-            android:textColor="#7C7A7A"
-            android:fontFamily="@font/nanumsquare_regular"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
-            android:layout_marginTop="7dp"
-            />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="22dp"
-            android:layout_height="1dp"
-            android:background="#1A000000"
-            app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
-            />
-
         <TextView
             android:id="@+id/tv_notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="틀린 문제의 번호를 선택한 후\n난이도를 입력해 주세요."
+            android:text="복습할 문제를\n문제 보관함에 추가하세요."
             android:textSize="18sp"
             android:fontFamily="@font/nanumsquare_bold"
             android:textColor="#683F21"
-            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
             android:layout_marginTop="28dp"
             />
 
-        <LinearLayout
-            android:id="@+id/ll_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_notice"
-            android:layout_marginTop="10dp"
-            >
-            <TextView
-                android:id="@+id/tv_count1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12개의 문제 중 "
-                android:textSize="12sp"
-                android:fontFamily="@font/nanumsquare_regular"
-                android:textColor="#683F21"
-                />
-            <TextView
-                android:id="@+id/tv_count2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0문제"
-                android:textSize="12sp"
-                android:fontFamily="@font/nanumsquare_bold"
-                android:textColor="#683F21"
-                />
-            <TextView
-                android:id="@+id/tv_count3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 오답"
-                android:textSize="12sp"
-                android:fontFamily="@font/nanumsquare_regular"
-                android:textColor="#683F21"
-                />
-        </LinearLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/ll_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_notice"
             android:layout_marginTop="22dp"
             app:layout_constraintBottom_toTopOf="@id/fab"
             >
@@ -187,50 +80,11 @@
                         />
 
                     <TextView
-                        android:id="@+id/tv_easy"
+                        android:id="@+id/tv_add"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="쉬움"
-                        android:textColor="#683F21"
-                        android:fontFamily="@font/nanumsquare_bold"
-                        android:textSize="11sp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_normal"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="보통"
-                        android:textColor="#683F21"
-                        android:fontFamily="@font/nanumsquare_bold"
-                        android:textSize="11sp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_hard"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="어려움"
-                        android:textColor="#683F21"
-                        android:fontFamily="@font/nanumsquare_bold"
-                        android:textSize="11sp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_unsolved"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="미풀이"
+                        android:layout_weight="4"
+                        android:text="추가할 문제를 선택하세요."
                         android:textColor="#683F21"
                         android:fontFamily="@font/nanumsquare_bold"
                         android:textSize="11sp"
@@ -318,7 +172,7 @@
             android:id="@+id/tv_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="과제 제출하기"
+            android:text="제출 끝내기"
             app:layout_constraintStart_toStartOf="@id/fab"
             app:layout_constraintEnd_toEndOf="@id/fab"
             app:layout_constraintTop_toTopOf="@id/fab"
