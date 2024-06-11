@@ -3,6 +3,7 @@ package com.chaeda.chaeda.presentation.assignment.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chaeda.chaeda.presentation.assignment.AssignmentState
+import com.chaeda.domain.entity.Textbook
 import com.chaeda.domain.repository.AssignmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,13 @@ class AssignmentDetailViewModel @Inject constructor(
 
     private var _assignmentState = MutableStateFlow<AssignmentState>(AssignmentState.Init)
     val assignmentState: StateFlow<AssignmentState> = _assignmentState.asStateFlow()
+
+    private var _textbook = MutableStateFlow<Textbook?>(null)
+    val textbook: StateFlow<Textbook?> = _textbook.asStateFlow()
+
+    fun updateTextbook(tb: Textbook) {
+        _textbook.value = tb
+    }
 
     fun getAssignmentById(id: Long) {
         viewModelScope.launch {

@@ -17,6 +17,8 @@ import com.chaeda.chaeda.presentation.assignment.dialog.SimpleAlertDialog
 import com.chaeda.chaeda.presentation.assignment.dialog.SimpleAlertDialogInterface
 import com.chaeda.chaeda.presentation.assignment.result.ResultViewModel
 import com.chaeda.chaeda.presentation.assignment.result.answer.ResultAnswerAdapter
+import com.chaeda.chaeda.presentation.assignment.result.review.ResultReviewActivity
+import com.chaeda.chaeda.presentation.assignment.result.review.ReviewAnswer
 import com.chaeda.domain.entity.ResultAnswer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,6 +34,8 @@ class ResultSubmitActivity
     private val startPage by intExtra()
     private val endPage by intExtra()
     private val deadline by stringExtra()
+    private val tname by stringExtra()
+    private val tsubject by stringExtra()
 
     private val resultViewModel by viewModels<ResultViewModel>()
     private lateinit var answerAdapter: ResultAnswerAdapter
@@ -98,6 +102,26 @@ class ResultSubmitActivity
         return date.isBefore(today)
     }
 
+    private fun moveToReview() {
+        val arr = ArrayList<ReviewAnswer>()
+        resultViewModel.problemRange.value.forEach { (i, strings) ->
+            val list = mutableListOf<ResultAnswer>()
+            strings.forEach {
+                list.add(ResultAnswer(resultViewModel.assignmentResult.value[i]?.containsKey(it)!!, it))
+            }
+            arr.add(ReviewAnswer(i, list))
+        }
+        startActivity(ResultReviewActivity.getIntent(
+            this@ResultSubmitActivity,
+            arr.toTypedArray(),
+            startPage,
+            endPage,
+            tname!!,
+            tsubject!!
+            ))
+        finish()
+    }
+
     private fun observe() {
         lifecycleScope.launch {
             resultViewModel.assignmentState.collect { state ->
@@ -108,7 +132,9 @@ class ResultSubmitActivity
                             dialog.isCancelable = false
                             dialog.show(supportFragmentManager, "SimpleAlertDialog")
                         }
-                        else finish()
+                        else {
+                            moveToReview()
+                        }
                     }
                     is AssignmentState.GetRangeSuccess -> {
                         Timber.tag("chaeda-getrange").d("AssignmentState GetRangeSuccess called")
@@ -145,16 +171,18 @@ class ResultSubmitActivity
     }
 
     override fun onYesButtonClick() {
-        finish()
+        moveToReview()
     }
 
     companion object {
-        fun getIntent(context: Context, id: Long, title: String, sp: Int, ep: Int, deadline: String) = Intent(context, ResultSubmitActivity::class.java).apply {
+        fun getIntent(context: Context, id: Long, title: String, sp: Int, ep: Int, deadline: String, tname: String, tsubject: String) = Intent(context, ResultSubmitActivity::class.java).apply {
             putExtra("id", id)
             putExtra("title", title)
             putExtra("startPage", sp)
             putExtra("endPage", ep)
             putExtra("deadline", deadline)
+            putExtra("tname", tname)
+            putExtra("tsubject", tsubject)
         }
     }
 }
