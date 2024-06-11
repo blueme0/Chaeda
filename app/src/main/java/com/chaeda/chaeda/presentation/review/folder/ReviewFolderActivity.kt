@@ -57,12 +57,14 @@ class ReviewFolderActivity
             llBack.setOnSingleClickListener {
                 finish()
             }
-            
+
             if (id != -1L) {
                 tvFab.text = "오답 폴더 수정하기"
                 etTitle.text.insert(0, title)
                 etContent.text.insert(0, description)
                 tvDownload.visibility = View.VISIBLE
+                empty.visibility = View.GONE
+                tvDelete.visibility = View.VISIBLE
 
                 tvDownload.setOnSingleClickListener {
                     viewModel.postMakeReviewPdf(id)
@@ -74,7 +76,9 @@ class ReviewFolderActivity
                 }
             } else {
                 tvFab.text = "오답 폴더 만들기"
-                tvDownload.visibility = View.INVISIBLE
+                tvDownload.visibility = View.GONE
+                tvDelete.visibility = View.INVISIBLE
+                empty.visibility = View.VISIBLE
 
                 fab.setOnSingleClickListener {
                     viewModel.postNewFolder()
