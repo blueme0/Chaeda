@@ -1,5 +1,6 @@
 package com.chaeda.data.datasoure.remote
 
+import com.chaeda.data.model.response.statistics.toConceptDetail
 import com.chaeda.data.service.StatisticsService
 import com.chaeda.domain.entity.ChapterDetail
 import com.chaeda.domain.entity.ConceptDetail
@@ -42,19 +43,19 @@ class RemoteStatisticsDataSource @Inject constructor(
     suspend fun getAccumulatedStatisticsByType(
         subConcept: String
     ): ConceptDetail {
-        return statisticsService.getAccumulatedStatisticsByType(subConcept)
+        return statisticsService.getAccumulatedStatisticsByType(subConcept).toConceptDetail()
     }
 
     suspend fun getMonthlyStatisticsByType(
         subConcept: String
     ): ConceptDetail {
-        return statisticsService.getMonthlyStatisticsByType(subConcept)
+        return statisticsService.getMonthlyStatisticsByType(subConcept).toConceptDetail()
     }
 
     suspend fun getWeeklyStatisticsByType(
         subConcept: String
     ): ConceptDetail {
-        return statisticsService.getWeeklyStatisticsByType(subConcept)
+        return statisticsService.getWeeklyStatisticsByType(subConcept).toConceptDetail()
     }
 
     suspend fun getChapterListBySubject(

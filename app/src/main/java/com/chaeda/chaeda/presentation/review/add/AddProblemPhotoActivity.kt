@@ -75,7 +75,7 @@ class AddProblemPhotoActivity
 
         subjects = Subject.values()
         subject = subjects!![0]
-        if (tsubject != "") initForResultReview()
+        if (tsubject != null) initForResultReview()
         chapters = subject!!.chapters
         chapter = chapters!![0]
 

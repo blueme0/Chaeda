@@ -90,6 +90,10 @@ class AddTextbookActivity
 
     private fun initListener() {
         with(binding) {
+            llBack.setOnSingleClickListener {
+                finish()
+            }
+
             tvAddFile.setOnSingleClickListener {
                 openFilePicker()
             }

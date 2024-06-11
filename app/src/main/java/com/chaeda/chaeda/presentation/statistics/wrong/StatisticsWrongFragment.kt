@@ -125,7 +125,7 @@ class StatisticsWrongFragment
                 navigateTo<StatisticsFragment>()
             }
             val endOfWeek = date.plusDays(6)
-            tvStandardText.text = "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 ~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
+            tvStandardText.text = "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일\n~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
         }
         requestWrongCount()
     }
@@ -198,7 +198,7 @@ class StatisticsWrongFragment
     private fun setStandardText() {
         val endOfWeek = date.plusDays(6)
         binding.tvStandardText.text = when (mode) {
-            MODE_WEEK -> "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 ~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
+            MODE_WEEK -> "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일\n~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
             MODE_MONTH -> "${date.year}년 ${date.monthValue}월"
             else -> ""
         }

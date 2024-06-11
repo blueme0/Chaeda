@@ -103,6 +103,11 @@ class ResultSubmitActivity
     }
 
     private fun moveToReview() {
+        if (resultViewModel.selectedProblemCount.value == 0) {
+            finish()
+            return
+        }
+
         val arr = ArrayList<ReviewAnswer>()
         resultViewModel.problemRange.value.forEach { (i, strings) ->
             val list = mutableListOf<ResultAnswer>()

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaeda.base.BindingActivity
+import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityTextbookListBinding
 import com.chaeda.chaeda.presentation.textbook.TextbookState
@@ -55,15 +56,9 @@ class TextbookListActivity
 
     private fun initListener() {
         with(binding) {
-//            fab.setOnSingleClickListener {
-//                // 결과를 전달하기 위해 Intent를 생성합니다.
-//                val resultIntent = Intent().apply {
-//                    putExtra("textbookId", textbookViewModel.textbookId.value)
-//                    putExtra("textbookName", textbookViewModel.textbookName.value)
-//                }
-//                setResult(RESULT_OK, resultIntent)
-//                finish()
-//            }
+            llBack.setOnSingleClickListener {
+                finish()
+            }
         }
     }
 

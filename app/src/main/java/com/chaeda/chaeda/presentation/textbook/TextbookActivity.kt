@@ -2,7 +2,6 @@ package com.chaeda.chaeda.presentation.textbook
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -27,13 +26,6 @@ class TextbookActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.window?.apply {
-//            this.statusBarColor = Color.TRANSPARENT
-            this.statusBarColor = Color.parseColor("#FFFFFF")
-//            decorView.systemUiVisibility =
-//                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-
         initView()
         initListener()
         setTextChangedListener()
@@ -57,6 +49,9 @@ class TextbookActivity
         with(binding) {
             tvAdd.setOnSingleClickListener {
                 startActivity(AddTextbookActivity.getIntent(this@TextbookActivity))
+            }
+            llBack.setOnSingleClickListener {
+                finish()
             }
         }
     }

@@ -48,6 +48,10 @@ class AddAssignmentActivity
             binding.tvFab.text = "과제 수정하기"
         }
         with(binding) {
+            llBack.setOnSingleClickListener {
+                finish()
+            }
+
             fab.setOnSingleClickListener {
                 if (addAssignmentViewModel.assignmentValid.value) {
                     if (isEditable) addAssignmentViewModel.editAssignment(id)
