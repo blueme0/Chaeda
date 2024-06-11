@@ -50,6 +50,9 @@ class TextbookActivity
             tvAdd.setOnSingleClickListener {
                 startActivity(AddTextbookActivity.getIntent(this@TextbookActivity))
             }
+            llBack.setOnSingleClickListener {
+                finish()
+            }
         }
     }
 

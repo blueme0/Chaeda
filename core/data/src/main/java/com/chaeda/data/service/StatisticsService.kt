@@ -1,5 +1,6 @@
 package com.chaeda.data.service
 
+import com.chaeda.data.model.response.statistics.ConceptStatisticsDTO
 import com.chaeda.domain.entity.ChapterDetail
 import com.chaeda.domain.entity.ConceptDetail
 import com.chaeda.domain.entity.WrongCountWithConcept
@@ -36,17 +37,17 @@ interface StatisticsService {
     @GET("/statistics/statistics/accumulated/{subConcept}")
     suspend fun getAccumulatedStatisticsByType(
         @Path("subConcept") subConcept: String
-    ): ConceptDetail
+    ): ConceptStatisticsDTO
 
     @GET("/statistics/statistics/monthly/{subConcept}")
     suspend fun getMonthlyStatisticsByType(
         @Path("subConcept") subConcept: String
-    ): ConceptDetail
+    ): ConceptStatisticsDTO
 
     @GET("/statistics/statistics/weekly/{subConcept}")
     suspend fun getWeeklyStatisticsByType(
         @Path("subConcept") subConcept: String
-    ): ConceptDetail
+    ): ConceptStatisticsDTO
 
     // not in use
     @GET("/statistics/chapter/list")

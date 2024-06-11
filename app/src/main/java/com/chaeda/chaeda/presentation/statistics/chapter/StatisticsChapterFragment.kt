@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -195,7 +194,7 @@ class StatisticsChapterFragment
                 override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     // 선택된 아이템의 텍스트 가져오기
                     chapter = parent.getItemAtPosition(position) as Chapter
-                    Toast.makeText(requireActivity(), "${chapter.koreanName}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireActivity(), "${chapter.koreanName}", Toast.LENGTH_SHORT).show()
 //                    if (selectedItem != "학년 선택하기") signUpViewModel.updateGrade(selectedItem)
 //                    else signUpViewModel.updateGrade("")
 //                    setGraph(selectedItem)

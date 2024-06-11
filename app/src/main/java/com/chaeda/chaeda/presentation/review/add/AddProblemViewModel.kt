@@ -110,7 +110,7 @@ class AddProblemViewModel @Inject constructor(
     }
 
     companion object {
-        private const val DATE_REGEX = "^(\\d{4})-(\\d{2})-(\\d{2})\$"
+        private const val DATE_REGEX = "^(\\d{4}).(\\d{2}).(\\d{2})\$"
         const val IMAGE_TYPE_HOMEWORK_THUMBNAIL = "HOMEWORK_THUMBNAIL"
         const val IMAGE_TYPE_REVIEW_NOTE_PROBLEM = "REVIEW_NOTE_PROBLEM"
     }

@@ -18,6 +18,7 @@ import com.chaeda.domain.enumSet.Concept
 import com.chaeda.domain.enumSet.Subject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class StatisticsTypeDetailActivity
@@ -45,14 +46,13 @@ class StatisticsTypeDetailActivity
             val subjectEnum = Subject.valueOf(chapterEnum.subject)
             tvConcept.text = conceptEnum.koreanName
             tvChapter.text = chapterEnum.koreanName
-            tvChapter.text = subjectEnum.koreanName
+            tvSubject.text = subjectEnum.koreanName
         }
         requestStatistics()
     }
 
     private fun updateView(concept: ConceptDetail) {
         with(binding) {
-//            tv
             tvSolved.text = "${concept.problemCount}문제"
             tvWrong.text = "${concept.wrongCount}문제"
             tvEasy.text = "${concept.easyNum}문제"
@@ -62,7 +62,7 @@ class StatisticsTypeDetailActivity
     }
 
     private fun requestStatistics() {
-        when (mode) {
+        when (cur_mode) {
             MODE_ALL -> {
                 viewModel.getAccumulatedStatisticsByType(type!!)
             }
@@ -78,6 +78,10 @@ class StatisticsTypeDetailActivity
 
     private fun initListener() {
         with(binding) {
+            llBack.setOnSingleClickListener {
+                finish()
+            }
+
             llCheckAll.setOnSingleClickListener {
                 ivCheckAll.setImageResource(R.drawable.ic_radio_checked)
                 ivCheckMonth.setImageResource(R.drawable.ic_radio_unchecked)
@@ -109,13 +113,19 @@ class StatisticsTypeDetailActivity
             viewModel.statisticsState.collect { state ->
                 when (state) {
                     is StatisticsState.GetWeeklyStatisticsDetail -> {
+                        Timber.tag("chaeda-detail").d("weekly success - ${state.concept}")
                         updateView(state.concept)
                     }
                     is StatisticsState.GetMontlyStatisticsDetail -> {
+                        Timber.tag("chaeda-detail").d("monthly success - ${state.concept}")
                         updateView(state.concept)
                     }
                     is StatisticsState.GetAccumulatedStatisticsDetail -> {
+                        Timber.tag("chaeda-detail").d("accumulated success - ${state.concept}")
                         updateView(state.concept)
+                    }
+                    is StatisticsState.Failure -> {
+                        Timber.tag("chaeda-detail").d("failure - ${state.msg}")
                     }
                     else -> {
 

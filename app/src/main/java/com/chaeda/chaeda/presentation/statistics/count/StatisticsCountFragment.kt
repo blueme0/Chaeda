@@ -218,7 +218,7 @@ class StatisticsCountFragment
         val endOfWeek = date.plusDays(6)
         binding.tvStandardText.text = when (mode) {
             MODE_DATE -> "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 (${DAY_OF_WEEK[date.dayOfWeek.value - 1]})"
-            MODE_WEEK -> "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일 ~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
+            MODE_WEEK -> "${date.year}년 ${date.monthValue}월 ${date.dayOfMonth}일\n~ ${endOfWeek.year}년 ${endOfWeek.monthValue}월 ${endOfWeek.dayOfMonth}일"
             MODE_MONTH -> "${date.year}년 ${date.monthValue}월"
             else -> ""
         }
