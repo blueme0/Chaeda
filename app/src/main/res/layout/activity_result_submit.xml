@@ -148,6 +148,7 @@
             app:layout_constraintTop_toBottomOf="@id/ll_count"
             android:layout_marginTop="22dp"
             app:layout_constraintBottom_toTopOf="@id/fab"
+            android:overScrollMode="never"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
