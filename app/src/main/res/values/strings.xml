@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chaeda</string>
+    <string name="app_name">채다</string>
     <string name="statistics_main_introduce">채다 서비스에서 제공하는\n통계 정보들은 아래와 같습니다.</string>
     <string name="statistics_count_title">풀이한 문항 수 비교</string>
     <string name="statistics_count_subtitle">특정 날짜, 주차, 월을 기준으로\n사용자가 풀이한 문제 수를 그래프로 비교합니다.</string>

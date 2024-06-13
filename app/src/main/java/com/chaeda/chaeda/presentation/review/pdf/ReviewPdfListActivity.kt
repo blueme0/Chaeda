@@ -21,8 +21,10 @@ import com.chaeda.base.util.extension.setOnSingleClickListener
 import com.chaeda.chaeda.R
 import com.chaeda.chaeda.databinding.ActivityReviewPdfListBinding
 import com.chaeda.chaeda.presentation.review.add.ReviewState
+import com.chaeda.domain.entity.ReviewPdf
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import java.net.URL
 
@@ -91,7 +93,8 @@ class ReviewPdfListActivity
 
     private fun initView() {
         pdfAdapter = PdfListAdapter {
-            viewModel.getReviewPdf(it.id)
+//            viewModel.getReviewPdf(it.id)
+            urlDownloading(TEST_DOWNLOAD_PDF)
         }
 
         binding.rvPdf.adapter = pdfAdapter
@@ -105,9 +108,11 @@ class ReviewPdfListActivity
                 when (state) {
                     is ReviewState.GetReviewPdfListSuccess -> {
                         pdfAdapter.setItems(state.list)
+                        pdfAdapter.setItems(listOf(ReviewPdf(1L, "review", "2024-06-12")))
                     }
                     is ReviewState.GetReviewPdfSuccess -> {
-                        urlDownloading(state.url)
+//                        urlDownloading(state.url)
+                        urlDownloading(TEST_DOWNLOAD_PDF)
                     }
                     else -> { }
                 }
@@ -136,6 +141,7 @@ class ReviewPdfListActivity
                 val columnReason: Int = cursor.getColumnIndex(DownloadManager.COLUMN_REASON)
                 val status: Int = cursor.getInt(columnIndex)
                 cursor.close()
+                Timber.tag("chaeda-download").d("columnReason : $columnReason")
                 when (status) {
                     DownloadManager.STATUS_SUCCESSFUL -> Toast.makeText(
                         this@ReviewPdfListActivity,
@@ -160,16 +166,19 @@ class ReviewPdfListActivity
     }
 
     private fun urlDownloading(url: String) {
+        Timber.tag("chaeda-download").d("urlDownloading: $url")
         if (mDownloadManager == null) {
             mDownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         }
-        val outputFile = File(outputFilePath + getFileName(url))
+//        val outputFile = File(outputFilePath + getFileName(url))
+        val outputFile = File(outputFilePath + "review.pdf")
         if (!outputFile.getParentFile().exists()) {
             outputFile.getParentFile().mkdirs()
         }
         val uri = Uri.parse(url)
         val request = DownloadManager.Request(uri)
-        request.setTitle(getFileName(url))
+//        request.setTitle(getFileName(url))
+        request.setTitle("review.pdf")
         request.setDestinationUri(Uri.fromFile(outputFile))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setAllowedOverMetered(true)
@@ -194,6 +203,8 @@ class ReviewPdfListActivity
 
     companion object {
         fun getIntent(context: Context) = Intent(context, ReviewPdfListActivity::class.java)
-        private const val TEST_DOWNLOAD_PDF = "https://s3-fullaccel.s3.ap-northeast-2.amazonaws.com/s3test.pdf?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFkaDmFwLW5vcnRoZWFzdC0yIkcwRQIgQeJMXDrTVUmXe8zZe8FYa9%2BczXT4Cl0t3ExgrrP9Q0kCIQC%2FLaQmcKxHthqjv%2F2ZNFTs1CtH9aZNAZbefGfbO2kAYCrxAgjS%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDc2NzM5NzkyNjYyNyIM9f%2FAyWxfC027oKpOKsUCgk6D0JnmC%2Fbx048z%2B7ZKXwc63q7Ee72jpzxCn4thqMX0dnPL2Dp3T46VJyHHhxwpXZs4WDfCztgD9YxRPXEAp6aVGGH%2FsO76lVT6igvjBdzr1aZ531njYubJZR4ISVXa%2ByoFT4WE%2FkhxbP14M88GvVZRHjMtGO03oJ4ur3ZaeLB04f4qMoisLcaEGKTjXfnmp9F8audPE%2FXXmJJwdwNTGDQHKcIREUK%2BMTgMSQFXyen%2FsXBq1NTBJfNw6v97sW6u1MoMJh%2BuVhMSMLx0bb7w%2BXOyMvXscu4850zEpMM8uRogZl%2B2e4ATbFqWx98TGK%2FP9Cvvv9NO0HBpmIadMdlYf9k2%2BfYwuvnWjX3xZhvZ6x7%2FDAMkYJ56Elay2StfRaXHXlzLVuy2%2FEALzlomgIhlreZ8c%2FrZmCzqWZY2OPgo2b0RblFQ7DDsjNGyBjqzAtE4E968FGp%2B4oip%2FrQKNFqQoubt%2FXx2ub9sigWWAnK6yUAnZL1S25BNNFYTuuOJ0g5LOz2s0RNdAQHYrnh29HtRjhadq6TJF022eYc8yUKb9a80WXdLfrGl%2FT8kl4b9HaNESLYUcQ6dMdufDN9ka%2Fg5Nx22G6vBm540bS3P3fmWBLvvDHWCUwY%2F%2BPRrEZgHYP7Kw80y3Js69tZGYJzJdo%2FSRQuoiq3RX7yCXbfxJbVWbQOXRRnC%2FO6X4sJuhTL6KQLUhkNcBBaSRjyZlyEM95gmAyPxqDjtvCe1R3CfBv%2B2BIfspcuv4QterAX3oD09n0nrT8%2BEzzoy7xrY0SUY1U6%2Fwf2CpxQIbWbndYNOh5e6dVZzb5t%2FOP0SG7cS8rgVX%2FdcnTGIXQVb80x5uBXwkn5cXIs%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240527T094435Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Credential=ASIA3FLD3C3RXLOIJY7W%2F20240527%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=35adc1687804d93e07dbf18aa6c4df4601d3f0ec15ca675283cdc2f5d35b490a"
+//        private const val TEST_DOWNLOAD_PDF = "https://drive.google.com/file/d/1wHbsqcfI9E9NRMuLgh4DYYcDHaba3xqN/view?usp=drive_link"
+//        private const val TEST_DOWNLOAD_PDF = "https://bigfile.mail.naver.com/download?fid=PqR0W6k9WzU9KAujK3ejFAMlKxEjKogZFAgrKxUmKAg/KxvjKxbZKAblFoKla3e4KoMZKrMqKzumK4UmMouXp6MdF6pSK6JCF6UrpzMdM2=="
+        private const val TEST_DOWNLOAD_PDF = "https://bigfile.mail.naver.com/download?fid=P9R0W6k9WzU9aAujK3ejaxu9FAbjKogZFAgrKxUmKxUwKAujKxbZKAblFoKla3YrKogqKxU/KA3Sp6tmFrKrFrElK4ulax3CFo2lFxK9pt=="
     }
 }

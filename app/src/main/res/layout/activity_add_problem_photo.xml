@@ -98,7 +98,7 @@
                     android:background="@drawable/shape_rect8_fill_brown"
                     android:textAlignment="center"
                     android:gravity="center"
-                    android:text="문제 사진 불러오기"
+                    android:text="문제 사진 촬영하기"
                     app:layout_constraintTop_toBottomOf="@id/et_date"
                     android:layout_marginTop="33dp"
                     android:fontFamily="@font/nanumsquare_bold"

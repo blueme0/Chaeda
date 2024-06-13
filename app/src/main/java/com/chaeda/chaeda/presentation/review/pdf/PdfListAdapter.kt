@@ -44,7 +44,7 @@ class PdfListAdapter (private val itemClick: (ReviewPdf) -> (Unit))
 
         fun onBind(item: ReviewPdf) {
             binding.tvTitle.text = item.title
-            binding.tvContent.text = item.createdDateTime
+            binding.tvContent.text = item.createdDateTime.split("T")[0]
             binding.ivThumbnail.setImageResource(R.drawable.ic_empty_thumbnail)
 
             binding.root.setOnSingleClickListener {

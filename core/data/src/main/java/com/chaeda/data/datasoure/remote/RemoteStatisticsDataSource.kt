@@ -67,6 +67,10 @@ class RemoteStatisticsDataSource @Inject constructor(
     suspend fun getWrongCountByChapter(
         chapter: String
     ): List<ConceptDetail> {
-        return statisticsService.getWrongCountByChapter(chapter)
+        val list = mutableListOf<ConceptDetail>()
+        statisticsService.getWrongCountByChapter(chapter).forEach {
+            list.add(it.toConceptDetail())
+        }
+        return list
     }
 }
