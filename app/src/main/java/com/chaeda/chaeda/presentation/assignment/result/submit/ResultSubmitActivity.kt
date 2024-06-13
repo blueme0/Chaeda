@@ -110,9 +110,14 @@ class ResultSubmitActivity
 
         val arr = ArrayList<ReviewAnswer>()
         resultViewModel.problemRange.value.forEach { (i, strings) ->
+            Timber.tag("chaeda-check").d("i: $i, strings: ${strings.toList()}")
+            Timber.tag("chaeda-check").d("assignmentResult: ${resultViewModel.assignmentResult.value[i]}")
             val list = mutableListOf<ResultAnswer>()
             strings.forEach {
-                list.add(ResultAnswer(resultViewModel.assignmentResult.value[i]?.containsKey(it)!!, it))
+                if (resultViewModel.assignmentResult.value.containsKey(i))
+                    list.add(ResultAnswer(resultViewModel.assignmentResult.value[i]?.containsKey(it)!!, it))
+                else
+                    list.add(ResultAnswer(false, it))
             }
             arr.add(ReviewAnswer(i, list))
         }

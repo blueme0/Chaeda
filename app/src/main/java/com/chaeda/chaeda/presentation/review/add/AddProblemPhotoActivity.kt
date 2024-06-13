@@ -78,6 +78,7 @@ class AddProblemPhotoActivity
         if (tsubject != null) initForResultReview()
         chapters = subject!!.chapters
         chapter = chapters!![0]
+        viewModel.updateChapter(chapter!!)
 
         initListener()
         initAddBtn()
@@ -97,9 +98,14 @@ class AddProblemPhotoActivity
 
         with(binding) {
             val now = LocalDateTime.now()
-            etDate.setText(now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+            etDate.setText(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
             etTextbook.setText(name)
             etIndex.setText(index)
+            with(viewModel) {
+                updateDateString(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                updateTextbookName(name!!)
+                updateProblemNum(index!!)
+            }
         }
     }
 
@@ -311,7 +317,7 @@ class AddProblemPhotoActivity
 
     private fun initListener() {
         with(binding) {
-            ivBack.setOnSingleClickListener {
+            llBack.setOnSingleClickListener {
                 finish()
             }
 
